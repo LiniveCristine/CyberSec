@@ -1,4 +1,4 @@
-```markdown
+
 # 🗓️ Cronograma de Estudos — Penetration Tester (HTB / CPTS)
 
 Este cronograma foi estruturado para o **path Penetration Tester (CPTS)** do Hack The Box, com foco em **progressão técnica realista**, prática constante e consolidação de conhecimento.
@@ -156,4 +156,4 @@ O tempo pode variar de acordo com seu **conhecimento prévio**
 ✅ Refaça labs difíceis  
 ✅ Aprenda a errar rápido  
 ⚠️ Se travar em um lab → pause, pesquise e volte depois
-```
+
