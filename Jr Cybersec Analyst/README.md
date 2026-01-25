@@ -23,8 +23,8 @@ O cronograma possui **19 semanas**, mas o tempo pode variar de acordo com seu **
 
 **Conteúdos:**
 
-- Introdução à Cybersecurity
-- CIA Triad
+- ✅ Introdução à Cybersecurity
+- ✅ CIA Triad
 - Threats, Vulnerabilities e Risk
 - Blue Team x Red Team
 - Conceitos básicos de segurança
