@@ -1,4 +1,4 @@
-```markdown
+
 # ⏱️ Estrutura Fixa de Estudo — Hack The Box (CPTS)
 
 Este cronograma foi pensado para quem estuda **3 vezes por semana**, com **80 minutos por sessão**, conciliando trabalho e estudos sem gerar burnout.
@@ -23,8 +23,8 @@ O cronograma possui **19 semanas**, mas o tempo pode variar de acordo com seu **
 
 **Conteúdos:**
 
-- Introdução à Cybersecurity
-- CIA Triad
+- ✅ Introdução à Cybersecurity
+- ✅ CIA Triad
 - Threats, Vulnerabilities e Risk
 - Blue Team x Red Team
 - Conceitos básicos de segurança
@@ -166,4 +166,4 @@ O cronograma possui **19 semanas**, mas o tempo pode variar de acordo com seu **
 - Preparação consistente para o exame **CPTS**
 
 > ⚠️ Este não é um curso para correr. Labs difíceis exigem calma e repetição.
-```
+

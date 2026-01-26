@@ -1,4 +1,4 @@
-```markdown
+
 # 🕸️ Cronograma de Estudos — Web Penetration Tester (Hack The Box)
 
 Este cronograma foi elaborado para o path **Web Penetration Tester** do Hack The Box, considerando uma rotina de **3 sessões de estudo por semana**, ideal para quem trabalha ou estuda em paralelo.
@@ -183,4 +183,4 @@ Executar um pentest web completo, do reconhecimento à exploração.
 
 🎯 **Objetivo Final:**  
 Dominar os principais vetores de ataque web e estar preparado para desafios reais de **Web Pentesting**.
-```
+
