@@ -1,186 +1,349 @@
+# 📘 CRONOGRAMA INTEGRADO — 25 SEMANAS  
+**Versão Carreira • Executável • Mentalidade de Campo**
+---
 
-# 🕸️ Cronograma de Estudos — Web Penetration Tester (Hack The Box)
+## ⚠️ Aviso Importante sobre Ritmo de Estudo
 
-Este cronograma foi elaborado para o path **Web Penetration Tester** do Hack The Box, considerando uma rotina de **3 sessões de estudo por semana**, ideal para quem trabalha ou estuda em paralelo.
+Este cronograma foi planejado considerando, **em média, apenas 3 dias de estudo por semana**, com sessões de **70–90 minutos**.
 
-📅 **Frequência:** 3x por semana  
-⏱️ **Duração sugerida por sessão:** 60–90 minutos  
-🎯 **Objetivo:** Desenvolver base sólida em ataques web e exploração prática de vulnerabilidades.
+👉 **O cronograma pode (e deve) ser ajustado à disponibilidade de cada pessoa**, mantendo a ordem dos conteúdos e a lógica de progressão.
+
+O foco aqui é **consistência no longo prazo**, não velocidade.
 
 ---
 
-## 📅 Organização Semanal Sugerida
+## 🎯 Base do Treinamento
 
-- **Dia 1:** Teoria + exemplos
-- **Dia 2:** Continuação + primeiros labs
-- **Dia 3:** Labs + revisão
+- **HC (Hacking Club)** — visão prática + mentalidade
+- **HTB Academy — Web Pen Tester**
+- **HTB Academy — Penetration Tester (selecionado)**
+- **HTB Machines / Challenges**
+- **Bug Bounty** (HackerOne / Bugcrowd)
 
----
+## ℹ️ Nota sobre Fontes de Estudo
 
-## 🔹 FASE 1 — Fundamentos Web
+A internet está cheia de **conteúdo gratuito e de alta qualidade** — com tempo e determinação, é totalmente possível montar um plano sólido apenas garimpando materiais abertos.
 
-**Duração:** Semanas 1–3 (3 semanas)
+Neste cronograma, optei por utilizar **conteúdos pagos** principalmente por **praticidade** e **falta de tempo para uma busca detalhada**, não por serem a única forma de aprender.
 
-### Conteúdos
-
-- Funcionamento da Web
-- HTTP/HTTPS (requests e responses)
-- Métodos HTTP
-- Status codes
-- Headers
-- Cookies e Sessions
-
-🎯 **Meta:**  
-Entender como aplicações web funcionam por baixo do capô.
+👉 O método e a progressão continuam válidos independentemente da fonte escolhida.
 
 ---
 
-## 🔹 FASE 2 — Web Reconnaissance
-
-**Duração:** Semanas 4–5 (2 semanas)
-
-### Conteúdos
-
-- Reconhecimento web
-- Directory e file enumeration
-- Robots.txt
-- Virtual hosts
-- Subdomain enumeration
-- Fingerprinting de tecnologias
-
-🎯 **Meta:**  
-Saber mapear corretamente uma aplicação antes de atacar.
+📅 **Ritmo fixo:** 3 sessões por semana (70–90 min)
 
 ---
 
-## 🔹 FASE 3 — Ferramentas Essenciais
+## 🔁 Regra Global (Do Início ao Fim)
 
-**Duração:** Semanas 6–7 (2 semanas)
+📌 **Após CADA vulnerabilidade estudada:**
+- ➡️ 1 sessão dedicada **exclusivamente a reports reais**, substituindo revisão genérica.
 
-### Conteúdos
+### 🧠 Formato Fixo da Sessão de Reports
+Para **2–3 reports reais**:
+1. Onde o hacker começou?
+2. Qual sinal levantou suspeita?
+3. O que foi testado antes de achar o bug?
+4. Qual detalhe fez a diferença?
+5. Gerar **checklist prático reutilizável**
 
-- Burp Suite (Proxy, Repeater, Intruder)
-- cURL
-- Gobuster / FFUF / Dirsearch
-- Extensões do navegador
-- Wordlists
-
-🎯 **Meta:**  
-Usar ferramentas web com eficiência e propósito.
-
----
-
-## 🔹 FASE 4 — Vulnerabilidades Web Básicas
-
-**Duração:** Semanas 8–10 (3 semanas)
-
-### Conteúdos
-
-- SQL Injection (básico ao intermediário)
-- Cross-Site Scripting (XSS)
-- Command Injection
-- File Inclusion (LFI / RFI)
-- Path Traversal
-
-🎯 **Meta:**  
-Identificar e explorar vulnerabilidades web comuns.
+📌 **Objetivo:**  
+Criar **instinto de campo**, não apenas conhecimento técnico.
 
 ---
 
-## 🔹 FASE 5 — Autenticação & Controle de Acesso
+# 🗓 SEMANAS 1–6 — FUNDAMENTOS + RECON (SEM BOUNTY)
 
-**Duração:** Semanas 11–12 (2 semanas)
-
-### Conteúdos
-
-- Authentication bypass
-- Broken Access Control
-- IDOR
-- Session fixation
-- Brute force em login
-
-🎯 **Meta:**  
-Quebrar lógicas de autenticação e autorização.
+🎯 **Objetivo:** base técnica + metodologia  
+❌ **Nada de caçar bugs ainda**
 
 ---
 
-## 🔹 FASE 6 — Web Attacks Avançados
+## 🔹 Semanas 1–2 — Fundamentos & Metodologia
 
-**Duração:** Semanas 13–15 (3 semanas)
+### Sessões
+#### 📘 Teoria / Labs
+- 🟦 HC: Metodologia, mentalidade, HTTP  
+- 🟦 HTB-W: Web Requests, HTTP Basics  
+- 🟦 HTB-P: Penetration Testing Process  
 
-### Conteúdos
+#### 🧪 Prática
+- 🟩 Labs HTTP  
+- 🟥 Starting Point — Meow, Fawn  
 
-- Insecure Deserialization
-- SSTI (Server-Side Template Injection)
-- File upload vulnerabilities
-- Business Logic Flaws
-- Race conditions (conceito)
+#### 🧠 Reports
+- Apenas leitura leve  
+- ❌ Sem checklist (ainda)
 
-🎯 **Meta:**  
-Explorar falhas menos óbvias e mais realistas.
-
----
-
-## 🔹 FASE 7 — APIs & Web Services
-
-**Duração:** Semanas 16–17 (2 semanas)
-
-### Conteúdos
-
-- REST APIs
-- Autenticação em APIs
-- JWT
-- API enumeration
-- OWASP API Top 10
-
-🎯 **Meta:**  
-Testar APIs modernas com metodologia correta.
+📌 *Aqui você aprende a pensar, não a atacar.*
 
 ---
 
-## 🔹 FASE 8 — Labs Completos & Consolidação
+## 🔹 Semanas 3–4 — Proxies & Parameter Discovery
 
-**Duração:** Semanas 18–20 (3 semanas)
+### Sessões
+#### 📘
+- 🟦 HC: Burp, Parameter Discovery  
+- 🟦 HTB-W: Web Proxies, Parameter Fuzzing  
+- 🟦 HTB-P: Intercepting Web Traffic  
 
-### Conteúdos
+#### 🧪
+- 🟩 Labs Burp / FFUF  
+- 🟥 Web Challenge — Parameters  
 
-- Labs completos estilo CTF
-- Exploração end-to-end
-- Revisão de técnicas
-- Organização de anotações
-- Criação de checklist de pentest web
+#### 🧠 Reports (obrigatórios)
+- Parameter pollution  
+- Hidden parameters  
 
-🎯 **Meta:**  
-Executar um pentest web completo, do reconhecimento à exploração.
-
----
-
-## 📌 Resumo do Cronograma
-
-| Fase                     | Duração      |
-| ------------------------ | ------------ |
-| Fundamentos Web          | 3 semanas    |
-| Reconnaissance           | 2 semanas    |
-| Ferramentas              | 2 semanas    |
-| Vulnerabilidades Básicas | 3 semanas    |
-| Auth & Access Control    | 2 semanas    |
-| Ataques Avançados        | 3 semanas    |
-| APIs                     | 2 semanas    |
-| Labs & Consolidação      | 3 semanas    |
-| **Total**                | **~5 meses** |
+📌 *Você está aprendendo onde olhar, não onde atacar.*
 
 ---
 
-## 💡 Dicas Importantes
+## 🔹 Semanas 5–6 — DNS & Infra Web
 
-- Labs são mais importantes que teoria
-- Documente tudo (Notion, Obsidian, CherryTree)
-- Não copie payloads sem entender
-- Refazer labs difíceis faz parte do aprendizado
-- Se travar, pause, pesquise e volte depois
+### Sessões
+#### 📘
+- 🟦 HC: DNS, Infra, Takeover  
+- 🟦 HTB-W: DNS + Subdomain Enumeration  
+- 🟦 HTB-P: DNS Enumeration  
+
+#### 🧪
+- 🟩 Amass / dnsrecon  
+- 🟥 Academy Labs — Subdomain Takeover  
+
+#### 🧠 Reports
+- Subdomain takeover reais  
+- Enumeração ignorada por devs  
+
+📌 *Aqui nasce o olhar de recon profissional.*
 
 ---
 
-🎯 **Objetivo Final:**  
-Dominar os principais vetores de ataque web e estar preparado para desafios reais de **Web Pentesting**.
+# 🗓 SEMANAS 7–8 — XSS (PRIMEIRA VULN REAL)
 
+🚫 **Ainda sem caça**  
+🎯 **Objetivo:** reconhecer padrões antes de agir
+
+---
+
+## 🔹 Semana 7 — XSS Fundamentals
+
+#### 📘
+- 🟦 HC: Reflected / Stored / DOM  
+- 🟦 HTB-W: XSS  
+- 🟦 HTB-P: Client-Side Attacks  
+
+#### 🧪
+- 🟩 Academy Labs — XSS  
+
+#### 🧠 Reports
+- XSS simples  
+- Checklist: contextos, sinks, reflection  
+
+---
+
+## 🔹 Semana 8 — XSS Avançado
+
+#### 📘
+- 🟦 HC: Blind XSS  
+- 🟦 HTB-W: Advanced XSS / Filter Evasion  
+
+#### 🧪
+- 🟥 Web Challenge — XSS  
+
+#### 🧠 Reports
+- Blind XSS reais  
+- Payloads “improváveis”  
+
+📌 *Você aprende a reconhecer cheiro de bug.*
+
+---
+
+# 🗓 SEMANAS 9–12 — SQLi + RCE  
+⚠️ **Entrada Guiada em Bug Bounty**
+
+---
+
+## 🔹 Semana 9 — SQL Injection Manual
+
+#### 📘
+- 🟦 HC: SQLi manual  
+- 🟦 HTB-W: SQLi Fundamentals  
+- 🟦 HTB-P: SQLi Attacks  
+
+#### 🧪
+- 🟥 Starting Point — Appointment  
+
+#### 🧠 Reports
+- SQLi reais  
+
+#### 🎯 Bug Bounty (guiado)
+- 1 alvo  
+- Apenas parâmetros óbvios  
+- Zero expectativa de bug  
+
+---
+
+## 🔹 Semana 10 — SQLi Avançado
+
+#### 📘
+- 🟦 HC: UNION / Time-based  
+- 🟦 HTB-W: Advanced SQLi  
+
+#### 🧪
+- 🟥 Web Challenge — SQLi  
+
+#### 🧠 Reports
+- SQLi avançados  
+
+🎯 *Caça focada exclusivamente em SQLi.*
+
+---
+
+## 🔹 Semana 11 — Command Injection
+
+#### 📘
+- 🟦 HC: Command Injection  
+- 🟦 HTB-W: Command Injection  
+
+#### 🧪
+- 🟥 Machine — Bashed  
+
+#### 🧠 Reports
+- RCE reais  
+
+🎯 *Caça apenas em funções “system-like”.*
+
+---
+
+## 🔹 Semana 12 — LFI / RFI
+
+#### 📘
+- 🟦 HC: File Inclusion  
+- 🟦 HTB-W: File Inclusion  
+
+#### 🧪
+- 🟥 Machine — Nineveh  
+
+#### 🧠 Reports
+- LFI / RFI reais  
+
+🎯 *Caça focada em parâmetros de path.*
+
+📌 *Aqui você já é ativo, mesmo sem achar nada.*
+
+---
+
+# 🗓 SEMANAS 13–16 — AUTH, IDOR & APIs  
+✅ **Bug Bounty Real**
+
+---
+
+## 🔹 Semana 13 — Broken Access Control
+
+#### 📘
+- 🟦 HC: Auth / IDOR  
+- 🟦 HTB-W: Broken Access Control  
+- 🟦 HTB-P: Auth Attacks  
+
+#### 🧪
+- 🟩 Academy Labs — BAC  
+
+#### 🧠 Reports
+- IDOR / BOLA  
+
+🎯 *Bug bounty sério começa aqui.*
+
+---
+
+## 🔹 Semana 14 — CSRF & Logic Flaws
+
+#### 📘
+- 🟦 HC: CSRF / lógica  
+- 🟦 HTB-W: CSRF Attacks  
+
+#### 🧪
+- 🟥 Web Challenge — Auth  
+
+#### 🧠 Reports
+- Falhas de lógica reais  
+
+🎯 *Testes de fluxo completo.*
+
+---
+
+## 🔹 Semana 15 — APIs REST & NoSQL
+
+#### 📘
+- 🟦 HC: REST / NoSQL  
+- 🟦 HTB-W: API Attacks  
+
+#### 🧪
+- 🟥 Machine — Stocker  
+
+#### 🧠 Reports
+- APIs reais  
+
+🎯 *Caça focada em endpoints.*
+
+---
+
+## 🔹 Semana 16 — GraphQL & API Auth
+
+#### 📘
+- 🟦 HC: GraphQL  
+- 🟦 HTB-W: GraphQL Attacks  
+
+#### 🧪
+- 🟥 Web Challenge — API  
+
+#### 🧠 Reports
+- GraphQL reais  
+
+🎯 *Caça focada em auth bypass.*
+
+📌 *Aqui você já é operacional em Bug Bounty.*
+
+---
+
+# 🗓 SEMANAS 17–18 — UPLOAD & MISCONFIGS
+
+#### 📘
+- 🟦 HC: Upload / WebDAV  
+- 🟦 HTB-W: Upload & Misconfigs  
+
+#### 🧪
+- 🟥 Shocker / ScriptKiddie  
+
+#### 🧠 Reports
+- Casos reais  
+
+🎯 *Caça direcionada.*
+
+---
+
+# 🗓 SEMANA 19 — CONSOLIDAÇÃO
+
+- 🟥 Machine Easy → Medium  
+- 📝 Writeup estilo pentest  
+- 🧠 Checklist final por vulnerabilidade  
+- 🎯 1 sessão livre de bounty  
+
+---
+
+# 🗓 SEMANAS 20–25 — BUG BOUNTY FOCUSED PHASE
+
+❌ Nenhum conteúdo novo  
+✅ Apenas execução e refinamento
+
+### Estrutura Semanal
+- 🎯 2 sessões de bug bounty  
+- 🧠 1 sessão de reports + checklist  
+
+### 🎯 Objetivo Realista
+- 1 bug **low/medium válido** **OU**  
+- Domínio completo do processo  
+
+📌 *Ambos são vitória.*
+
+---
