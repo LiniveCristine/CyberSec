@@ -70,6 +70,7 @@ O **modem** faz a modulação e demodulação do sinal para permitir a troca de 
 Dessa forma, a rede local tem acesso a sites e serviços online.
 
 ---
+---
 
 # 🧩 Modelo OSI
 
@@ -218,3 +219,361 @@ Ao encerrar a conexão, os dados da sessão são perdidos.
    - O endereço IP garante que os pacotes cheguem ao servidor web
 
 4. Por fim, os dados passam pelas camadas de **enlace** e **física**, sendo transmitidos fisicamente
+
+Perfeito — segue o **resumo em Markdown**, organizado, didático e no mesmo padrão que você pediu 👇
+
+---
+---
+
+# 🌐 Componentes de uma Rede
+
+## 🖥️ End Devices (Dispositivos Finais)
+
+* Computadores, tablets, smartphones, dispositivos **IoT**
+* Também chamados de **hosts**
+* Ligados diretamente ao **usuário final**
+* Origem e destino das informações na rede
+
+---
+
+## 🔀 Intermediary Devices (Dispositivos Intermediários)
+
+* **Switches**
+* **Roteadores**
+* **Modems**
+
+📌 Função:
+
+* Facilitar o **fluxo de dados**
+* **Encaminhar pacotes** até o destino correto
+
+---
+
+## 🔗 Network Media e Software Components
+
+### 📡 Network Media
+
+* Meios físicos ou sem fio por onde os dados trafegam:
+
+  * **Com fio:** Ethernet, fibra óptica
+  * **Sem fio:** Wi-Fi, Bluetooth
+
+### 💻 Software Components
+
+* Definem **regras e procedimentos** da rede
+
+🔹 Protocolos:
+
+* HTTP
+* TCP/IP
+* FTP
+
+🔹 Softwares de gerenciamento:
+
+* Monitoramento
+* Configuração
+* Administração da rede
+
+---
+
+## 🗄️ Servers (Servidores)
+
+* Servidor Web
+* Servidor de Arquivos
+* Servidor de E-mail
+* Servidor de Banco de Dados (BD)
+
+📌 Fornecem serviços para clientes na rede
+
+---
+
+# 🧩 Placa de Rede
+
+* Componente de **hardware**
+* Permite a conexão do dispositivo à rede
+* Fornece a **interface física**
+* Possui um **endereço MAC único**
+
+📌 Importância do MAC:
+
+* Identificação dos dispositivos
+* Comunicação na **camada de enlace (Data Link)**
+
+🔹 Tipos:
+
+* **Ethernet (com fio)**
+* **Wi-Fi (sem fio)**
+
+---
+
+# 🚦 Roteadores
+
+* **Encaminham pacotes** entre redes diferentes
+* Redes distintas **não se comunicam sem roteamento**
+* Operam na **camada de rede (Layer 3)**
+* Utilizam **endereços IP**
+
+📌 Utilizam:
+
+* Tabelas de roteamento
+* Protocolos de roteamento
+
+### 🔹 Protocolos de Roteamento
+
+#### OSPF (Open Shortest Path First)
+
+* Protocolo **dinâmico**
+* Usado em **gateways internos**
+* Muito comum em redes corporativas
+
+#### BGP (Border Gateway Protocol)
+
+* Usado em **gateways externos**
+* Responsável pela comunicação com **ISPs**
+* Define rotas entre grandes redes (Internet)
+
+---
+
+# 🔁 Switches e Hubs
+
+## 🔀 Switch
+
+* Conecta dispositivos em uma **LAN**
+* Opera na **camada 2 (Enlace)**
+* Usa **endereços MAC** para encaminhar dados corretamente
+
+## 🔌 Hub
+
+* Opera na **camada 1 (Física)**
+* Não entende endereços MAC
+* Replica os dados para **todas as portas**
+
+---
+---
+
+# 🏗️ Arquitetura da Internet
+
+Define como os dados são **organizados, transmitidos e gerenciados**.
+
+---
+
+## 🔄 Ponto a Ponto (P2P)
+
+* Cada nó atua como **cliente e servidor**
+* Comunicação direta entre hosts
+* Não há servidor central
+
+📌 Exemplo:
+
+* Torrent
+
+---
+
+## 🧑‍💻 Cliente-Servidor
+
+* Arquitetura mais utilizada
+* Cliente solicita serviços ao servidor
+* Existem **servidores centrais**
+
+📌 Exemplo:
+
+* Browser acessando um site
+
+---
+
+# 🧱 Modelos de Camadas
+
+## 1️⃣ Camada Única (Single-tier)
+
+* Cliente, servidor e banco de dados em um único sistema
+* Pouca escalabilidade e segurança
+* Não usada em grandes sistemas
+
+---
+
+## 2️⃣ Dois Níveis (Two-tier)
+
+* Cliente separado do servidor
+* Cliente: apresentação
+* Servidor: banco de dados
+
+📌 Exemplo:
+
+* Aplicações desktop
+
+⚠️ Observação:
+
+* Navegar em um site **não** caracteriza two-tier
+
+---
+
+## 3️⃣ Três Níveis (Three-tier)
+
+* Introduz o **Servidor de Aplicação**
+
+🔹 Camadas:
+
+* Cliente: apresentação
+* Servidor de aplicação: lógica de negócio
+* Servidor de banco de dados: armazenamento
+
+📌 Vantagem:
+
+* Manutenção independente das camadas
+
+---
+
+## 🌐 N Camadas (N-tier)
+
+* Expansão do modelo three-tier
+* Ideal para **aplicações web grandes**
+
+---
+
+# 🔀 Arquitetura Híbrida
+
+* Combina **P2P** e **Cliente-Servidor**
+* Aproveita os pontos fortes de cada modelo
+
+📌 Exemplo: Chamada de Vídeo
+
+* Servidor central:
+
+  * Login
+  * Autenticação
+* Transmissão de áudio e vídeo:
+
+  * **P2P**
+
+---
+
+# ☁️ Arquitetura em Nuvem
+
+* Infraestrutura hospedada por terceiros
+
+📌 Provedores:
+
+* AWS
+* Azure
+* Google Cloud
+
+📌 Modelo:
+
+* Cliente-servidor
+
+🔹 Exemplo:
+
+* Google Drive (SaaS)
+
+---
+
+# 🧠 Arquitetura Definida por Software (SDN)
+
+* Separa:
+
+  * **Decisão do tráfego**
+  * **Encaminhamento dos dados**
+* Configurações feitas via software
+* Mais flexibilidade e controle
+
+---
+---
+
+# 🔁 Exemplo de Fluxo de Dados (Acesso a um Site)
+
+## 📡 1. Conexão à Rede
+
+* Notebook em uma **LAN/WLAN**
+* Ainda sem IP
+
+### 🔹 DHCP
+
+* Solicita:
+
+  * Endereço IP
+  * DNS
+  * Gateway
+  * Outras configurações
+* Cliente: UDP porta **68**
+* Servidor: UDP porta **67**
+* Comunicação via **broadcast**
+
+---
+
+## 🌐 2. Resolução de Nome (DNS)
+
+* Pesquisa URL no browser
+* Envio de **DNS Query**
+* Recebe **DNS Response** com IP do domínio
+
+---
+
+## 📦 3. Encapsulamento (Modelo OSI)
+
+* **Aplicação:**  Solicitação HTTP
+* **Transporte:** TCP (porta 80) encapsualar HTTP
+* **Rede:** IP (origem e destino) encapsular segmentos TCP
+* **Enlace:** Frame (Ethernet ou Wi-Fi) encapsular pacotes IP
+    * Enlace utiliza endereço MAC
+
+📌 MAC de destino:
+
+* MAC do **roteador (gateway)**
+
+🔹 Descoberto via **ARP**
+
+---
+
+## 🔄 4. NAT e Envio à Internet
+
+* Roteador realiza **NAT**
+* IP privado → IP público
+* Pacotes seguem para o **ISP**
+
+---
+
+## 🖥️ 5. Servidor Web
+
+* Firewall analisa a solicitação
+* Servidor web (Apache/Nginx) processa
+* Resposta enviada ao cliente
+
+📌 Caminho de volta ocorre de forma inversa
+
+---
+---
+
+# 🧪 Interfaces de Rede (Linux)
+
+## 🔹 ifconfig -a
+
+* Lista interfaces de rede
+* Inclui interfaces inativas
+
+📌 Exemplos:
+
+* **ens3:** endereço público
+* **lo:** loopback
+* **tun0:** túnel (VPN)
+
+---
+
+## 🔹 netstat -tulnp4
+
+📌 Função:
+
+* Monitora conexões TCP/IP
+* Mostra portas abertas e serviços
+
+### Flags:
+
+* **-t:** TCP
+* **-u:** UDP
+* **-l:** listening
+* **-n:** numérico
+* **-p:** programa
+* **-4:** IPv4
+
+⚠️ -p Requer privilégios de root (`sudo`)
+
+
