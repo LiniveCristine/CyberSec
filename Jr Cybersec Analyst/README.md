@@ -35,12 +35,12 @@ Dominar o vocabulário e os conceitos base.
 *(3 semanas)*
 
 ### Conteúdos
-- OSI Model  
-- TCP/IP  
-- HTTP, HTTPS, DNS, FTP, SSH  
-- Portas  
-- Subnetting (básico)  
-- Labs de rede  
+- ✅ OSI Model  
+- ✅ TCP/IP  
+- ✅ HTTP, HTTPS, DNS, FTP, SSH  
+- ✅ Portas  
+- ✅ Subnetting (básico)  
+- ✅ Labs de rede  
 
 🎯 **Meta:**  
 Explicar com clareza como o tráfego de rede funciona.
