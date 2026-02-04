@@ -574,6 +574,198 @@ Define como os dados são **organizados, transmitidos e gerenciados**.
 * **-p:** programa
 * **-4:** IPv4
 
-⚠️ -p Requer privilégios de root (`sudo`)
+---
+
+# 🕵️ Proxy
+
+## 📌 O que é Proxy
+
+* Um **proxy** é um dispositivo ou serviço que atua como **intermediário** entre o cliente e o servidor
+* Posiciona-se **no meio da conexão**
+* Pode **inspecionar, filtrar e modificar** o tráfego
+* Normalmente atua na **Camada 7 (Aplicação)** do modelo OSI
+
+---
+
+# 🔀 Tipos de Proxy
+
+## 🔹 Proxy de Encaminhamento (Forward Proxy)
+
+* As solicitações do **usuário passam pelo proxy**
+* Utilizado para:
+
+  * Inspeção de tráfego
+  * Controle de acesso
+  * Filtro de conteúdo
+
+📌 Exemplo:
+
+* **Burp Suite**
+
+  * Pode atuar como proxy de encaminhamento
+  * Muito usado em testes de segurança
+
+---
+
+## 🔹 Proxy Reverso (Reverse Proxy)
+
+* Atua **do lado do servidor**
+* Filtra as **requisições de entrada**
+* O cliente não se comunica diretamente com o servidor final
+
+📌 Exemplo:
+
+* **WAF (Web Application Firewall)**
+
+### 🔐 WAF
+
+* Proxy reverso especializado
+* Inspeciona requisições HTTP/HTTPS
+* Bloqueia:
+
+  * Ataques
+  * Requisições maliciosas
+  * Padrões suspeitos
+
+---
+
+## 🔹 Proxy Transparente e Não Transparente
+
+### 🔸 Proxy Transparente
+
+* O cliente **não sabe** que está passando por um proxy
+* Comum em:
+
+  * Redes corporativas
+  * Provedores de internet
+
+### 🔸 Proxy Não Transparente
+
+* O cliente **sabe** que o proxy existe
+* Configuração manual no navegador ou sistema
+
+---
+
+# 📚 Terminologias e Protocolos
+
+## 📡 Protocolos de Rede
+
+Protocolos definem **regras e padrões** para comunicação entre dispositivos.
+
+---
+
+### 🔐 SSH (Secure Shell)
+
+* Acesso remoto **seguro**
+* Execução de comandos remotamente
+* Comunicação criptografada
+
+---
+
+### 🔓 RSH (Remote Shell)
+
+* Execução remota de comandos em sistemas Unix
+* **Inseguro** (sem criptografia)
+
+---
+
+### 📁 FTP (File Transfer Protocol)
+
+* Transferência de arquivos
+* Comunicação **não criptografada**
+
+---
+
+### 📧 SMTP (Simple Mail Transfer Protocol)
+
+* Envio e recebimento de e-mails
+
+---
+
+### 🌐 HTTP (Hypertext Transfer Protocol)
+
+* Modelo **cliente-servidor**
+* Envio e recebimento de dados na internet
+* Base da navegação web
+
+---
+
+### 🧭 OSPF (Open Shortest Path First)
+
+* Protocolo de roteamento:
+
+  * Interno
+  * Dinâmico
+
+---
+
+### 🔒 VPN (Virtual Private Network)
+
+* Cria um **túnel seguro e criptografado**
+* Protege a comunicação entre redes
+
+🔹 **IPsec**
+
+* Conjunto de protocolos usado para segurança em VPNs
+
+---
+
+### 🔁 NAT (Network Address Translation)
+
+* Traduz:
+
+  * IPs privados → IPs públicos
+* Permite acesso à internet por redes internas
+
+---
+
+### ⚙️ AJAX (Asynchronous JavaScript and XML)
+
+* Conjunto de técnicas para carregamento dinâmico de conteúdo
+* Evita recarregar a página inteira
+
+📌 Exemplo:
+
+* Atualização de comentários sem refresh da página
+
+🔹 Tecnologias usadas:
+
+* JavaScript
+* XML / JSON
+
+---
+
+# 🌐 URI e URL
+
+## 🔹 URI (Uniform Resource Identifier)
+
+* Identificador genérico de recursos
+* Define **a identidade** de um recurso
+
+---
+
+## 🔹 URL (Uniform Resource Locator)
+
+* Tipo específico de URI
+* Identifica:
+
+  * O recurso
+  * Sua **localização**
+
+📌 Regra importante:
+
+* Toda **URL é uma URI**
+* Nem toda **URI é uma URL**
+
+---
+
+## ✅ Resumo Final
+
+* Proxies atuam como **intermediários**
+* Podem filtrar requisições ou respostas
+* São fundamentais para **segurança, controle e análise**
+* Protocolos definem como os dados trafegam
+* URI e URL organizam o acesso a recursos na web
+
 
 
