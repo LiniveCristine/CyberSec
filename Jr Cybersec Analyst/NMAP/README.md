@@ -2,7 +2,7 @@
 
 ---
 
-### 1. 🧠 O que é Enumeração
+### 🧠 O que é Enumeração
 
 A **enumeração** é a fase de **coleta de informações** durante um teste de segurança ou análise de rede.
 
@@ -20,7 +20,7 @@ A **enumeração** é a fase de **coleta de informações** durante um teste de 
 
 ---
 
-### 2. 🛠️ Enumeração Manual vs Ferramentas
+### 🛠️ Enumeração Manual vs Ferramentas
 
 #### 👨‍💻 Enumeração manual
 
@@ -36,7 +36,7 @@ A **enumeração** é a fase de **coleta de informações** durante um teste de 
 
 ---
 
-### 3. 🌐 Introdução ao Nmap
+### 🌐 Introdução ao Nmap
 
 O **Nmap (Network Mapper)** é uma ferramenta de código aberto usada para:
 
@@ -54,7 +54,7 @@ Também pode:
 
 ---
 
-### 4. 📡 Tipos de Varredura no Nmap
+### 📡 Tipos de Varredura no Nmap
 
 O Nmap oferece diferentes técnicas de scan:
 
@@ -65,7 +65,7 @@ O Nmap oferece diferentes técnicas de scan:
 
 ---
 
-### 5. ⌨️ Sintaxe básica do Nmap
+### ⌨️ Sintaxe básica do Nmap
 
 ```bash
 nmap <tipo de scan> <opções> <alvo>
@@ -79,7 +79,7 @@ nmap --help
 
 ---
 
-### 6. ⚡ Técnica de Scan: TCP SYN (-sS)
+### ⚡ Técnica de Scan: TCP SYN (-sS)
 
 #### 🧩 O que é
 
@@ -104,7 +104,7 @@ nmap --help
 
 ---
 
-### 7. 🧪 Exemplo prático
+### 🧪 Exemplo prático
 
 #### Teste sem serviços ativos
 
@@ -134,7 +134,7 @@ Resultado:
 
 ---
 
-### 8. 📍 Host Discovery (Descoberta de Hosts)
+### 📍 Host Discovery (Descoberta de Hosts)
 
 Antes de escanear portas, é necessário verificar se o host está ativo.
 
@@ -170,7 +170,7 @@ Flag:
 
 ---
 
-### 9. 💾 Salvando resultados
+### 💾 Salvando resultados
 
 Comando:
 
@@ -194,7 +194,7 @@ Arquivos gerados:
 
 ---
 
-### 10. ⚖️ ICMP vs ARP
+### ⚖️ ICMP vs ARP
 
 | Protocolo     | Uso                              |
 | ------------- | -------------------------------- |
@@ -209,7 +209,7 @@ Desabilitar ARP:
 
 ---
 
-### 11. 👁️ Verificando o tráfego de rede
+### 👁️ Verificando o tráfego de rede
 
 Para confirmar o protocolo usado:
 
@@ -225,7 +225,7 @@ Para confirmar o protocolo usado:
 
 ---
 
-### 12. 📋 Varredura usando lista de IPs
+### 📋 Varredura usando lista de IPs
 
 Criar arquivo:
 
@@ -241,7 +241,7 @@ sudo nmap -sn -oA meu_arquivo -iL host.lst
 
 ---
 
-### 13. 🌐 Analisando vários IPs
+### 🌐 Analisando vários IPs
 
 #### Listando IPs manualmente
 
@@ -257,7 +257,7 @@ sudo nmap -sn -oA meu_arquivo 10.129.2.18-20
 
 ---
 
-### 14. 🎯 Analisando um único host
+### 🎯 Analisando um único host
 
 ```bash
 sudo nmap 10.129.2.18 -sn -oA host
@@ -273,10 +273,177 @@ O Nmap:
 
 ---
 
-### 15. 💡 Dica importante
+### 💡 Dica importante
 
 - Sempre **salve os resultados das varreduras**.
 - Isso permite:
   - 📊 Comparações futuras.
   - 📝 Documentação.
   - 🔗 Integração com outras ferramentas.
+
+  ## 🚪 Estados de Portas e Varredura com Nmap
+
+---
+
+### 📊 Estados de uma porta
+
+Durante um scan, o **Nmap** classifica o estado das portas de acordo com a resposta recebida.
+
+| Estado                 | Significado                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| 🟢 **OPEN**            | A conexão foi estabelecida (TCP ou UDP).                                                     |
+| 🔴 **CLOSED**          | A porta está fechada. Recebemos pacote **RST**.                                              |
+| 🟡 **FILTERED**        | O Nmap não recebeu resposta. Pode haver firewall.                                            |
+| 🔵 **UNFILTERED**      | Porta acessível, mas não é possível saber se está aberta ou fechada. Ocorre no scan **-sA**. |
+| 🟠 **OPEN/FILTERED**   | Não é possível saber se a porta está aberta ou filtrada.                                     |
+| ⚫ **CLOSED/FILTERED** | Não é possível saber se está fechada ou filtrada. Ocorre em IP ocioso.                       |
+
+---
+
+### 🔍 Descobrindo portas TCP abertas
+
+#### 🔹 Comportamento padrão
+
+- O Nmap varre as **1000 portas TCP mais comuns**.
+- Tipo padrão:
+  - 👑 **Root:** `-sS` (TCP SYN scan)
+  - 👤 **Usuário comum:** `-sT` (TCP connect scan)
+
+#### Diferença entre os scans
+
+| Tipo  | Descrição                      | Discrição          |
+| ----- | ------------------------------ | ------------------ |
+| `-sS` | Não completa o 3-way handshake | 🕵️ Mais discreto   |
+| `-sT` | Conexão TCP completa           | 🚨 Mais detectável |
+
+---
+
+### 🎯 Definindo quais portas escanear
+
+#### 🔹 Portas específicas
+
+```bash
+-p 22,25,80,139,445
+```
+
+#### 🔹 Intervalo de portas
+
+```bash
+-p 22-445
+```
+
+#### 🔹 Portas mais frequentes
+
+```bash
+--top-ports 10
+```
+
+- Escaneia as **10 portas mais comuns**.
+- Pode usar qualquer número.
+
+#### 🔹 Todas as portas
+
+```bash
+-p-
+```
+
+#### 🔹 Varredura rápida
+
+```bash
+-F
+```
+
+- Escaneia as **100 portas mais frequentes**.
+
+---
+
+### ⚙️ Outras flags importantes
+
+| Flag       | Função                                |
+| ---------- | ------------------------------------- |
+| `-n`       | Desativa resolução DNS                |
+| `-Pn`      | Desativa ICMP (ignora host discovery) |
+| `--reason` | Mostra o motivo do estado da porta    |
+| `-sV`      | Detecta versão dos serviços           |
+| `-sC`      | Executa scripts padrão do Nmap        |
+
+---
+
+### 🔥 Identificando bloqueios por firewall
+
+Alguns indícios de firewall:
+
+- ⏱️ **Tempo de scan muito rápido**
+  - Exemplo: `0.05s`
+  - Pode indicar bloqueio de pacotes.
+
+- 📡 **Port unreachable**
+  - Host ativo.
+  - Recebe ICMP tipo 3.
+  - Indica porta inacessível.
+
+---
+
+### 📡 Descobrindo portas UDP
+
+#### Características do UDP
+
+- Não usa **3-way handshake**.
+- Processo mais lento.
+- Timeout maior.
+
+#### Comando
+
+```bash
+-sU
+```
+
+#### Comparação
+
+| Scan        | Velocidade     |
+| ----------- | -------------- |
+| `-sS` (TCP) | ⚡ Mais rápido |
+| `-sU` (UDP) | 🐢 Mais lento  |
+
+#### Comportamento comum
+
+- Muitas vezes **não há resposta**.
+- Nmap não consegue determinar o estado.
+
+| Resposta         | Estado        |
+| ---------------- | ------------- |
+| Sem resposta     | Open/Filtered |
+| ICMP unreachable | Closed        |
+
+---
+
+### 💾 Salvando resultados do scan
+
+#### Três formatos principais
+
+| Opção | Arquivo  | Uso                        |
+| ----- | -------- | -------------------------- |
+| `-oN` | `.nmap`  | Saída normal               |
+| `-oG` | `.gnmap` | Saída pesquisável          |
+| `-oX` | `.xml`   | Integração com ferramentas |
+
+#### Salvar nos três formatos
+
+```bash
+-oA nome_do_arquivo
+```
+
+---
+
+### 📄 Convertendo XML para HTML
+
+Para gerar relatórios visuais:
+
+```bash
+xsltproc arquivo.xml -o arquivo.html
+```
+
+- Converte o XML em **relatório HTML**.
+- Fica organizado e fácil de ler.
+
+---
