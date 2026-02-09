@@ -447,3 +447,290 @@ xsltproc arquivo.xml -o arquivo.html
 - Fica organizado e fácil de ler.
 
 ---
+
+## 🔎 Enumeração de Serviços com Nmap
+
+---
+
+### 🎯 Objetivo da enumeração de serviços
+
+Identificar **qual aplicação** está rodando em uma porta e **qual a versão** dela.
+
+Isso ajuda a:
+
+* 🧨 Encontrar **exploits específicos**.
+* 🔍 Buscar **vulnerabilidades conhecidas**.
+* 📂 Analisar código-fonte, quando disponível.
+
+---
+
+### ⚡ Detecção de serviços
+
+O ideal é seguir uma estratégia em duas etapas:
+
+#### 🔹 1º Passo: Varredura rápida
+
+* Identificar as portas abertas.
+* Ter uma visão geral do alvo.
+
+#### 🔹 2º Passo: Varredura completa
+
+* Escanear **todas as portas** com `-p-`.
+* Pode demorar bastante.
+
+---
+
+### 🛠️ Comando para varredura completa com detecção de serviços
+
+```bash
+nmap 10.129.2.28 -p- -sV --stats-every=5s
+```
+
+| Opção              | Função                            |
+| ------------------ | --------------------------------- |
+| `-p-`              | Escaneia todas as portas          |
+| `-sV`              | Detecta serviços e versões        |
+| `--stats-every=5s` | Mostra o status a cada 5 segundos |
+
+#### 🔊 Aumentando a verbosidade
+
+```bash
+-v   ou   -vv
+```
+
+* Mostra mais detalhes durante o scan.
+
+---
+
+### 🔌 Utilizando o Netcat para verificação manual
+
+Às vezes o Nmap não reconhece um serviço.
+
+Nesse caso:
+
+* É necessário verificar manualmente com o **Netcat**.
+
+```bash
+nc -nv {endereço} {porta}
+```
+
+| Flag | Função                       |
+| ---- | ---------------------------- |
+| `-n` | Desativa resolução DNS       |
+| `-v` | Modo verboso (mais detalhes) |
+
+---
+
+### 📜 Scripts no Nmap (NSE – Nmap Scripting Engine)
+
+Permite usar scripts em **Lua** para interagir com serviços.
+
+#### 🗂️ Principais categorias
+
+| Categoria       | Função                            |
+| --------------- | --------------------------------- |
+| AUTH            | Autenticação                      |
+| BROADCAST       | Descoberta por broadcast          |
+| BRUTE           | Ataques de força bruta            |
+| DEFAULT (`-sC`) | Scripts padrão                    |
+| DISCOVERY       | Descoberta de serviços            |
+| DOS             | Testes de negação de serviço      |
+| EXPLOIT         | Exploração de vulnerabilidades    |
+| VULN            | Busca vulnerabilidades conhecidas |
+
+#### Comandos básicos
+
+Script padrão:
+
+```bash
+nmap <alvo> -sC
+```
+
+Script por categoria:
+
+```bash
+nmap <alvo> --script <categoria>
+```
+
+---
+
+### 🔥 Varredura agressiva
+
+```bash
+nmap -A <alvo>
+```
+
+Essa opção descobre:
+
+* 🖥️ Tipo de servidor
+* 🌐 Aplicação web
+* 🧾 Título da página
+* 💻 Sistema operacional
+
+---
+
+### 🧨 Script de vulnerabilidades
+
+```bash
+nmap 10.129.2.28 -p 80 -sV --script vuln
+```
+
+* Consulta banco de dados de vulnerabilidades.
+* Verifica falhas conhecidas no serviço.
+
+---
+
+### 📁 Enumeração web com HTTP-ENUM
+
+Descobre:
+
+* Diretórios
+* Arquivos
+* Aplicações
+
+```bash
+nmap -p 80,443 --script http-enum <alvo>
+```
+
+---
+
+### 📥 Baixando arquivos com CURL
+
+Ferramenta para transferir dados de servidores.
+
+```bash
+curl <alvo>/arquivo.txt -o arquivoLocal.txt
+```
+
+* Faz requisição **HTTP GET**.
+* Salva o arquivo localmente.
+
+---
+
+### 🧪 Requisição HTTP manual com Netcat
+
+```bash
+echo -e "GET / HTTP/1.1\r\nHost: exemplo.com\r\nConnection: close\r\n\r\n" | nc exemplo.com 80
+```
+
+* Envia requisição HTTP manual.
+* Retorna resposta do servidor.
+
+---
+
+### ⚙️ Ajustando o desempenho da varredura
+
+| Opção               | Função                               |
+| ------------------- | ------------------------------------ |
+| `-T <0-5>`          | Velocidade da varredura              |
+| `--min-parallelism` | Número mínimo de processos paralelos |
+| `--max-rtt-timeout` | Tempo máximo de resposta             |
+| `--min-rate`        | Pacotes enviados por segundo         |
+| `--max-retries`     | Número máximo de tentativas          |
+
+---
+
+### ⏱️ Timeout
+
+* Padrão: **100 ms**.
+* Diminuir:
+
+  * ⚡ Varredura mais rápida.
+  * ❗ Pode causar falsos negativos.
+
+---
+
+### 🔁 Número máximo de tentativas
+
+* Padrão: **10 tentativas**.
+* Se usar `0`:
+
+  * Não haverá reteste.
+  * Pode gerar falsos negativos.
+
+---
+
+### 🚀 Velocidade da varredura
+
+```bash
+-T 0 até -T 5
+```
+
+| Valor | Característica           |
+| ----- | ------------------------ |
+| 0     | Muito lento e furtivo    |
+| 3     | Padrão                   |
+| 5     | Muito rápido e agressivo |
+
+⚠️ Varreduras agressivas podem ser bloqueadas.
+
+---
+
+### 🛡️ Evasão de firewall e IDS/IPS
+
+Sistemas de segurança detectam padrões de varredura e podem bloquear conexões.
+
+#### Comparação de scans
+
+| Scan            | Característica                                             |
+| --------------- | ---------------------------------------------------------- |
+| `-sA` (ACK)     | Mais difícil de filtrar, mas não identifica portas abertas |
+| `-sS` (SYN)     | Pode ser bloqueado por firewall                            |
+| `-sT` (Connect) | Mais detectável                                            |
+
+---
+
+### 🎭 Iscas (Decoy scanning)
+
+Oculta o IP real do atacante.
+
+```bash
+-D RND:5
+```
+
+* Gera **5 IPs falsos** no pacote.
+
+---
+
+### 🧾 Spoofing de IP de origem
+
+```bash
+nmap 10.129.2.28 -n -Pn -p 445 -O -S 10.129.2.200 -e tun0
+```
+
+| Opção | Função                          |
+| ----- | ------------------------------- |
+| `-S`  | Define IP de origem manualmente |
+| `-e`  | Interface de rede usada         |
+
+---
+
+### 🌐 Proxy DNS
+
+Define manualmente o servidor DNS:
+
+```bash
+--dns-server <ns1>,<ns2>
+```
+
+Útil em:
+
+* 🔐 Redes corporativas.
+* 🏢 DMZ (zona desmilitarizada).
+
+---
+
+### 🔓 Porta de origem confiável
+
+O DNS usa a porta **53 TCP/UDP**.
+
+Podemos usar essa porta como origem:
+
+```bash
+--source-port 53
+```
+
+* O firewall pode considerar o tráfego confiável.
+* Aumenta a chance de passar pelos filtros.
+
+
