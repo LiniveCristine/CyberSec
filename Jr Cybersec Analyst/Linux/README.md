@@ -838,3 +838,323 @@ Configuração:
 - **SSH** → protege apenas a conexão entre cliente e servidor.
 
 ---
+
+# 🌍 Servidor Apache
+
+## 🧩 Módulos do Apache
+
+O **Apache** funciona de forma modular 🧱.
+Isso significa que podemos ativar apenas os recursos que precisamos, tornando o servidor mais leve e personalizado.
+
+Cada módulo tem uma função específica.
+
+### 🔐 MOD_SSL
+
+- Permite comunicação segura via **HTTPS**.
+- Criptografa os dados entre navegador e servidor.
+- Essencial para sites que lidam com login, pagamentos e dados sensíveis.
+
+---
+
+### 🔀 MOD_PROXY
+
+- Atua como intermediário.
+- Controla e redireciona requisições.
+- Muito usado em servidores proxy e balanceadores de carga.
+
+---
+
+### 🧠 MOD_HEADERS e MOD_REWRITE
+
+Permitem maior controle sobre o tráfego HTTP.
+
+- **MOD_HEADERS** → Manipula cabeçalhos HTTP.
+- **MOD_REWRITE** → Reescreve URLs (muito usado para rotas amigáveis).
+
+Exemplo prático:
+
+- Transformar `/produto.php?id=10`
+- Em `/produto/10`
+
+---
+
+## 💻 Suporte a sites dinâmicos
+
+O Apache suporta linguagens como:
+
+- PHP 🐘
+- JavaScript ⚡
+- Python 🐍
+
+Isso permite criar **sites dinâmicos**, que interagem com banco de dados e usuários.
+
+---
+
+## ⚙️ Instalando e iniciando o Apache
+
+### 📦 Instalar
+
+```bash id="6rj4qt"
+sudo apt install apache2
+```
+
+### ▶️ Iniciar servidor
+
+```bash id="e0y7zn"
+service apache2 start
+```
+
+Por padrão, usa a **porta 80 (HTTP)**.
+
+Arquivo para alterar portas:
+
+```bash id="1kq3mv"
+/etc/apache2/ports.conf
+```
+
+---
+
+# 🌐 CURL e WGET
+
+São ferramentas de linha de comando para fazer requisições web.
+
+Suportam:
+
+- HTTP
+- HTTPS
+- FTP
+
+Permitem:
+
+- Testar conectividade
+- Ver cabeçalhos HTTP
+- Baixar arquivos
+- Baixar código-fonte
+- Fazer requisições GET, POST, PUT, DELETE
+
+---
+
+## 🔎 Muito usado em Reconhecimento (Recon)
+
+Durante a fase de **content discovery**, podemos:
+
+- Buscar endpoints
+- Descobrir APIs
+- Encontrar diretórios ocultos
+- Extrair URLs e subdomínios
+
+### 🕷️ Crawling
+
+- Baixar página
+- Extrair links
+- Visitar links
+- Repetir o processo
+
+Spidering = crawling automatizado.
+
+---
+
+## 🛠️ Principais flags do curl
+
+```bash id="0x4tkl"
+curl -i http://site.com
+```
+
+- `-i` → mostra cabeçalhos HTTP.
+
+```bash id="c7m92q"
+curl -v http://site.com
+```
+
+- `-v` → modo detalhado (debug).
+
+```bash id="x1q8ja"
+curl -X POST http://site.com
+```
+
+- `-X` → define método HTTP.
+
+```bash id="p3mw7b"
+curl -d "usuario=admin" http://site.com
+```
+
+- `-d` → envia dados (POST).
+
+---
+
+# 🌐 Configuração de Rede
+
+## 📡 IFCONFIG
+
+Mostra interfaces de rede:
+
+```bash id="c8b9rz"
+ifconfig
+```
+
+Hoje está sendo substituído por:
+
+```bash id="f1v6kx"
+ip addr
+```
+
+---
+
+## 🔛 Ativar ou desativar interface
+
+Ativar:
+
+```bash id="n7l2xy"
+sudo ifconfig eth0 up
+```
+
+ou
+
+```bash id="v8r3qt"
+sudo ip link set eth0 up
+```
+
+Desativar:
+
+```bash id="k2z5mu"
+sudo ip link set eth0 down
+```
+
+Verificar status:
+
+```bash id="s9t4ra"
+ip a
+```
+
+---
+
+## 🧾 Atribuir IP manualmente
+
+```bash id="m1q8uz"
+sudo ifconfig eth0 192.168.1.2
+```
+
+Máscara:
+
+```bash id="h3w9pl"
+sudo ifconfig eth0 netmask 255.255.255.0
+```
+
+Gateway:
+
+```bash id="r7c2fn"
+sudo route add default gw 192.168.1.1 eth0
+```
+
+Ver rotas:
+
+```bash id="y8k4vd"
+ip route
+```
+
+---
+
+## 🌍 Configuração de DNS
+
+Arquivo:
+
+```bash id="u5b7nm"
+/etc/resolv.conf
+```
+
+⚠️ Alterações aqui normalmente **não são permanentes**.
+
+---
+
+## 📝 Configuração permanente
+
+Editar:
+
+```bash id="d4t6zs"
+sudo nano /etc/network/interfaces
+```
+
+Exemplo:
+
+```text
+auto eth0
+iface eth0 inet static
+address 192.168.1.2
+netmask 255.255.255.0
+gateway 192.168.1.1
+dns-nameservers 8.8.8.8 8.8.4.4
+```
+
+Explicação:
+
+- `auto` → ativa no boot.
+- `inet` → IPv4.
+- `static` → IP fixo.
+- `dhcp` → IP automático.
+- DNS → servidores públicos do Google.
+
+Após alterar:
+
+```bash id="w2p8rs"
+sudo systemctl restart network
+```
+
+---
+
+# 📊 Monitoramento da Rede
+
+Envolve:
+
+- Captura 📥
+- Análise 🔎
+- Interpretação 🧠
+
+---
+
+## 🛠️ Ferramentas importantes
+
+- ping
+- traceroute
+- netstat
+- tcpdump
+- wireshark
+- nmap
+
+---
+
+## 📡 PING
+
+Testa conectividade.
+
+```bash id="x7q1lt"
+ping google.com
+```
+
+Define quantidade:
+
+```bash id="c3r8pv"
+ping -c 4 google.com
+```
+
+Ele envia pacotes ICMP e mede o tempo de resposta.
+
+---
+
+## 🔌 NETSTAT
+
+Mostra conexões e portas abertas:
+
+```bash id="p6t2zn"
+netstat -tulnp4
+```
+
+Significado das flags:
+
+- `-t` → TCP
+- `-u` → UDP
+- `-l` → portas escutando
+- `-n` → IP numérico
+- `-p` → programa responsável
+- `4` → IPv4
+
+---
