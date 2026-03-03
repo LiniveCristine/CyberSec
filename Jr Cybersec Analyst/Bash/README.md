@@ -1,40 +1,40 @@
-# 🐚 Bash Script – Conceitos Fundamentais
+# 🐚 Bash Script – Guia Completo para README
 
-## 📌 O que é?
-
-**Bash** é uma **linguagem de script**, ou seja:
-
-- ✅ **Não precisa ser compilada**
-- ✅ É interpretada diretamente pelo sistema
-- ✅ Muito utilizada em sistemas Linux para automação
-
-### 💻 WSL (Windows Subsystem for Linux)
-
-O **WSL** permite rodar **Linux dentro do Windows**, possibilitando executar comandos Bash mesmo usando Windows.
+Material organizado para usar como **README no GitHub**, com explicações claras e progressivas 🚀
 
 ---
 
-## 🧱 Estrutura da Linguagem
+# 📌 O que é Bash?
 
-Bash é semelhante a outras linguagens de programação e possui:
+Bash é uma **linguagem de script**, ou seja:
 
-- 📥 Entrada e saída (input/output)
-- 📦 Argumentos
-- 🧠 Variáveis e arrays
-- 🔀 Condicionais
-- 🔁 Loops
-- ⚖️ Operadores lógicos
-- 🛠️ Funções
+* ✅ Não precisa ser compilada
+* ✅ É interpretada diretamente pelo sistema
+* ✅ Muito usada em Linux para automação
 
-Ou seja, é totalmente capaz de criar scripts automatizados e inteligentes.
+## 💻 WSL (Windows Subsystem for Linux)
+
+Permite rodar **Linux dentro do Windows**, possibilitando usar Bash mesmo no Windows.
+
+---
+
+# 🧱 Estrutura do Bash
+
+Bash possui elementos semelhantes a outras linguagens:
+
+* 📥 Input e Output
+* 📦 Argumentos
+* 🧠 Variáveis e Arrays
+* 🔀 Condicionais
+* 🔁 Loops
+* ⚖️ Operadores Lógicos
+* 🛠️ Funções
 
 ---
 
 # ▶️ Executando um Script
 
-Antes de executar um script, precisamos definir **qual interpretador irá processá-lo**.
-
-### Formas de executar:
+Para executar um script, precisamos definir o **interpretador**.
 
 ```bash
 bash script.sh
@@ -42,23 +42,59 @@ sh script.sh
 ./script.sh
 ```
 
-### 🔎 Diferenças:
+### 🔎 Diferenças
 
-- `bash script.sh` → Executa usando o interpretador Bash
-- `sh script.sh` → Executa usando o shell padrão (geralmente aponta para Bash)
-- `./script.sh` → Executa o script que está na pasta atual
+* `bash script.sh` → Executa usando Bash
+* `sh script.sh` → Executa com shell padrão
+* `./script.sh` → Executa script na pasta atual
 
-⚠️ Para usar `./script.sh`, o arquivo precisa ter permissão de execução:
+⚠️ Para usar `./`, o arquivo precisa ter **permissão de execução**.
+
+---
+
+# 🔐 Permissão de Execução
+
+Se aparecer:
 
 ```bash
-chmod +x script.sh
+Permission denied
+```
+
+Significa que o arquivo **não tem privilégio de execução**.
+
+Você pode rodar assim:
+
+```bash
+bash ./cidr.sh
+```
+
+Ou adicionar permissão:
+
+```bash
+chmod +x cidr.sh
+```
+
+Ver permissões:
+
+```bash
+ls -l cidr.sh
+```
+
+### 📌 Significado das permissões
+
+* `r` → read (leitura)
+* `w` → write (escrita)
+* `x` → execute (execução)
+
+Ordem dos usuários:
+
+```
+dono | grupo | outros
 ```
 
 ---
 
 # 🏗️ Estrutura de um Script
-
-Exemplo básico:
 
 ```bash
 #!/bin/bash
@@ -83,56 +119,35 @@ fi
 #!/bin/bash
 ```
 
-### 📌 O que é?
+* Sempre começa com `#!`
+* Define qual interpretador executará o script
 
-- Sempre começa com `#!`
-- Indica **qual interpretador executará o script**
-
-Exemplos:
+Exemplo:
 
 ```bash
-#!/bin/bash
 #!/usr/bin/env python
 ```
-
-✔️ No primeiro caso, usamos o Bash
-✔️ No segundo, o Python será o interpretador
 
 ---
 
 # 💬 Comentários
 
-Em Bash, usamos:
-
 ```bash
-# Comentário aqui
+# Isso é um comentário
 ```
-
-Comentários ajudam na organização e documentação do código.
 
 ---
 
 # 🎯 Analisando Argumentos do Usuário
 
-### Verificando se argumentos foram passados:
-
 ```bash
 if [ $# -eq 0 ]
 ```
 
-### 📌 Importante:
+### 📌 Explicação
 
-⚠️ **Sempre colocar espaço depois do colchete**
-
-```bash
-if [ $# -eq 0 ]   # ✅ Correto
-if [$# -eq 0]     # ❌ Errado
-```
-
-### 🔎 O que significa?
-
-- `$#` → Quantidade de argumentos passados
-- `-eq` → Igual (==)
+* `$#` → Quantidade de argumentos
+* `-eq` → Igual
 
 Exemplos:
 
@@ -141,118 +156,11 @@ Exemplos:
 ./CIDR.sh              # $# = 0
 ```
 
-Se for igual a 0, o script exibe erro e encerra.
-
----
-
-# 🚨 Exibindo Mensagens de Erro
+⚠️ Sempre colocar espaço:
 
 ```bash
-echo -e "You need to specify the target domain.\n"
-```
-
-### 📌 O que faz o `-e`?
-
-Permite usar caracteres especiais:
-
-- `\n` → Nova linha
-- `\t` → Tabulação
-
-Exemplo:
-
-```bash
-echo -e "\t$0 <domain>"
-```
-
----
-
-# 🔢 Ordem dos Argumentos
-
-| Variável | Significado              |
-| -------- | ------------------------ |
-| `$0`     | Nome do script           |
-| `$1`     | Primeiro argumento       |
-| `$2`     | Segundo argumento        |
-| `$#`     | Quantidade de argumentos |
-
-Exemplo:
-
-```bash
-domain=$1
-```
-
-Aqui estamos dizendo:
-
-👉 A variável `domain` recebe o **primeiro argumento passado pelo usuário**.
-
----
-
-# 🔀 Condicionais
-
-### Estrutura básica:
-
-```bash
-if ... then
-...
-else
-...
-fi
-```
-
-### Com múltiplas condições:
-
-```bash
-if ... then
-...
-elif ... then
-...
-else
-...
-fi
-```
-
-⚠️ Sempre lembrar do espaço:
-
-```bash
-if [ $var -ne 35 ]   # ✅ Correto
-```
-
----
-
-# 🐚 Bash Script – Argumentos, Operadores e Estruturas
-
-Guia organizado para usar como **README no GitHub**, com foco prático e didático 🚀
-
----
-
-# 🎯 Analisando Argumentos do Usuário
-
-```bash
-if [ $# -eq 0 ]
-then
-    echo "Nenhum argumento foi passado"
-fi
-```
-
-## 🔎 Entendendo cada parte
-
-* `$#` → Quantidade de argumentos passados ao script
-* `-eq` → Igual (==)
-
-### 📌 Exemplos
-
-```bash
-./CIDR.sh google.com   # $# = 1
-./CIDR.sh              # $# = 0
-```
-
-Se for igual a 0 → significa que o usuário não passou argumentos.
-
-⚠️ **Sempre colocar espaço depois do colchete**
-
-```bash
-if [ $# -eq 0 ]   # ✅ Correto
-if [$# -eq 0]     # ❌ Errado
+if [ $# -eq 0 ]   # ✅
+if [$# -eq 0]     # ❌
 ```
 
 ---
@@ -263,35 +171,31 @@ if [$# -eq 0]     # ❌ Errado
 echo -e "You need to specify the target domain.\n"
 ```
 
-## 📌 O que faz o `-e`?
-
-Permite caracteres especiais:
+`-e` permite usar:
 
 * `\n` → Nova linha
 * `\t` → Tab
-
-Exemplo:
 
 ```bash
 echo -e "\t$0 <domain>"
 ```
 
-### 🔎 Variáveis importantes
+---
 
-| Variável | Significado              |
+# 🔢 Ordem dos Argumentos
+
+| Variável | Função                   |
 | -------- | ------------------------ |
 | `$0`     | Nome do script           |
 | `$1`     | Primeiro argumento       |
 | `$2`     | Segundo argumento        |
 | `$#`     | Quantidade de argumentos |
 
-Exemplo:
-
 ```bash
 domain=$1
 ```
 
-⚠️ Não pode ter espaço:
+⚠️ Não usar espaço:
 
 ```bash
 domain=$1   # ✅
@@ -301,8 +205,6 @@ domain = $1 # ❌
 ---
 
 # 🔀 Condicionais
-
-## Estruturas possíveis
 
 ```bash
 if ... then
@@ -322,54 +224,30 @@ else
 fi
 ```
 
-⚠️ Sempre com espaço:
-
-```bash
-if [ $var -ne 35 ]
-```
-
 ---
 
 # ⚖️ Operadores de Comparação
 
-Temos **4 categorias principais**:
-
-* 📝 String
-* 🔢 Inteiro
-* 📁 Arquivo
-* 🧠 Booleano
-
----
-
 ## 📝 STRING
 
-| Operador | Significado              |
-| -------- | ------------------------ |
-| `==`     | Igual                    |
-| `!=`     | Diferente                |
-| `>`      | Maior (ordem alfabética) |
-| `<`      | Menor                    |
-| `-z`     | String vazia             |
-| `-n`     | String NÃO vazia         |
-
-### 📌 Exemplo
+| Operador | Significado      |
+| -------- | ---------------- |
+| `==`     | Igual            |
+| `!=`     | Diferente        |
+| `-z`     | String vazia     |
+| `-n`     | String não vazia |
 
 ```bash
 if [ "$1" != "HackTheBox" ]
 ```
 
-Sempre usar aspas para evitar erros.
-
-### ⚠️ Comparação com > ou <
-
-Deve usar **duplo colchete**:
+### ⚠️ Para usar > ou <
 
 ```bash
 [[ "zebra" < "amaciante" ]]
 ```
 
-✔️ Retorna falso
-Porque "z" vem depois de "a" na ordem alfabética.
+Comparação alfabética.
 
 ---
 
@@ -379,69 +257,48 @@ Porque "z" vem depois de "a" na ordem alfabética.
 | -------- | -------------- |
 | `-eq`    | Igual          |
 | `-ne`    | Diferente      |
-| `-gt`    | Maior que      |
-| `-lt`    | Menor que      |
+| `-gt`    | Maior          |
+| `-lt`    | Menor          |
 | `-ge`    | Maior ou igual |
 | `-le`    | Menor ou igual |
-
-### 📌 Exemplo
 
 ```bash
 if [[ ${#texto} -gt 1000 ]]
 ```
 
-`${#texto}` → quantidade de caracteres da variável.
-
 ---
 
 ## 📁 OPERADORES DE ARQUIVO
 
-Usados para verificar existência e permissões:
-
-| Operador | Verifica                              |
-| -------- | ------------------------------------- |
-| `-e`     | Se existe                             |
-| `-f`     | Se é arquivo                          |
-| `-d`     | Se é diretório                        |
-| `-L`     | Se é link simbólico                   |
-| `-s`     | Se tem tamanho > 0                    |
-| `-r`     | Permissão de leitura                  |
-| `-w`     | Permissão de escrita                  |
-| `-x`     | Permissão de execução                 |
-| `-O`     | Se usuário é proprietário             |
-| `-G`     | Mesmo grupo do usuário                |
-| `-N`     | Se foi modificado após última leitura |
-
-### 📌 Exemplo
+| Operador | Verifica            |
+| -------- | ------------------- |
+| `-e`     | Se existe           |
+| `-f`     | Se é arquivo        |
+| `-d`     | Se é diretório      |
+| `-L`     | Se é link simbólico |
+| `-s`     | Tamanho > 0         |
+| `-r`     | Permissão leitura   |
+| `-w`     | Permissão escrita   |
+| `-x`     | Permissão execução  |
 
 ```bash
 if [[ -e "$1" ]]
-```
-
-Se o arquivo existir → executa o bloco.
-
-```bash
-arquivo="text.txt"
-
-if [[ -f "$arquivo" ]]
 ```
 
 ---
 
 # 🧠 Operadores Lógicos
 
-| Operador | Significado |   |    |
-| -------- | ----------- | - | -- |
-| `!`      | Negação     |   |    |
-| `&&`     | E           |   |    |
-| `        |             | ` | OU |
-
-### 📌 Exemplo
+| Operador | Função  |   |    |
+| -------- | ------- | - | -- |
+| `!`      | Negação |   |    |
+| `&&`     | E       |   |    |
+| `        |         | ` | OU |
 
 ```bash
 if [[ ! -e "$1" || ! -r "$1" ]]
 then
-    echo "Arquivo não existe ou sem permissão de leitura"
+    echo "Arquivo não existe ou sem permissão"
 fi
 ```
 
@@ -449,66 +306,52 @@ fi
 
 # ➕ Operadores Aritméticos
 
-| Operador | Função        |
-| -------- | ------------- |
-| `+`      | Soma          |
-| `-`      | Subtração     |
-| `*`      | Multiplicação |
-| `/`      | Divisão       |
-| `%`      | Resto         |
-| `++`     | Incremento    |
-| `--`     | Decremento    |
-
-### 📌 Exemplo
-
 ```bash
 soma=$((10 + 10))
+```
+
+Operadores:
+
+```
++  -  *  /  %  ++  --
 ```
 
 ---
 
 # 📦 Argumentos, Variáveis e Arrays
 
----
-
-## 🎯 ARGUMENTOS
-
-Podemos usar até 9 argumentos diretos:
+## 🎯 Argumentos
 
 ```bash
-$0 -> nome do script
-$1 -> primeiro argumento
-...
-$9 -> nono argumento
+$0 -> nome script
+$1 ... $9 -> argumentos
 ```
 
 ---
 
-## 🧠 VARIÁVEIS ESPECIAIS
+## 🧠 Variáveis Especiais
 
-| Variável | Função                          |
-| -------- | ------------------------------- |
-| `$#`     | Número de argumentos            |
-| `$@`     | Lista de todos argumentos       |
-| `$$`     | ID do processo                  |
-| `$?`     | Código de retorno (0 = sucesso) |
+| Variável | Função               |
+| -------- | -------------------- |
+| `$#`     | Número de argumentos |
+| `$@`     | Lista de argumentos  |
+| `$$`     | ID do processo       |
+| `$?`     | Código de retorno    |
 
 ---
 
-## 📌 VARIÁVEIS
-
-Declaração:
+## 📌 Variáveis
 
 ```bash
 domain=$1
 echo $domain
 ```
 
-⚠️ Sem espaço entre nome e valor.
+Sem espaço entre nome e valor.
 
 ---
 
-## 🗂️ ARRAY
+## 🗂️ Arrays
 
 ```bash
 domains=(google.com globo.com yahoo.com)
@@ -520,9 +363,7 @@ Acessando:
 echo ${domains[0]}
 ```
 
-### 📌 Observações
-
-* Elementos separados por **espaço**
+* Valores separados por espaço
 * Usa `()` para definir
 * Usa `${}` para expandir
 
@@ -530,32 +371,23 @@ echo ${domains[0]}
 
 # ⌨️ Input e Output
 
----
-
 ## 📥 INPUT
 
 ```bash
 read -p "Digite seu nome: " nome
 ```
 
-* `-p` → Mantém texto e input na mesma linha
-* `nome` → Variável que armazenará o valor digitado
-
 ---
 
 ## 📤 OUTPUT
 
-### Salvar saída em arquivo
+### Mostrar e salvar ao mesmo tempo:
 
 ```bash
 tree | tee resultado.txt
 ```
 
-`tee` → Mostra na tela e salva no arquivo.
-
----
-
-### 📌 Exemplo real
+### Exemplo prático:
 
 ```bash
 netrange=$(whois $ip | grep "NetRange\|CIDR" | tee -a CIDR.txt)
@@ -563,10 +395,8 @@ netrange=$(whois $ip | grep "NetRange\|CIDR" | tee -a CIDR.txt)
 
 ### 🔎 Explicação
 
-* `whois $ip` → Consulta informações do IP
-* `grep "NetRange\|CIDR"` → Filtra dados relevantes
-* `tee -a CIDR.txt` → Salva no arquivo
-* `-a` → Append (não sobrescreve, apenas adiciona)
+* `whois $ip` → Consulta informações
+* `grep` → Filtra
+* `tee -a` → Adiciona ao arquivo sem sobrescrever
 
 ---
-
