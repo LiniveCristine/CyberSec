@@ -219,15 +219,354 @@ if [ $var -ne 35 ]   # ✅ Correto
 
 ---
 
-# ⚖️ Operadores de Comparação
+# 🐚 Bash Script – Argumentos, Operadores e Estruturas
 
-| Operador | Significado         |
-| -------- | ------------------- |
-| `-eq`    | Igual (==)          |
-| `-ne`    | Diferente (!=)      |
-| `-gt`    | Maior que (>)       |
-| `-lt`    | Menor que (<)       |
-| `-ge`    | Maior ou igual (>=) |
-| `-le`    | Menor ou igual (<=) |
+Guia organizado para usar como **README no GitHub**, com foco prático e didático 🚀
 
 ---
+
+# 🎯 Analisando Argumentos do Usuário
+
+```bash
+if [ $# -eq 0 ]
+then
+    echo "Nenhum argumento foi passado"
+fi
+```
+
+## 🔎 Entendendo cada parte
+
+* `$#` → Quantidade de argumentos passados ao script
+* `-eq` → Igual (==)
+
+### 📌 Exemplos
+
+```bash
+./CIDR.sh google.com   # $# = 1
+./CIDR.sh              # $# = 0
+```
+
+Se for igual a 0 → significa que o usuário não passou argumentos.
+
+⚠️ **Sempre colocar espaço depois do colchete**
+
+```bash
+if [ $# -eq 0 ]   # ✅ Correto
+if [$# -eq 0]     # ❌ Errado
+```
+
+---
+
+# 🚨 Exibindo Erros
+
+```bash
+echo -e "You need to specify the target domain.\n"
+```
+
+## 📌 O que faz o `-e`?
+
+Permite caracteres especiais:
+
+* `\n` → Nova linha
+* `\t` → Tab
+
+Exemplo:
+
+```bash
+echo -e "\t$0 <domain>"
+```
+
+### 🔎 Variáveis importantes
+
+| Variável | Significado              |
+| -------- | ------------------------ |
+| `$0`     | Nome do script           |
+| `$1`     | Primeiro argumento       |
+| `$2`     | Segundo argumento        |
+| `$#`     | Quantidade de argumentos |
+
+Exemplo:
+
+```bash
+domain=$1
+```
+
+⚠️ Não pode ter espaço:
+
+```bash
+domain=$1   # ✅
+domain = $1 # ❌
+```
+
+---
+
+# 🔀 Condicionais
+
+## Estruturas possíveis
+
+```bash
+if ... then
+...
+else
+...
+fi
+```
+
+```bash
+if ... then
+...
+elif ... then
+...
+else
+...
+fi
+```
+
+⚠️ Sempre com espaço:
+
+```bash
+if [ $var -ne 35 ]
+```
+
+---
+
+# ⚖️ Operadores de Comparação
+
+Temos **4 categorias principais**:
+
+* 📝 String
+* 🔢 Inteiro
+* 📁 Arquivo
+* 🧠 Booleano
+
+---
+
+## 📝 STRING
+
+| Operador | Significado              |
+| -------- | ------------------------ |
+| `==`     | Igual                    |
+| `!=`     | Diferente                |
+| `>`      | Maior (ordem alfabética) |
+| `<`      | Menor                    |
+| `-z`     | String vazia             |
+| `-n`     | String NÃO vazia         |
+
+### 📌 Exemplo
+
+```bash
+if [ "$1" != "HackTheBox" ]
+```
+
+Sempre usar aspas para evitar erros.
+
+### ⚠️ Comparação com > ou <
+
+Deve usar **duplo colchete**:
+
+```bash
+[[ "zebra" < "amaciante" ]]
+```
+
+✔️ Retorna falso
+Porque "z" vem depois de "a" na ordem alfabética.
+
+---
+
+## 🔢 INTEIROS
+
+| Operador | Significado    |
+| -------- | -------------- |
+| `-eq`    | Igual          |
+| `-ne`    | Diferente      |
+| `-gt`    | Maior que      |
+| `-lt`    | Menor que      |
+| `-ge`    | Maior ou igual |
+| `-le`    | Menor ou igual |
+
+### 📌 Exemplo
+
+```bash
+if [[ ${#texto} -gt 1000 ]]
+```
+
+`${#texto}` → quantidade de caracteres da variável.
+
+---
+
+## 📁 OPERADORES DE ARQUIVO
+
+Usados para verificar existência e permissões:
+
+| Operador | Verifica                              |
+| -------- | ------------------------------------- |
+| `-e`     | Se existe                             |
+| `-f`     | Se é arquivo                          |
+| `-d`     | Se é diretório                        |
+| `-L`     | Se é link simbólico                   |
+| `-s`     | Se tem tamanho > 0                    |
+| `-r`     | Permissão de leitura                  |
+| `-w`     | Permissão de escrita                  |
+| `-x`     | Permissão de execução                 |
+| `-O`     | Se usuário é proprietário             |
+| `-G`     | Mesmo grupo do usuário                |
+| `-N`     | Se foi modificado após última leitura |
+
+### 📌 Exemplo
+
+```bash
+if [[ -e "$1" ]]
+```
+
+Se o arquivo existir → executa o bloco.
+
+```bash
+arquivo="text.txt"
+
+if [[ -f "$arquivo" ]]
+```
+
+---
+
+# 🧠 Operadores Lógicos
+
+| Operador | Significado |   |    |
+| -------- | ----------- | - | -- |
+| `!`      | Negação     |   |    |
+| `&&`     | E           |   |    |
+| `        |             | ` | OU |
+
+### 📌 Exemplo
+
+```bash
+if [[ ! -e "$1" || ! -r "$1" ]]
+then
+    echo "Arquivo não existe ou sem permissão de leitura"
+fi
+```
+
+---
+
+# ➕ Operadores Aritméticos
+
+| Operador | Função        |
+| -------- | ------------- |
+| `+`      | Soma          |
+| `-`      | Subtração     |
+| `*`      | Multiplicação |
+| `/`      | Divisão       |
+| `%`      | Resto         |
+| `++`     | Incremento    |
+| `--`     | Decremento    |
+
+### 📌 Exemplo
+
+```bash
+soma=$((10 + 10))
+```
+
+---
+
+# 📦 Argumentos, Variáveis e Arrays
+
+---
+
+## 🎯 ARGUMENTOS
+
+Podemos usar até 9 argumentos diretos:
+
+```bash
+$0 -> nome do script
+$1 -> primeiro argumento
+...
+$9 -> nono argumento
+```
+
+---
+
+## 🧠 VARIÁVEIS ESPECIAIS
+
+| Variável | Função                          |
+| -------- | ------------------------------- |
+| `$#`     | Número de argumentos            |
+| `$@`     | Lista de todos argumentos       |
+| `$$`     | ID do processo                  |
+| `$?`     | Código de retorno (0 = sucesso) |
+
+---
+
+## 📌 VARIÁVEIS
+
+Declaração:
+
+```bash
+domain=$1
+echo $domain
+```
+
+⚠️ Sem espaço entre nome e valor.
+
+---
+
+## 🗂️ ARRAY
+
+```bash
+domains=(google.com globo.com yahoo.com)
+```
+
+Acessando:
+
+```bash
+echo ${domains[0]}
+```
+
+### 📌 Observações
+
+* Elementos separados por **espaço**
+* Usa `()` para definir
+* Usa `${}` para expandir
+
+---
+
+# ⌨️ Input e Output
+
+---
+
+## 📥 INPUT
+
+```bash
+read -p "Digite seu nome: " nome
+```
+
+* `-p` → Mantém texto e input na mesma linha
+* `nome` → Variável que armazenará o valor digitado
+
+---
+
+## 📤 OUTPUT
+
+### Salvar saída em arquivo
+
+```bash
+tree | tee resultado.txt
+```
+
+`tee` → Mostra na tela e salva no arquivo.
+
+---
+
+### 📌 Exemplo real
+
+```bash
+netrange=$(whois $ip | grep "NetRange\|CIDR" | tee -a CIDR.txt)
+```
+
+### 🔎 Explicação
+
+* `whois $ip` → Consulta informações do IP
+* `grep "NetRange\|CIDR"` → Filtra dados relevantes
+* `tee -a CIDR.txt` → Salva no arquivo
+* `-a` → Append (não sobrescreve, apenas adiciona)
+
+---
+
