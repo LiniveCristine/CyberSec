@@ -1,8 +1,71 @@
-# 🐚 Bash Script – Guia Completo para README
+# 🐚 Bash Script – Mini Resumo
 
-Material organizado para usar como **README no GitHub**, com explicações claras e progressivas 🚀
+📑 Sumário
+
+- [📌 O que é Bash?](#-o-que-é-bash)
+  - [💻 WSL (Windows Subsystem for Linux)](#-wsl-windows-subsystem-for-linux)
+
+- [🧱 Estrutura do Bash](#-estrutura-do-bash)
+
+- [▶️ Executando um Script](#️-executando-um-script)
+
+- [🔐 Permissão de Execução](#-permissão-de-execução)
+  - [📌 Significado das permissões](#-significado-das-permissões)
+
+- [🏗️ Estrutura de um Script](#️-estrutura-de-um-script)
+
+- [🔰 Shebang](#-shebang)
+
+- [💬 Comentários](#-comentários)
+
+- [🎯 Analisando Argumentos do Usuário](#-analisando-argumentos-do-usuário)
+
+- [🚨 Exibindo Erros](#-exibindo-erros)
+
+- [🔢 Ordem dos Argumentos](#-ordem-dos-argumentos)
+
+- [⚖️ Operadores de Comparação](#️-operadores-de-comparação)
+  - [📝 STRING](#-string)
+  - [🔢 INTEIROS](#-inteiros)
+  - [📁 OPERADORES DE ARQUIVO](#-operadores-de-arquivo)
+
+- [🧠 Operadores Lógicos](#-operadores-lógicos)
+
+- [➕ Operadores Aritméticos](#-operadores-aritméticos)
+
+- [📦 Argumentos, Variáveis e Arrays](#-argumentos-variáveis-e-arrays)
+  - [🎯 Argumentos](#-argumentos)
+  - [🧠 Variáveis Especiais](#-variáveis-especiais)
+  - [📌 Variáveis](#-variáveis)
+  - [🗂️ Arrays](#️-arrays)
+
+- [⌨️ Input e Output](#️-input-e-output)
+  - [📥 INPUT](#-input)
+  - [📤 OUTPUT](#-output)
+
+- [🔀 Controle de Fluxo em Bash](#-controle-de-fluxo-em-bash)
+  - [IF - ELSE](#-if---else)
+  - [🔁 FOR](#-for)
+  - [🔁 WHILE](#-while)
+  - [🔁 UNTIL](#-until)
+  - [🔀 SWITCH - CASE](#-switch---case)
+
+- [🧩 Funções](#-funções)
+  - [Declarando funções](#declarando-funções)
+  - [Chamando uma função](#chamando-uma-função)
+  - [Passando argumentos](#passando-argumentos)
+  - [Variáveis globais](#variáveis-globais)
+  - [🔙 Retorno de função](#-retorno-de-função)
+
+- [🐞 Debugging](#-debugging)
 
 ---
+
+
+
+
+
+# 🐚 Bash Script
 
 # 📌 O que é Bash?
 
@@ -204,28 +267,6 @@ domain = $1 # ❌
 
 ---
 
-# 🔀 Condicionais
-
-```bash
-if ... then
-...
-else
-...
-fi
-```
-
-```bash
-if ... then
-...
-elif ... then
-...
-else
-...
-fi
-```
-
----
-
 # ⚖️ Operadores de Comparação
 
 ## 📝 STRING
@@ -400,3 +441,235 @@ netrange=$(whois $ip | grep "NetRange\|CIDR" | tee -a CIDR.txt)
 * `tee -a` → Adiciona ao arquivo sem sobrescrever
 
 ---
+
+# 🔀 Controle de Fluxo em Bash
+
+O **controle de fluxo** define como o script será executado, permitindo criar **decisões, repetições e organização do código**.
+
+---
+
+# IF - ELSE
+
+Estrutura condicional usada para executar comandos **com base em condições**.
+
+## Estrutura
+
+```bash
+if [ condição ]
+then
+    comandos
+else
+    comandos
+fi
+````
+
+Também podemos usar **elif** para múltiplas condições.
+
+```bash
+if [ condição ]
+then
+    comandos
+elif [ condição ]
+then
+    comandos
+else
+    comandos
+fi
+```
+
+⚠️ **Importante:** sempre colocar **espaço depois dos colchetes**
+
+```bash
+if [ $var -ne 35 ]
+```
+
+---
+
+# 🔁 FOR
+
+O `for` é utilizado para **percorrer listas de valores**.
+
+## Exemplo
+
+```bash
+for ip in "10.10.10.170 10.10.10.174 10.10.10.175"
+do
+    ping -c 1 $ip
+done
+```
+
+O script irá:
+
+1. Percorrer cada IP da lista
+2. Executar o `ping`
+3. Repetir até terminar a lista
+
+## Em uma única linha
+
+Também podemos escrever o `for` em uma linha:
+
+```bash
+for ip in 10.10.10.170 10.10.10.174; do ping -c1 $ip; done
+```
+
+---
+
+# 🔁 WHILE
+
+O `while` executa comandos **enquanto uma condição for verdadeira**.
+
+```bash
+while [ $stat -eq 1 ]
+do
+    comandos
+done
+```
+
+Enquanto `stat` for igual a **1**, o loop continuará executando.
+
+---
+
+# 🔁 UNTIL
+
+O `until` é **o oposto do while**.
+
+* `while` → executa enquanto for **true**
+* `until` → executa enquanto for **false**
+
+---
+
+# 🔀 SWITCH - CASE
+
+Estrutura usada para criar **menus de opções**.
+
+```bash
+read -p "Selecione a opção: " opt
+
+case $opt in
+1) network_range ;;
+2) ping_host ;;
+3) network_range && ping_host ;;
+*) exit 0 ;;
+esac
+```
+
+Explicação:
+
+* `1)` executa `network_range`
+* `2)` executa `ping_host`
+* `3)` executa **as duas funções**
+* `*` qualquer outra opção → encerra o script
+
+`;;` indica o **fim do bloco** de cada opção.
+
+---
+
+# 🧩 FUNÇÕES
+
+Funções permitem **organizar e reutilizar código** dentro do script.
+
+---
+
+# Declarando funções
+
+Existem **duas formas**.
+
+## Método 1
+
+```bash
+function minha_func {
+    comandos
+}
+```
+
+## Método 2
+
+```bash
+minha_func() {
+    comandos
+}
+```
+
+---
+
+# Chamando uma função
+
+Para executar a função basta usar o **nome dela**.
+
+```bash
+minha_func
+```
+
+---
+
+# Passando argumentos
+
+Podemos passar argumentos para funções.
+
+```bash
+minha_func "argumento"
+```
+
+Dentro da função podemos acessar usando:
+
+```
+$1
+$2
+$#
+```
+
+---
+
+# Variáveis globais
+
+No Bash, **todas as variáveis são globais por padrão**.
+
+Isso significa que variáveis criadas no script **podem ser usadas dentro das funções** sem precisar passar argumentos.
+
+---
+
+# 🔙 Retorno de função
+
+Funções retornam um **código de status**.
+
+| Código | Significado |
+| ------ | ----------- |
+| 0      | Sucesso     |
+| 1      | Erro        |
+
+Podemos verificar usando:
+
+```bash
+$?
+```
+
+---
+
+# 🐞 DEBUGGING
+
+O debugging permite **identificar erros no script**.
+
+Podemos usar:
+
+| Flag | Função                          |
+| ---- | ------------------------------- |
+| `-x` | mostra execução linha por linha |
+| `-v` | mostra o script sendo executado |
+
+## Exemplo
+
+```bash
+bash -x teste.sh
+```
+
+ou
+
+```bash
+bash -x -v teste.sh
+```
+
+O Bash irá mostrar:
+
+* fluxo de execução do script
+* comandos executados
+* ponto exato onde ocorreu o erro
