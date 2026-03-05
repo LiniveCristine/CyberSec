@@ -1,3 +1,82 @@
+# 📑 Sumário
+
+| Categoria | Conteúdo |
+|---|---|
+| 📂 Sistema de Arquivos | [🗂️ Hierarquia dos Sistemas de Arquivo](#️-hierarquia-dos-sistemas-de-arquivo-linux) • [🌳 Diretório raiz](#-diretório-raiz) |
+| 📁 Diretórios Linux | [📁 Principais diretórios](#-principais-diretórios-e-suas-funções) |
+| ⚙️ Sistema | [/bin](#️-diretórios-de-sistema) • [/boot](#️-diretórios-de-sistema) • [/sbin](#️-diretórios-de-sistema) |
+| 🖥️ Hardware | [/dev](#️-hardware-e-configuração) • [/etc](#️-hardware-e-configuração) |
+| 👤 Usuários | [/home](#-diretórios-de-usuários) • [/root](#-diretórios-de-usuários) |
+| 💾 Programas | [/mnt](#-armazenamento-e-programas) • [/opt](#-armazenamento-e-programas) • [/usr](#-armazenamento-e-programas) |
+| 🧹 Arquivos temporários | [/tmp](#-arquivos-temporários-e-variáveis) • [/var](#-arquivos-temporários-e-variáveis) |
+| 🧠 Estrutura prática | [🧠 Exemplo prático da estrutura](#-exemplo-prático-da-estrutura) |
+| 🐚 Shell | [🐚 Introdução ao Shell](#-introdução-ao-shell) |
+| 🖥️ Terminal | [🖥️ Shell vs Terminal](#️-shell-vs-terminal) |
+| ❓ Ajuda | [❓ Comandos de ajuda](#-comandos-de-ajuda) |
+| 👤 Usuário | [👤 Informações do usuário](#-informações-do-usuário) |
+| 🌐 Rede | [🌐 Informações de rede e máquina](#-informações-de-rede-e-máquina) |
+| 🧠 Sistema | [🧠 Informações do sistema](#-informações-do-sistema) |
+| 📁 Navegação | [📁 Diretórios e navegação](#-diretórios-e-navegação) |
+| 🌐 Comandos de rede | [🌐 Comandos de rede](#-comandos-de-rede) |
+| 🔌 Conexões | [🔌 Verificando conexões](#-verificando-conexões) |
+| 🔍 Processos | [🔍 Alternativas e análise de processos](#-alternativas-e-análise-de-processos) |
+| 🔌 Dispositivos | [🔌 Dispositivos e arquivos abertos](#-dispositivos-e-arquivos-abertos) |
+| 🔍 Reconhecimento | [🔍 Coletando informações no sistema](#-coletando-informações-no-sistema) |
+| 🧠 Sistema | [🧠 Descobrir hardware e versão](#-descobrir-hardware-e-versão-do-sistema) |
+| 👤 Privilégios | [👤 Verificar privilégios](#-verificar-privilégios-do-usuário) |
+| 📧 Email | [📧 Descobrir e-mails](#-descobrir-e-mails-do-usuário) |
+| 🐚 Shell | [🐚 Descobrir o shell](#-descobrir-o-shell-do-usuário) |
+| 🌐 Interfaces | [🌐 Interfaces de rede](#-verificar-interfaces-de-rede) |
+| 🔄 Fluxos Linux | [💻 STDIN / STDOUT / STDERR](#-stdin--stdout--stderr) |
+| 🚫 Erros | [🚫 Ocultando erros](#-ocultando-erros) |
+| 💾 Redirecionamento | [💾 Salvando saída](#-salvando-saída-normal-stdout) |
+| 📁 Logs | [📁 Salvando saída e erros](#-salvando-saída-e-erros-separadamente) |
+| ➕ Append | [➕ Adicionando ao arquivo](#-adicionando-ao-arquivo-sem-apagar) |
+| 📥 Entrada | [📥 Redirecionando entrada](#-redirecionando-entrada-stdin) |
+| 🔗 Pipes | [🔗 Pipes](#-pipes) |
+| 🔎 Filtros | [🔎 Filtrando Conteúdo](#-filtrando-conteúdo) |
+| 📄 Navegação | [MORE](#-more) • [LESS](#-less) |
+| 🔝 Linhas | [HEAD](#-head) • [TAIL](#-tail) |
+| 🔤 Ordenação | [SORT](#-sort) |
+| 🔍 Busca | [GREP](#-grep) |
+| ✂️ Texto | [CUT](#-cut) • [TR](#-tr) |
+| 📊 Formatação | [COLUMN](#-column) |
+| 🧠 Processamento | [AWK](#-awk) |
+| ✏️ Substituição | [SED](#️-sed) |
+| 🔢 Contagem | [WC](#-wc) |
+| 🧩 Regex | [🧩 Expressões Regulares](#-expressões-regulares) |
+| 🧱 Estruturas | [Parênteses](#-agrupamentos) • [Colchetes](#-agrupamentos) • [Chaves](#-agrupamentos) |
+| 🔀 Operadores | [🔀 Operadores Regex](#-operadores) |
+| 📦 Pacotes | [📦 Gerenciamento de Pacotes](#-gerenciamento-de-pacotes) |
+| 🛠️ Pacotes Linux | [APT](#️-apt) |
+| 🐍 Python | [PIP](#-pip) |
+| 🌱 Git | [GIT](#-git) |
+| 🌐 Serviços | [🌐 Serviços de Rede](#-serviços-de-rede) |
+| 🔐 Acesso remoto | [SSH](#-ssh) |
+| 📂 Compartilhamento | [NFS](#-nfs) |
+| 🌍 Web | [Servidor Web Apache](#-servidor-web-apache) |
+| 🐍 Servidor rápido | [Servidor HTTP com Python](#-servidor-http-com-python) |
+| 🔒 VPN | [VPN](#-vpn) |
+| 🌐 Apache | [🌐 Servidor Apache](#-servidor-apache) |
+| 🧩 Módulos | [MOD_SSL](#-mod_ssl) • [MOD_PROXY](#-mod_proxy) |
+| 🧠 HTTP | [MOD_HEADERS e MOD_REWRITE](#-mod_headers-e-mod_rewrite) |
+| 💻 Dinâmico | [Suporte a sites dinâmicos](#-suporte-a-sites-dinâmicos) |
+| ⚙️ Instalação | [Instalar Apache](#️-instalando-e-iniciando-o-apache) |
+| 🌐 Requisições | [🌐 CURL e WGET](#-curl-e-wget) |
+| 🔎 Recon | [Reconhecimento Web](#-muito-usado-em-reconhecimento-recon) |
+| 🛠️ CURL | [Principais flags do curl](#️-principais-flags-do-curl) |
+| 🌐 Rede | [🌐 Configuração de Rede](#-configuração-de-rede) |
+| 📡 Interfaces | [IFCONFIG](#-ifconfig) |
+| 🔛 Interface | [Ativar ou desativar interface](#-ativar-ou-desativar-interface) |
+| 🧾 IP | [Atribuir IP manualmente](#-atribuir-ip-manualmente) |
+| 🌍 DNS | [Configuração de DNS](#-configuração-de-dns) |
+| 📝 Permanente | [Configuração permanente](#-configuração-permanente) |
+| 📊 Monitoramento | [📊 Monitoramento da Rede](#-monitoramento-da-rede) |
+| 🛠️ Ferramentas | [Ferramentas importantes](#️-ferramentas-importantes) |
+| 📡 Conectividade | [PING](#-ping) |
+| 🔌 Portas | [NETSTAT](#-netstat) |
+
+
 ## 🗂️ Hierarquia dos Sistemas de Arquivo (Linux)
 
 O sistema de arquivos do Linux é organizado em uma **estrutura de árvore**, onde tudo começa a partir de um diretório principal chamado **raiz** (`/`).
