@@ -1,69 +1,40 @@
 # 🐚 Bash Script – Mini Resumo
 
-📑 Sumário
+# 📑 Sumário
 
-- [📌 O que é Bash?](#-o-que-é-bash)
-  - [💻 WSL (Windows Subsystem for Linux)](#-wsl-windows-subsystem-for-linux)
-
-- [🧱 Estrutura do Bash](#-estrutura-do-bash)
-
-- [▶️ Executando um Script](#️-executando-um-script)
-
-- [🔐 Permissão de Execução](#-permissão-de-execução)
-  - [📌 Significado das permissões](#-significado-das-permissões)
-
-- [🏗️ Estrutura de um Script](#️-estrutura-de-um-script)
-
-- [🔰 Shebang](#-shebang)
-
-- [💬 Comentários](#-comentários)
-
-- [🎯 Analisando Argumentos do Usuário](#-analisando-argumentos-do-usuário)
-
-- [🚨 Exibindo Erros](#-exibindo-erros)
-
-- [🔢 Ordem dos Argumentos](#-ordem-dos-argumentos)
-
-- [⚖️ Operadores de Comparação](#️-operadores-de-comparação)
-  - [📝 STRING](#-string)
-  - [🔢 INTEIROS](#-inteiros)
-  - [📁 OPERADORES DE ARQUIVO](#-operadores-de-arquivo)
-
-- [🧠 Operadores Lógicos](#-operadores-lógicos)
-
-- [➕ Operadores Aritméticos](#-operadores-aritméticos)
-
-- [📦 Argumentos, Variáveis e Arrays](#-argumentos-variáveis-e-arrays)
-  - [🎯 Argumentos](#-argumentos)
-  - [🧠 Variáveis Especiais](#-variáveis-especiais)
-  - [📌 Variáveis](#-variáveis)
-  - [🗂️ Arrays](#️-arrays)
-
-- [⌨️ Input e Output](#️-input-e-output)
-  - [📥 INPUT](#-input)
-  - [📤 OUTPUT](#-output)
-
-- [🔀 Controle de Fluxo em Bash](#-controle-de-fluxo-em-bash)
-  - [IF - ELSE](#-if---else)
-  - [🔁 FOR](#-for)
-  - [🔁 WHILE](#-while)
-  - [🔁 UNTIL](#-until)
-  - [🔀 SWITCH - CASE](#-switch---case)
-
-- [🧩 Funções](#-funções)
-  - [Declarando funções](#declarando-funções)
-  - [Chamando uma função](#chamando-uma-função)
-  - [Passando argumentos](#passando-argumentos)
-  - [Variáveis globais](#variáveis-globais)
-  - [🔙 Retorno de função](#-retorno-de-função)
-
-- [🐞 Debugging](#-debugging)
+| Categoria | Conteúdo |
+|---|---|
+| 🧠 Introdução | [📌 O que é Bash?](#-o-que-é-bash) • [💻 WSL (Windows Subsystem for Linux)](#-wsl-windows-subsystem-for-linux) |
+| 🧱 Estrutura | [🧱 Estrutura do Bash](#-estrutura-do-bash) |
+| ▶️ Execução | [▶️ Executando um Script](#️-executando-um-script) |
+| 🔐 Permissões | [🔐 Permissão de Execução](#-permissão-de-execução) • [📌 Significado das permissões](#-significado-das-permissões) |
+| 🏗️ Script | [🏗️ Estrutura de um Script](#️-estrutura-de-um-script) |
+| 🔰 Configuração | [🔰 Shebang](#-shebang) • [💬 Comentários](#-comentários) |
+| 🎯 Argumentos | [🎯 Analisando Argumentos do Usuário](#-analisando-argumentos-do-usuário) • [🔢 Ordem dos Argumentos](#-ordem-dos-argumentos) |
+| 🚨 Erros | [🚨 Exibindo Erros](#-exibindo-erros) |
+| ⚖️ Comparações | [⚖️ Operadores de Comparação](#️-operadores-de-comparação) |
+| 📝 Strings | [📝 STRING](#-string) |
+| 🔢 Inteiros | [🔢 INTEIROS](#-inteiros) |
+| 📁 Arquivos | [📁 OPERADORES DE ARQUIVO](#-operadores-de-arquivo) |
+| 🧠 Lógica | [🧠 Operadores Lógicos](#-operadores-lógicos) |
+| ➕ Matemática | [➕ Operadores Aritméticos](#-operadores-aritméticos) |
+| 📦 Estruturas | [📦 Argumentos, Variáveis e Arrays](#-argumentos-variáveis-e-arrays) |
+| 🎯 Argumentos | [🎯 Argumentos](#-argumentos) |
+| 🧠 Variáveis | [🧠 Variáveis Especiais](#-variáveis-especiais) • [📌 Variáveis](#-variáveis) |
+| 🗂️ Arrays | [🗂️ Arrays](#️-arrays) |
+| ⌨️ Entrada/Saída | [⌨️ Input e Output](#️-input-e-output) |
+| 📥 Entrada | [📥 INPUT](#-input) |
+| 📤 Saída | [📤 OUTPUT](#-output) |
+| 🔀 Fluxo | [🔀 Controle de Fluxo em Bash](#-controle-de-fluxo-em-bash) |
+| 🔁 Loops | [🔁 FOR](#-for) • [🔁 WHILE](#-while) • [🔁 UNTIL](#-until) |
+| 🔀 Condições | [IF - ELSE](#-if---else) • [🔀 SWITCH - CASE](#-switch---case) |
+| 🧩 Funções | [🧩 Funções](#-funções) |
+| ⚙️ Funções | [Declarando funções](#declarando-funções) • [Chamando uma função](#chamando-uma-função) |
+| 🎯 Parâmetros | [Passando argumentos](#passando-argumentos) • [Variáveis globais](#variáveis-globais) |
+| 🔙 Retorno | [🔙 Retorno de função](#-retorno-de-função) |
+| 🐞 Debug | [🐞 Debugging](#-debugging) |
 
 ---
-
-
-
-
 
 # 🐚 Bash Script
 
