@@ -1,5 +1,54 @@
 ## 🔎 Enumeração e Introdução ao Nmap
 
+# 📑 Sumário
+
+| Categoria | Conteúdo |
+|---|---|
+| 🔎 Introdução | [🔎 Enumeração e Introdução ao Nmap](#-enumeração-e-introdução-ao-nmap) |
+| 🧠 Conceitos | [🧠 O que é Enumeração](#-o-que-é-enumeração) • [🛠️ Enumeração Manual vs Ferramentas](#️-enumeração-manual-vs-ferramentas) |
+| 🌐 Nmap | [🌐 Introdução ao Nmap](#-introdução-ao-nmap) • [📡 Tipos de Varredura no Nmap](#-tipos-de-varredura-no-nmap) |
+| ⌨️ Uso básico | [⌨️ Sintaxe básica do Nmap](#️-sintaxe-básica-do-nmap) |
+| ⚡ Técnicas de scan | [⚡ TCP SYN Scan](#-técnica-de-scan-tcp-syn--ss) |
+| 🧪 Prática | [🧪 Exemplo prático](#-exemplo-prático) |
+| 📍 Descoberta de hosts | [📍 Host Discovery](#-host-discovery-descoberta-de-hosts) |
+| 📡 Métodos | [ICMP Echo Request](#-icmp-echo-request) • [ARP Request](#-arp-request) |
+| 💾 Resultados | [💾 Salvando resultados](#-salvando-resultados) |
+| ⚖️ Comparação | [⚖️ ICMP vs ARP](#️-icmp-vs-arp) |
+| 👁️ Análise de tráfego | [👁️ Verificando o tráfego de rede](#️-verificando-o-tráfego-de-rede) |
+| 📋 Listas de hosts | [📋 Varredura usando lista de IPs](#-varredura-usando-lista-de-ips) |
+| 🌐 Múltiplos hosts | [🌐 Analisando vários IPs](#-analisando-vários-ips) |
+| 🎯 Host único | [🎯 Analisando um único host](#-analisando-um-único-host) |
+| 💡 Boas práticas | [💡 Dica importante](#-dica-importante) |
+| 🚪 Portas | [🚪 Estados de Portas e Varredura com Nmap](#-estados-de-portas-e-varredura-com-nmap) |
+| 📊 Estados de portas | [📊 Estados de uma porta](#-estados-de-uma-porta) |
+| 🔍 Scan TCP | [🔍 Descobrindo portas TCP abertas](#-descobrindo-portas-tcp-abertas) |
+| 🎯 Portas específicas | [🎯 Definindo quais portas escanear](#-definindo-quais-portas-escanear) |
+| ⚙️ Flags | [⚙️ Outras flags importantes](#️-outras-flags-importantes) |
+| 🔥 Firewall | [🔥 Identificando bloqueios por firewall](#-identificando-bloqueios-por-firewall) |
+| 📡 UDP | [📡 Descobrindo portas UDP](#-descobrindo-portas-udp) |
+| 💾 Exportação | [💾 Salvando resultados do scan](#-salvando-resultados-do-scan) |
+| 📄 Relatórios | [📄 Convertendo XML para HTML](#-convertendo-xml-para-html) |
+| 🔎 Serviços | [🔎 Enumeração de Serviços com Nmap](#-enumeração-de-serviços-com-nmap) |
+| 🎯 Objetivo | [🎯 Objetivo da enumeração de serviços](#-objetivo-da-enumeração-de-serviços) |
+| ⚡ Estratégia | [⚡ Detecção de serviços](#-detecção-de-serviços) |
+| 🛠️ Scan completo | [🛠️ Varredura completa com detecção de serviços](#️-comando-para-varredura-completa-com-detecção-de-serviços) |
+| 🔌 Verificação manual | [🔌 Utilizando o Netcat](#-utilizando-o-netcat-para-verificação-manual) |
+| 📜 NSE | [📜 Scripts no Nmap (NSE)](#-scripts-no-nmap-nse--nmap-scripting-engine) |
+| 🔥 Scan agressivo | [🔥 Varredura agressiva](#-varredura-agressiva) |
+| 🧨 Vulnerabilidades | [🧨 Script de vulnerabilidades](#-script-de-vulnerabilidades) |
+| 📁 Enumeração Web | [📁 HTTP-ENUM](#-enumeração-web-com-http-enum) |
+| 📥 Transferência | [📥 Baixando arquivos com CURL](#-baixando-arquivos-com-curl) |
+| 🧪 HTTP manual | [🧪 Requisição HTTP com Netcat](#-requisição-http-manual-com-netcat) |
+| ⚙️ Performance | [⚙️ Ajustando desempenho da varredura](#️-ajustando-o-desempenho-da-varredura) |
+| ⏱️ Timeout | [⏱️ Timeout](#️-timeout) |
+| 🔁 Tentativas | [🔁 Número máximo de tentativas](#-número-máximo-de-tentativas) |
+| 🚀 Velocidade | [🚀 Velocidade da varredura](#-velocidade-da-varredura) |
+| 🛡️ Evasão | [🛡️ Evasão de firewall e IDS/IPS](#️-evasão-de-firewall-e-idsips) |
+| 🎭 Decoy | [🎭 Iscas (Decoy scanning)](#-iscas-decoy-scanning) |
+| 🧾 Spoofing | [🧾 Spoofing de IP de origem](#-spoofing-de-ip-de-origem) |
+| 🌐 DNS | [🌐 Proxy DNS](#-proxy-dns) |
+| 🔓 Porta confiável | [🔓 Porta de origem confiável](#-porta-de-origem-confiável) |
+
 ---
 
 ### 🧠 O que é Enumeração
