@@ -1,3 +1,37 @@
+# 📑 Sumário
+
+| Seção | Conteúdo |
+|------|----------|
+| 🌐 Redes | [O que é uma Rede](#-o-que-é-uma-rede) |
+| 📚 Conceitos | [Conceitos Iniciais](#-conceitos-iniciais) |
+| 🏠 Tipos de Rede | [LAN](#-lan-local-area-network) • [MAN](#️-man-metropolitan-area-network) • [WAN](#-wan-wide-area-network) |
+| 🔗 Conexão LAN/WAN | [LAN e WAN Funcionando Juntas](#-lan-e-wan-funcionando-juntas) |
+| 🧩 Modelo OSI | [Modelo OSI](#-modelo-osi) |
+| 📡 Camadas OSI | [Física](#1️⃣-camada-física) • [Enlace](#2️⃣-camada-de-enlace-data-link) • [Rede](#3️⃣-camada-de-rede) • [Transporte](#4️⃣-camada-de-transporte) • [Sessão](#5️⃣-camada-de-sessão) • [Apresentação](#6️⃣-camada-de-apresentação) • [Aplicação](#7️⃣-camada-de-aplicação) |
+| 🔁 Exemplos | [Envio de Arquivo](#-exemplo-1-envio-de-um-arquivo) • [Acesso a Site](#-exemplo-2-acesso-a-um-site) |
+| 🧱 Componentes de Rede | [Componentes de uma Rede](#-componentes-de-uma-rede) |
+| 🖥️ Dispositivos | [End Devices](#️-end-devices-dispositivos-finais) • [Intermediary Devices](#-intermediary-devices-dispositivos-intermediários) |
+| 🗄️ Servidores | [Servers](#️-servers-servidores) |
+| 🧩 Hardware de Rede | [Placa de Rede](#-placa-de-rede) |
+| 🚦 Roteamento | [Roteadores](#-roteadores) |
+| 🔁 Switches e Hubs | [Switch](#-switch) • [Hub](#-hub) |
+| 🏗️ Arquitetura da Internet | [Arquitetura da Internet](#️-arquitetura-da-internet) |
+| 🔄 Modelos de Comunicação | [P2P](#-ponto-a-ponto-p2p) • [Cliente-Servidor](#-cliente-servidor) |
+| 🧱 Arquitetura de Sistemas | [Single-tier](#1️⃣-camada-única-single-tier) • [Two-tier](#2️⃣-dois-níveis-two-tier) • [Three-tier](#3️⃣-três-níveis-three-tier) • [N-tier](#-n-camadas-n-tier) |
+| 🔀 Arquitetura Híbrida | [Arquitetura Híbrida](#-arquitetura-híbrida) |
+| ☁️ Cloud | [Arquitetura em Nuvem](#️-arquitetura-em-nuvem) |
+| 🧠 SDN | [Arquitetura Definida por Software](#-arquitetura-definida-por-software-sdn) |
+| 🔁 Fluxo de Dados | [Fluxo de Acesso a Site](#-exemplo-de-fluxo-de-dados-acesso-a-um-site) |
+| 🧪 Ferramentas Linux | [Interfaces de Rede](#-interfaces-de-rede-linux) |
+| 🕵️ Proxy | [Proxy](#️-proxy) |
+| 🔀 Tipos de Proxy | [Forward Proxy](#-proxy-de-encaminhamento-forward-proxy) • [Reverse Proxy](#-proxy-reverso-reverse-proxy) |
+| 📡 Protocolos | [Protocolos de Rede](#-terminologias-e-protocolos) |
+| 🌐 Identificadores Web | [URI](#-uri-uniform-resource-identifier) • [URL](#-url-uniform-resource-locator) |
+| ✅ Final | [Resumo Final](#-resumo-final) |
+
+
+
+
 # 🌐 O que é uma Rede
 
 Uma **rede** é o conjunto de dois ou mais dispositivos (_hosts_) ligados por qualquer meio (cabo coaxial, fibra óptica, wireless, etc.) que compartilham recursos entre si, como **informações** e **recursos de hardware**.
