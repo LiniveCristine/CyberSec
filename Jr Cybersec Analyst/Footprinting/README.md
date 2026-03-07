@@ -845,3 +845,256 @@ E --> F[Serviços expostos]
 - consulta passiva no Shodan
 
 ---
+
+# ☁️ Cloud Resources no Reconhecimento
+
+Muitas empresas utilizam **serviços em nuvem** para armazenar arquivos, executar aplicações e hospedar infraestrutura.
+
+Principais provedores:
+
+| Provedor     | Empresa               |
+| ------------ | --------------------- |
+| ☁️ **AWS**   | Amazon                |
+| ☁️ **GCP**   | Google Cloud Platform |
+| ☁️ **Azure** | Microsoft             |
+
+Esses serviços são muito utilizados porque oferecem:
+
+* escalabilidade
+* alta disponibilidade
+* integração com diversas aplicações
+
+⚠️ Porém, **configurações incorretas podem deixar dados expostos publicamente**.
+
+---
+
+# ⚠️ Riscos de Configuração em Nuvem
+
+Serviços de armazenamento em nuvem podem ser configurados como:
+
+* 🔒 **Privados**
+* 🌍 **Públicos**
+
+Se estiverem **mal configurados**, qualquer pessoa pode acessar os arquivos.
+
+Isso pode expor:
+
+* backups
+* arquivos internos
+* documentos confidenciais
+* credenciais
+* chaves SSH
+
+---
+
+# 📦 Principais Serviços de Armazenamento
+
+Cada provedor possui seu próprio serviço de armazenamento.
+
+| Provedor | Serviço           |
+| -------- | ----------------- |
+| AWS      | **S3 Buckets**    |
+| Azure    | **Blob Storage**  |
+| GCP      | **Cloud Storage** |
+
+Esses serviços armazenam arquivos como:
+
+* imagens
+* backups
+* documentos
+* arquivos de configuração
+* dados de aplicações
+
+---
+
+# 🔎 Como Encontrar Armazenamento em Nuvem
+
+Uma forma simples é usar **Google Dorks**.
+
+### 🔍 Pesquisando S3 Buckets (AWS)
+
+```id="i8b9ho"
+intext:<nome_da_empresa> inurl:amazonaws.com
+```
+
+---
+
+### 🔍 Pesquisando Azure Blob Storage
+
+```id="x98lre"
+intext:<nome_da_empresa> inurl:blob.core.windows.net
+```
+
+---
+
+### 🔍 Pesquisando Google Cloud Storage
+
+```id="p3v0sh"
+intext:<nome_da_empresa> inurl:storage.googleapis.com
+```
+
+Essas buscas podem revelar **links diretos para arquivos armazenados na nuvem**.
+
+---
+
+# 🌐 Domain Glass
+
+O **Domain Glass** é uma ferramenta usada para **analisar informações de um domínio**.
+
+Ele mostra dados da infraestrutura, como:
+
+* endereço IP
+* nameservers
+* registros WHOIS
+* hostnames associados
+
+---
+
+## 📊 Informações que podemos obter
+
+| Informação | Descrição                          |
+| ---------- | ---------------------------------- |
+| IP         | endereço do servidor               |
+| Nameserver | servidor DNS responsável           |
+| Whois      | informações do registro do domínio |
+| Hostnames  | domínios relacionados              |
+
+---
+
+## 🎯 Utilidade no Recon
+
+Com o Domain Glass podemos descobrir:
+
+* se o domínio utiliza **serviços em nuvem**
+* se existem **CDNs ou proxies**
+* possíveis **mecanismos de proteção**
+
+Exemplo:
+
+* Cloudflare
+* AWS
+* Azure
+
+Isso indica que **podemos encontrar obstáculos nas próximas etapas do recon**.
+
+---
+
+# 🔎 GreyHat Warfare
+
+O **GreyHat Warfare** é uma ferramenta OSINT usada para encontrar **arquivos públicos armazenados em nuvens**.
+
+Ele indexa arquivos encontrados em serviços como:
+
+* Amazon S3
+* Azure Blob Storage
+* Google Cloud Storage
+* DigitalOcean Spaces
+
+---
+
+# 📦 O que é um Bucket
+
+Um **bucket** é um espaço de armazenamento na nuvem.
+
+Ele funciona como uma **pasta gigante de arquivos**.
+
+Exemplo:
+
+```id="pqrr3c"
+empresa-backups
+empresa-assets
+logs-prod
+```
+
+Se o bucket estiver **público**, qualquer pessoa pode acessar os arquivos.
+
+---
+
+# ⚠️ Risco de Buckets Públicos
+
+Muitas empresas configuram buckets como públicos para:
+
+* hospedar imagens
+* disponibilizar arquivos de download
+
+Porém, às vezes arquivos **sensíveis são armazenados nesses buckets**.
+
+Exemplos:
+
+* backups de banco de dados
+* arquivos de configuração
+* logs
+* credenciais
+
+---
+
+# 🔍 Tipos de Pesquisa no GreyHat Warfare
+
+Podemos buscar arquivos utilizando:
+
+| Tipo de busca     | Exemplo         |
+| ----------------- | --------------- |
+| Nome do arquivo   | backup.sql      |
+| Tipo de arquivo   | .env            |
+| Palavra-chave     | password        |
+| Bucket específico | empresa-backups |
+
+---
+
+# 🔑 Arquivos Sensíveis que Podemos Encontrar
+
+Alguns arquivos são **especialmente críticos**.
+
+Exemplo:
+
+### Chaves SSH
+
+```id="ugvwy7"
+id_rsa
+id_rsa.pub
+```
+
+Esses arquivos são usados para **autenticação SSH**.
+
+Se expostos publicamente, podem permitir:
+
+* acesso a servidores
+* comprometimento da infraestrutura
+
+---
+
+# 🧠 Fluxo de Recon em Cloud Resources
+
+```mermaid
+graph TD
+
+A[Empresa] --> B[Domínio]
+B --> C[Infraestrutura]
+C --> D[Serviços em Nuvem]
+
+D --> E[AWS S3]
+D --> F[Azure Blob]
+D --> G[Google Cloud Storage]
+
+E --> H[Arquivos públicos]
+F --> H
+G --> H
+```
+
+---
+
+# 🎯 Objetivo da Enumeração em Cloud
+
+Durante o recon queremos descobrir:
+
+* buckets públicos
+* arquivos sensíveis
+* configurações expostas
+* possíveis credenciais
+
+Isso pode revelar **informações críticas sem precisar atacar diretamente o sistema**.
+
+---
+
+✅ Essa etapa é extremamente poderosa em **Bug Bounty**, porque muitas vezes permite encontrar **dados sensíveis usando apenas OSINT**, sem interação direta com o alvo.
+
