@@ -1098,3 +1098,490 @@ Isso pode revelar **informações críticas sem precisar atacar diretamente o si
 
 ✅ Essa etapa é extremamente poderosa em **Bug Bounty**, porque muitas vezes permite encontrar **dados sensíveis usando apenas OSINT**, sem interação direta com o alvo.
 
+---
+
+# 👥 Funcionários (OSINT)
+
+Durante a fase de **reconhecimento**, podemos coletar informações sobre **funcionários da empresa**.
+
+Uma das principais fontes é o **LinkedIn**.
+
+---
+
+## 🔎 O que analisar
+
+Buscar principalmente profissionais das áreas:
+
+| Área               | Motivo                                            |
+| ------------------ | ------------------------------------------------- |
+| 🔐 Segurança       | podem revelar ferramentas e práticas de segurança |
+| 💻 Desenvolvimento | indicam linguagens e frameworks utilizados        |
+
+Também podemos analisar:
+
+* habilidades listadas
+* projetos desenvolvidos
+* certificações
+* tecnologias mencionadas
+
+Essas informações podem indicar **quais tecnologias a empresa utiliza**.
+
+---
+
+## 💼 Análise de Vagas
+
+As **vagas de emprego** também são ótimas fontes de informação.
+
+Exemplos do que podemos descobrir:
+
+| Informação     | Exemplo            |
+| -------------- | ------------------ |
+| Linguagens     | Python, Java, PHP  |
+| Frameworks     | React, Django      |
+| Infraestrutura | AWS, Azure         |
+| Ferramentas    | Docker, Kubernetes |
+
+---
+
+## 🔍 Após identificar tecnologias
+
+Quando identificamos as tecnologias usadas pela empresa podemos:
+
+1. Pesquisar **documentação oficial**
+2. Verificar **boas práticas de segurança**
+3. Procurar **vulnerabilidades conhecidas**
+
+Muitas organizações seguem **configurações padrão**, o que pode resultar em:
+
+* nomes de arquivos previsíveis
+* diretórios padrão
+* configurações inseguras
+
+---
+
+# 🖥️ Enumeração Baseada em Infraestrutura vs Hosts
+
+Existem dois tipos principais de enumeração.
+
+---
+
+## 🌐 Enumeração de Infraestrutura
+
+Foca na **estrutura geral da organização**.
+
+Objetivo: entender **como os sistemas estão organizados**.
+
+Exemplos de informações coletadas:
+
+| Tipo           | Exemplos        |
+| -------------- | --------------- |
+| Domínios       | subdomínios     |
+| DNS            | registros DNS   |
+| Infraestrutura | servidores web  |
+| Cloud          | AWS, Azure, GCP |
+| CDN            | Cloudflare      |
+
+---
+
+## 🖥️ Enumeração Baseada em Hosts
+
+Foca em **máquinas específicas da rede**.
+
+Objetivo: descobrir detalhes técnicos de cada sistema.
+
+| Informação          | Exemplo           |
+| ------------------- | ----------------- |
+| Sistema Operacional | Linux / Windows   |
+| Serviços            | FTP, SSH, HTTP    |
+| Versões             | Apache 2.4        |
+| Portas              | 21, 22, 80        |
+| Usuários            | contas do sistema |
+
+---
+
+# 📁 FTP — File Transfer Protocol
+
+O **FTP** é um protocolo utilizado para:
+
+* enviar arquivos
+* baixar arquivos
+* gerenciar arquivos em servidores
+
+Ele opera na **camada de aplicação**, assim como:
+
+| Protocolo | Função                    |
+| --------- | ------------------------- |
+| HTTP      | navegação web             |
+| POP       | recebimento de e-mail     |
+| FTP       | transferência de arquivos |
+
+---
+
+## ⚠️ Segurança do FTP
+
+O FTP **não é seguro**, pois envia dados em **texto puro (clear text)**.
+
+Isso inclui:
+
+* usuário
+* senha
+
+Alternativas seguras:
+
+| Protocolo | Segurança       |
+| --------- | --------------- |
+| SFTP      | FTP sobre SSH   |
+| FTPS      | FTP com SSL/TLS |
+
+---
+
+# ⚙️ Funcionamento do FTP
+
+Uma conexão FTP utiliza **dois canais diferentes**.
+
+| Porta | Função            |
+| ----- | ----------------- |
+| 21    | canal de controle |
+| 20    | canal de dados    |
+
+---
+
+## 📡 Canal de Controle
+
+Utilizado para:
+
+* envio de comandos
+* comunicação cliente-servidor
+
+O servidor responde com **status codes**.
+
+---
+
+## 📂 Canal de Dados
+
+Utilizado para:
+
+* transferência de arquivos
+* listagem de diretórios
+
+O protocolo pode:
+
+* detectar erros
+* retomar transferências interrompidas
+
+---
+
+# 🔄 Modos de Conexão FTP
+
+Existem dois modos de funcionamento.
+
+---
+
+## 🔹 Modo Ativo
+
+Fluxo:
+
+| Etapa | Ação                             |
+| ----- | -------------------------------- |
+| 1     | cliente conecta na porta 21      |
+| 2     | servidor inicia conexão de dados |
+| 3     | servidor usa porta 20            |
+
+Problema:
+
+Se o cliente estiver protegido por **firewall**, o servidor pode não conseguir enviar dados.
+
+---
+
+## 🔹 Modo Passivo
+
+Nesse modo o **cliente inicia a conexão de dados**.
+
+Fluxo:
+
+| Etapa | Ação                            |
+| ----- | ------------------------------- |
+| 1     | cliente conecta ao servidor     |
+| 2     | cliente inicia conexão de dados |
+
+Isso evita bloqueios de firewall.
+
+---
+
+# 📦 TFTP — Trivial File Transfer Protocol
+
+O **TFTP** é uma versão simplificada do FTP.
+
+Principais diferenças:
+
+| FTP                 | TFTP                    |
+| ------------------- | ----------------------- |
+| usa TCP             | usa UDP                 |
+| possui autenticação | não possui autenticação |
+| mais recursos       | recursos limitados      |
+
+Por ser **não confiável**, normalmente é utilizado apenas em **redes locais protegidas**.
+
+---
+
+# 🧰 Servidor FTP — vsFTPd
+
+Um dos servidores FTP mais utilizados é o **vsFTPd**.
+
+Instalação:
+
+```bash
+sudo apt install vsftpd
+```
+
+---
+
+## ⚙️ Arquivo de Configuração
+
+Arquivo principal:
+
+```bash
+/etc/vsftpd.conf
+```
+
+Mostrar apenas configurações ativas:
+
+```bash
+cat /etc/vsftpd.conf | grep -v "#"
+```
+
+---
+
+## 🚫 Usuários Bloqueados
+
+Arquivo que define usuários que **não podem acessar FTP**.
+
+```bash
+cat /etc/ftpusers
+```
+
+---
+
+# 👤 Login Anônimo
+
+O FTP pode permitir **acesso anônimo**.
+
+Configurações importantes:
+
+| Configuração            | Função                         |
+| ----------------------- | ------------------------------ |
+| anonymous_enable        | permitir login anônimo         |
+| anon_upload_enable      | permitir upload                |
+| anon_mkdir_write_enable | permitir criação de diretórios |
+| anon_root               | diretório do usuário anônimo   |
+| write_enable            | permitir comandos de escrita   |
+
+Normalmente usado apenas em **redes internas**.
+
+---
+
+# 🔑 Acesso Anônimo
+
+Conectar ao servidor:
+
+```bash
+ftp 10.129.14.136
+```
+
+Login:
+
+```
+user: anonymous
+senha: guest
+```
+
+---
+
+## 📢 Banner do Servidor
+
+Ao conectar, o servidor retorna um **status code** e um **banner**.
+
+Exemplo:
+
+```
+220 FTP Server Ready
+```
+
+O banner pode revelar:
+
+* versão do servidor
+* tipo de software
+* sistema operacional
+
+---
+
+# 📂 Comandos FTP
+
+| Comando | Função                  |
+| ------- | ----------------------- |
+| status  | informações do servidor |
+| debug   | modo de depuração       |
+| trace   | rastrear comandos       |
+| ls      | listar arquivos         |
+
+---
+
+# 📥 Download de Arquivos
+
+Baixar arquivo:
+
+```bash
+get arquivo.txt
+```
+
+Baixar vários arquivos pode gerar **alertas de segurança**.
+
+---
+
+# 📤 Upload de Arquivos
+
+Enviar arquivo:
+
+```bash
+put arquivo.txt
+```
+
+Se o FTP estiver ligado a um **servidor web**, pode permitir:
+
+* upload de web shell
+* execução remota de código
+* elevação de privilégios
+
+---
+
+# ⚠️ Possíveis Explorações
+
+Um FTP mal configurado pode permitir:
+
+* acesso a arquivos sensíveis
+* **LFI (Local File Inclusion)**
+* **RCE (Remote Code Execution)**
+* exploração de logs
+
+---
+
+# 🔎 Footprinting do Serviço
+
+Para descobrir serviços usamos **scanners de rede**.
+
+Ferramenta mais utilizada:
+
+| Ferramenta | Uso                                 |
+| ---------- | ----------------------------------- |
+| Nmap       | descoberta e enumeração de serviços |
+
+---
+
+# 🧠 Nmap Scripting Engine (NSE)
+
+O **NSE** permite executar scripts para:
+
+* detectar vulnerabilidades
+* coletar informações
+* automatizar enumeração
+
+Documentação:
+
+```
+https://nmap.org/book/nse.html
+```
+
+---
+
+## 🔍 Encontrar Scripts FTP
+
+```bash
+find / -type f -name ftp* 2>/dev/null | grep scripts
+```
+
+---
+
+# ⚙️ Flags Importantes do Nmap
+
+| Flag | Função                     |
+| ---- | -------------------------- |
+| -sV  | detectar versão do serviço |
+| -A   | detecção completa          |
+| -sC  | executar scripts padrão    |
+
+---
+
+## 🔎 Scan FTP
+
+```bash
+sudo nmap -sV -p21 -sC -A 10.129.14.136
+```
+
+⚠️ A flag **-A** gera mais tráfego e é considerada **agressiva**.
+
+---
+
+# 🔧 Alternativas ao Nmap
+
+| Ferramenta | Uso             |
+| ---------- | --------------- |
+| netcat     | conexão manual  |
+| telnet     | teste de portas |
+
+Exemplo:
+
+```bash
+nc -nv <IP>
+```
+
+---
+
+# 🔐 FTP com TLS/SSL
+
+Se o FTP usar criptografia, podemos usar **OpenSSL**.
+
+```bash
+openssl s_client -connect 10.129.14.136:21 -starttls ftp
+```
+
+---
+
+# 🧠 Fluxo de Reconhecimento
+
+Até o momento o fluxo de enumeração segue este processo:
+
+```mermaid
+graph TD
+
+A[Domínio Alvo] --> B[OSINT]
+
+B --> C[Information Gathering]
+C --> D[DNS / IP / MX]
+
+D --> E[Enumeração de Infraestrutura]
+E --> F[subfinder / amass]
+
+F --> G[Resolução de Hosts]
+
+G --> H[Enumeração de Hosts]
+H --> I[nmap]
+
+I --> J[Enumeração de Serviços]
+```
+
+---
+
+## 🎯 Objetivo das Etapas
+
+| Etapa                  | Objetivo                       |
+| ---------------------- | ------------------------------ |
+| OSINT                  | descobrir informações públicas |
+| Information Gathering  | coletar dados técnicos         |
+| Enumeração de Infra    | mapear estrutura da empresa    |
+| Enumeração de Hosts    | analisar máquinas específicas  |
+| Enumeração de Serviços | investigar serviços expostos   |
+
+---
+
+
+
