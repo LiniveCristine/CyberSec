@@ -1583,5 +1583,337 @@ I --> J[Enumeração de Serviços]
 
 ---
 
+# 🗂️ SMB — Server Message Block
+
+O **SMB (Server Message Block)** é um protocolo de rede utilizado para **compartilhar arquivos e dispositivos** dentro de uma rede.
+
+Ele permite que computadores **acessem recursos de outros computadores como se fossem locais**.
+
+É muito utilizado em **ambientes Windows**.
+
+No Linux, a implementação mais comum é o **Samba**.
+
+---
+
+## 📦 O que pode ser compartilhado
+
+Com SMB é possível compartilhar:
+
+| Recurso         | Descrição                 |
+| --------------- | ------------------------- |
+| 📄 Arquivos     | documentos e dados        |
+| 📁 Pastas       | diretórios completos      |
+| 🖨️ Impressoras | dispositivos de impressão |
+
+---
+
+# 🌐 Funcionamento do SMB
+
+O SMB utiliza o **protocolo TCP** para comunicação.
+
+Antes de estabelecer comunicação ele realiza o **Three Way Handshake (3WHS)**.
+
+Fluxo simplificado:
+
+```mermaid
+graph TD
+A[Cliente] -->|SYN| B[Servidor]
+B -->|SYN-ACK| A
+A -->|ACK| B
+```
+
+---
+
+# 🔐 ACL — Access Control List
+
+A **ACL (Access Control List)** define **quais usuários ou grupos podem acessar determinados recursos**.
+
+Em redes Windows, os usuários normalmente são organizados em **workgroups ou domínios**.
+
+---
+
+## Permissões comuns
+
+| Permissão   | Descrição           |
+| ----------- | ------------------- |
+| read        | leitura de arquivos |
+| execute     | execução            |
+| full access | acesso total        |
+
+---
+
+# 🐧 Samba (SMB no Linux)
+
+O **Samba** é uma implementação do SMB para sistemas Linux.
+
+Ele utiliza o protocolo **CIFS (Common Internet File System)**.
+
+Isso permite que **sistemas Linux e Windows se comuniquem usando SMB**.
+
+---
+
+# 🚪 Portas Utilizadas
+
+Versões antigas do SMB utilizavam **NetBIOS**.
+
+| Porta | Uso                     |
+| ----- | ----------------------- |
+| 137   | NetBIOS Name Service    |
+| 138   | NetBIOS Datagram        |
+| 139   | NetBIOS Session Service |
+
+SMB moderno utiliza:
+
+| Porta | Uso           |
+| ----- | ------------- |
+| 445   | SMB sobre TCP |
+
+⚠️ **SMBv1 é considerado inseguro** e vulnerável a diversos ataques.
+
+---
+
+# ⚙️ Arquivo de Configuração do Samba
+
+Arquivo principal:
+
+```bash
+/etc/samba/smb.conf
+```
+
+Mostrar apenas linhas ativas:
+
+```bash
+cat /etc/samba/smb.conf | grep -v "#\|\;"
+```
+
+---
+
+# 🌍 Configurações Globais
+
+As **configurações globais** definem parâmetros do servidor SMB inteiro.
+
+Essas configurações:
+
+* afetam todos os compartilhamentos
+* podem ser sobrescritas por configurações específicas
+
+Isso pode causar **configurações incorretas ou inseguras**.
+
+---
+
+# ⚠️ Configurações Perigosas
+
+Algumas configurações podem expor arquivos ou permitir acesso não autorizado.
+
+| Configuração          | Risco                            |
+| --------------------- | -------------------------------- |
+| browseable = yes      | permite listar compartilhamentos |
+| read only = no        | permite modificar arquivos       |
+| writable = yes        | permite escrever arquivos        |
+| guest ok = yes        | permite acesso sem senha         |
+| logon script          | executa script no login          |
+| magic script          | executa script ao fechar         |
+| create mask = 0777    | permissões totais                |
+| directory mask = 0777 | permissões totais                |
+
+Se essas configurações estiverem ativas, podemos:
+
+* navegar pelos compartilhamentos
+* baixar arquivos
+* analisar conteúdos sensíveis
+
+---
+
+# 🔓 Conectando Anonimamente
+
+Podemos tentar **acesso anônimo ao SMB**.
+
+Listar compartilhamentos:
+
+```bash
+smbclient -N -L //<IP_SERVIDOR>
+```
+
+### Parâmetros
+
+| Flag | Função                   |
+| ---- | ------------------------ |
+| -N   | login sem senha          |
+| -L   | listar compartilhamentos |
+
+---
+
+# 📂 Conectando a um Compartilhamento
+
+```bash
+smbclient -U "" -N //<IP>/sharename
+```
+
+Depois de conectado podemos:
+
+* listar arquivos
+* baixar arquivos
+* explorar diretórios
+
+---
+
+## Comandos úteis
+
+| Comando | Função          |
+| ------- | --------------- |
+| ls      | listar arquivos |
+| get     | baixar arquivo  |
+
+Podemos executar comandos do sistema usando:
+
+```bash
+!comando
+```
+
+---
+
+# 🔎 Footprinting SMB
+
+Durante a enumeração SMB podemos descobrir:
+
+| Informação          | Descrição                |
+| ------------------- | ------------------------ |
+| usuários do domínio | contas existentes        |
+| compartilhamentos   | diretórios acessíveis    |
+| arquivos sensíveis  | documentos internos      |
+| backups             | possíveis dumps de dados |
+| credenciais         | senhas ou hashes         |
+
+---
+
+# 🧠 Enumeração com Nmap
+
+O **Nmap** possui scripts NSE para enumeração SMB.
+
+Exemplo de scan:
+
+```bash
+sudo nmap <IP_ALVO> -sV -sC -p139,445
+```
+
+Esse scan pode revelar:
+
+* versão do SMB
+* configuração do servidor
+* possíveis vulnerabilidades
+
+⚠️ Algumas varreduras SMB podem demorar bastante.
+
+---
+
+# 🔧 Enumeração Manual — rpcclient
+
+O **rpcclient** permite coletar informações diretamente do servidor SMB.
+
+Conectar anonimamente:
+
+```bash
+rpcclient -U "" <IP_ALVO>
+```
+
+---
+
+## Comandos importantes
+
+| Comando         | Função                   |
+| --------------- | ------------------------ |
+| srvinfo         | informações do servidor  |
+| enumdomains     | listar domínios          |
+| querydominfo    | informações do domínio   |
+| enumdomusers    | listar usuários          |
+| netsharegetinfo | info de compartilhamento |
+
+---
+
+# 👤 Informações de Usuários
+
+Após enumerar usuários podemos consultar detalhes usando o **RID**.
+
+```bash
+queryuser <RID>
+```
+
+Isso pode revelar:
+
+* nome do usuário
+* grupo
+* permissões
+
+---
+
+# 💥 Bruteforce de Usuários (RID)
+
+Podemos tentar descobrir usuários testando vários **RIDs**.
+
+```bash
+for i in $(seq 500 1100); do 
+rpcclient -N -U "" <IP_SERVER> -c "queryuser 0x$(printf '%x\n' $i)" | grep "User Name\|user_rid\|group_rid" && echo ""
+done
+```
+
+### O que o script faz
+
+1. testa RIDs entre **500 e 1100**
+2. executa `rpcclient`
+3. consulta informações do usuário
+4. filtra resultados com `grep`
+
+---
+
+# 🧰 Ferramentas Alternativas
+
+Outras ferramentas também podem ser usadas para enumeração SMB.
+
+| Ferramenta    | Função                   |
+| ------------- | ------------------------ |
+| samrdump.py   | brute force de usuários  |
+| SMBMap        | mapear compartilhamentos |
+| CrackMapExec  | enumeração e exploração  |
+| enum4linux-ng | enumeração automatizada  |
+
+---
+
+# ⚠️ Boa Prática
+
+Sempre utilize **mais de uma ferramenta de enumeração**.
+
+Motivo:
+
+* ferramentas podem retornar **resultados diferentes**
+* algumas detectam **informações que outras não encontram**
+
+---
+
+# 🧠 Fluxo de Enumeração SMB
+
+```mermaid
+graph TD
+
+A[Host descoberto] --> B[Verificar portas 139 e 445]
+B --> C[Enumerar compartilhamentos]
+
+C --> D[smbclient]
+C --> E[rpcclient]
+
+D --> F[Baixar arquivos]
+E --> G[Enumerar usuários]
+
+G --> H[Bruteforce RID]
+```
+
+---
+
+✅ A enumeração SMB é extremamente importante em **testes de invasão em redes corporativas**, pois pode revelar:
+
+* compartilhamentos abertos
+* usuários do domínio
+* arquivos sensíveis
+* credenciais expostas
+
 
 
