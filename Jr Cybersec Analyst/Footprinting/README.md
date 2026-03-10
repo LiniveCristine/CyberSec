@@ -2065,4 +2065,542 @@ Eles podem revelar:
 
 ---
 
+# 🌐 DNS (Domain Name System)
+
+O **DNS (Domain Name System)** é o sistema responsável por **traduzir nomes de domínio em endereços IP**.
+
+Exemplo:
+
+```
+
+[www.google.com](http://www.google.com) → 142.250.78.36
+
+```
+
+💡 Podemos imaginar o DNS como **uma grande lista telefônica da internet**.
+
+- Nós sabemos **o nome**
+- O DNS encontra **o número (IP)**
+
+⚠️ Diferente de um banco de dados centralizado, o DNS funciona de forma **distribuída**, com vários servidores espalhados pela internet.
+
+---
+
+# 🧠 Como imaginar o DNS
+
+Imagine uma **biblioteca cheia de listas telefônicas**.
+
+Cada lista contém **informações de uma região específica**.
+
+Quando procuramos um número:
+
+1️⃣ Perguntamos ao atendente  
+2️⃣ Ele pergunta a outros setores  
+3️⃣ Até encontrar quem possui a informação correta
+
+Esse processo é chamado de **resolução DNS**.
+
+---
+
+# 🖥️ Tipos de Servidores DNS
+
+O DNS possui diferentes tipos de servidores, cada um com uma função específica.
+
+---
+
+## 🔁 DNS Resolver (Recursive Resolver)
+
+O **DNS Resolver** é o **primeiro servidor que recebe a requisição do usuário**.
+
+Normalmente ele pertence a:
+
+- Provedor de internet (**ISP**)
+- Rede corporativa
+- DNS público
+
+Exemplos de DNS públicos:
+
+- Google DNS
+- Cloudflare DNS
+
+### Funcionamento
+
+Ele faz consultas para outros servidores **até encontrar a resposta**.
+
+Por isso ele é chamado de **recursivo**.
+
+---
+
+## 🌍 DNS Root Server (Servidor Raiz)
+
+Os **Root Servers** são responsáveis por **indicar onde estão os servidores que conhecem os domínios TLD**.
+
+### TLD (Top Level Domain)
+
+Exemplos:
+
+- `.com`
+- `.org`
+- `.net`
+- `.br`
+
+⚠️ Os servidores root **não sabem o IP do domínio**, mas sabem **qual servidor pode responder**.
+
+📊 Existem **13 servidores root principais no mundo**.
+
+---
+
+## 🧾 Authoritative Nameserver
+
+O **Authoritative Nameserver** possui **autoridade sobre uma zona DNS específica**.
+
+Ele contém os **registros oficiais do domínio**.
+
+Exemplo de registros armazenados:
+
+- A
+- AAAA
+- MX
+- TXT
+- CNAME
+
+Ele é o servidor que **finalmente responde com o endereço IP correto**.
+
+---
+
+## 📡 Non-Authoritative Nameserver
+
+Esse tipo de servidor **não possui autoridade sobre a zona**.
+
+Ele:
+
+- não mantém registros oficiais
+- precisa consultar outros servidores
+
+O processo ocorre assim:
+
+1️⃣ Consulta o servidor autoritativo  
+2️⃣ Se não tiver resposta, pergunta ao root  
+3️⃣ Depois consulta o servidor responsável
+
+---
+
+## 💾 Caching DNS Server
+
+O **Caching DNS Server** armazena respostas em **cache**.
+
+Isso significa que:
+
+- uma vez que a resposta foi encontrada
+- ela é armazenada temporariamente
+
+Assim futuras consultas são **muito mais rápidas**.
+
+⏱️ O tempo de armazenamento é definido pelo **TTL (Time To Live)**.
+
+---
+
+## 🔀 DNS Forwarding Server
+
+O **Forwarding Server** apenas **encaminha consultas DNS para outro servidor**.
+
+Ele é usado quando:
+
+- o DNS resolver **não está configurado para recursão**
+
+Se a recursão estiver ativa, o resolver **faz todas as consultas sozinho**.
+
+---
+
+# 🔄 Fluxo de Resolução DNS
+
+Fluxo simplificado de resolução:
+
+```
+
+Usuário → DNS Resolver → Root Server → Authoritative Server → Resposta
+
+````
+
+### Etapas
+
+1️⃣ Usuário solicita `www.exemplo.com.br`  
+2️⃣ O **DNS Resolver** verifica o cache  
+3️⃣ Se não houver resposta, consulta o **Root Server**  
+4️⃣ O root indica qual servidor conhece `.br`  
+5️⃣ O **Authoritative Server** retorna o IP  
+6️⃣ O resolver salva em **cache**  
+7️⃣ A resposta é enviada ao usuário
+
+---
+
+# 🔒 DNS Seguro
+
+Por padrão, o **DNS não possui criptografia**.
+
+Isso significa que:
+
+- provedores de internet
+- administradores de rede
+- atacantes em redes Wi-Fi
+
+podem **visualizar as consultas DNS**.
+
+Para resolver esse problema surgiram protocolos seguros.
+
+---
+
+## 🔐 DNS over TLS (DoT)
+
+Criptografa consultas DNS usando **TLS**.
+
+---
+
+## 🔐 DNS over HTTPS (DoH)
+
+Encapsula consultas DNS dentro de **requisições HTTPS**.
+
+Isso torna o tráfego **mais difícil de monitorar**.
+
+---
+
+## 🔐 DNSCrypt
+
+Outro protocolo que **criptografa consultas DNS**.
+
+---
+
+# 📚 Registros DNS
+
+Os **registros DNS** armazenam informações sobre um domínio.
+
+Cada tipo retorna uma informação diferente.
+
+| Registro | Função |
+|---|---|
+| **A** | Retorna endereço IPv4 |
+| **AAAA** | Retorna endereço IPv6 |
+| **MX** | Servidores de email |
+| **NS** | Servidores DNS do domínio |
+| **TXT** | Informações adicionais |
+| **CNAME** | Alias para outro domínio |
+| **PTR** | Resolução reversa |
+| **SOA** | Informações da zona |
+
+---
+
+### 🔎 Exemplo de consulta SOA
+
+Ferramenta utilizada:
+
+**dig (Domain Information Groper)**
+
+```bash
+dig soa exemplo.com
+````
+
+---
+
+# ⚙️ Configuração de Servidores DNS
+
+O servidor DNS mais comum em Linux é:
+
+**BIND9**
+
+Arquivo principal:
+
+```
+/etc/bind/named.conf
+```
+
+---
+
+## 📂 Tipos de Configuração
+
+Existem dois grupos de configuração.
+
+---
+
+### 🌍 Configurações Gerais
+
+Afetam **todas as zonas DNS**.
+
+Arquivos comuns:
+
+* `named.conf.local`
+* `named.conf.options`
+* `named.conf.log`
+
+---
+
+### 🧾 Configurações de Zona
+
+Configurações específicas de um domínio.
+
+Exemplo de arquivo:
+
+```
+db.domain.com
+```
+
+⚠️ Regras obrigatórias:
+
+* Deve existir um **registro SOA**
+* Deve existir pelo menos **um registro NS**
+
+---
+
+# ⚠️ Configurações Perigosas em DNS
+
+Algumas opções podem gerar vulnerabilidades.
+
+| Configuração      | Função                                |
+| ----------------- | ------------------------------------- |
+| `allow-query`     | Define quem pode consultar o servidor |
+| `allow-recursion` | Define quem pode usar recursão        |
+| `allow-transfer`  | Permite transferência de zona         |
+| `zone-statistics` | Coleta dados da zona                  |
+
+⚠️ Um **DNS mal configurado** pode expor toda a infraestrutura da empresa.
+
+---
+
+# 🔎 Footprinting DNS
+
+A enumeração DNS é feita analisando **as respostas das consultas**.
+
+---
+
+## 🛰️ Consultar servidores DNS
+
+```bash
+dig ns exemplo.com @10.129.14.128
+```
+
+Consulta o servidor DNS específico.
+
+---
+
+## 🔎 Descobrir versão do servidor
+
+```bash
+dig CH TXT version.bind @10.129.120.85
+```
+
+Pode revelar a **versão do BIND**.
+
+---
+
+## 📊 Obter todas informações do domínio
+
+```bash
+dig any meusite.com @10.129.15.128
+```
+
+Pode revelar:
+
+* emails
+* IPs
+* servidores DNS
+* infraestrutura interna
+
+---
+
+# 📦 Transferência de Zona
+
+---
+
+## 📂 O que é uma Zona DNS
+
+Uma **zona** é um arquivo que contém **todos os registros de um domínio**.
+
+Exemplo:
+
+```
+empresa.com
+```
+
+Contém:
+
+* subdomínios
+* IPs
+* servidores de email
+* aliases
+
+---
+
+## 🔄 O que é Zone Transfer
+
+A **transferência de zona** copia todos os registros DNS de um servidor para outro.
+
+Ela existe para **sincronizar servidores primários e secundários**.
+
+### Tipos
+
+**AXFR**
+
+Transferência completa da zona.
+
+---
+
+## 🛰️ Exploração em Pentest
+
+Se o servidor estiver mal configurado:
+
+```bash
+dig axfr empresa.com @ns1.empresa.com
+```
+
+Isso pode revelar **todos os subdomínios da empresa**.
+
+---
+
+# 🔎 Subdomínio Interno
+
+Algumas empresas utilizam domínios internos.
+
+Exemplo:
+
+```
+internal.empresa.com
+```
+
+Podemos tentar:
+
+```bash
+dig axfr internal.empresa.com @ns1.empresa.com
+```
+
+---
+
+# 🔨 Brute Force de Subdomínios
+
+Outra técnica comum é **testar milhares de subdomínios usando wordlists**.
+
+Wordlist popular:
+
+```
+SecLists
+```
+
+---
+
+## Exemplo de brute force com dig
+
+```bash
+for sub in $(cat subdomains.txt); do
+dig $sub.exemplo.com @10.129.14.128
+done
+```
+
+Ferramentas também podem automatizar isso.
+
+---
+
+# 🛠️ Ferramentas de Enumeração DNS
+
+Ferramentas muito utilizadas em segurança ofensiva:
+
+* **amass**
+* **subfinder**
+* **assetfinder**
+* **dnsrecon**
+* **dnsenum**
+
+---
+
+# 🎯 Importância no Bug Bounty
+
+A enumeração DNS é **uma das fases mais importantes do Recon**.
+
+Ela permite descobrir:
+
+* subdomínios esquecidos
+* sistemas internos
+* serviços expostos
+* ambientes de teste
+
+Muitos bugs começam com **descoberta de subdomínios**.
+
+---
+
+# ⚠️ Subdomain Takeover
+
+Uma vulnerabilidade comum ocorre quando:
+
+Um registro **CNAME aponta para um serviço que não existe mais**.
+
+Exemplo:
+
+```
+app.empresa.com → empresa.herokuapp.com
+```
+
+Se o serviço for removido, um atacante pode **registrar novamente o recurso**.
+
+Plataformas comuns:
+
+* GitHub Pages
+* AWS
+* Heroku
+* Vercel
+
+---
+
+# ☠️ DNS Cache Poisoning
+
+Ataque onde um invasor **insere um IP falso no cache DNS**.
+
+Fluxo do ataque:
+
+```
+Domínio → Resolver DNS → Cache com IP falso → Usuário acessa servidor malicioso
+```
+
+Isso pode redirecionar usuários para **sites controlados pelo atacante**.
+
+---
+
+# 🧭 Fluxo de Recon com DNS
+
+Durante um pentest o fluxo costuma ser:
+
+```
+Domínio
+   ↓
+Enumeração de subdomínios
+   ↓
+Resolução DNS
+   ↓
+Identificação da infraestrutura
+```
+
+A partir disso podemos descobrir:
+
+* servidores
+* aplicações
+* ambientes internos
+* superfícies de ataque
+
+---
+
+# 🧠 Mentalidade de Análise
+
+Durante a enumeração DNS devemos perguntar:
+
+### 🔎 O que está exposto?
+
+* Existem subdomínios internos?
+* Existem registros esquecidos?
+* Existe transferência de zona?
+
+### ⚠️ O que está mal configurado?
+
+* Recursão aberta?
+* allow-transfer habilitado?
+* CNAME quebrado?
+
+Essas respostas podem revelar **toda a infraestrutura da empresa**.
+
+
 
