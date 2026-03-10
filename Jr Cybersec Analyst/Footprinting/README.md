@@ -1583,6 +1583,325 @@ I --> J[Enumeração de Serviços]
 
 ---
 
+# 📂 SMB e NFS – Compartilhamento de Arquivos em Redes
+
+Os protocolos **SMB** e **NFS** permitem **acessar arquivos remotos como se estivessem no sistema local**.
+
+Eles são muito utilizados em:
+
+- Redes corporativas
+- Infraestruturas internas
+- Servidores de arquivos
+- Backups centralizados
+
+⚠️ Em **pentests e bug bounty**, esses serviços são extremamente interessantes porque podem expor:
+
+- Arquivos sensíveis
+- Credenciais
+- Backups
+- Scripts
+- Informações de usuários
+
+---
+
+# 🖥️ SMB (Server Message Block)
+
+O **SMB (Server Message Block)** é um protocolo de rede utilizado para **compartilhar arquivos e dispositivos em uma rede**.
+
+Ele é **muito comum em ambientes Windows**.
+
+Com SMB é possível acessar recursos de outro computador **como se estivessem locais**.
+
+### 📦 Recursos que podem ser compartilhados
+
+- Arquivos
+- Pastas
+- Impressoras
+
+---
+
+## 🌐 Funcionamento do SMB
+
+O SMB utiliza:
+
+- **Protocolo TCP**
+- **Three Way Handshake (3WHS)** para estabelecer conexão
+
+---
+
+# 👥 Controle de Acesso (ACL)
+
+O SMB utiliza **ACL (Access Control List)** para definir permissões de acesso.
+
+Essas permissões podem ser aplicadas a:
+
+- Usuários
+- Grupos
+
+Os usuários geralmente são organizados em **Workgroups** ou **Domínios**.
+
+### 🔑 Tipos de permissões
+
+- `read` → Permite leitura
+- `execute` → Permite execução
+- `full access` → Controle total
+
+---
+
+# 🐧 Samba
+
+O **Samba** é uma **implementação do SMB para sistemas Linux**.
+
+Ele permite que **servidores Linux se comuniquem com sistemas Windows**.
+
+O Samba utiliza o protocolo:
+
+**CIFS (Common Internet File System)**
+
+📌 Isso significa que:
+
+> O Samba "fala a mesma linguagem" do SMB.
+
+Logo, sistemas **Linux e Windows podem compartilhar arquivos entre si**.
+
+---
+
+# 🚪 Portas Utilizadas pelo SMB
+
+### 📜 Versões antigas
+
+Utilizavam **NetBIOS**:
+
+- **137**
+- **138**
+- **139**
+
+### ⚡ SMB moderno
+
+Utiliza:
+
+- **TCP 445**
+
+⚠️ A **primeira versão do SMB (SMBv1)** é considerada **insegura**.
+
+---
+
+# ⚙️ Arquivo de Configuração do Samba
+
+Arquivo principal:
+
+```
+
+/etc/samba/smb.conf
+
+````
+
+Para visualizar **apenas as configurações ativas**:
+
+```bash
+/etc/samba/smb.conf | grep -v "#\|\;"
+````
+
+Isso remove:
+
+* comentários
+* linhas vazias
+
+---
+
+# 🌍 Configurações Globais
+
+As **configurações globais** definem parâmetros para **todo o servidor SMB**.
+
+Elas se aplicam a **todos os compartilhamentos**.
+
+⚠️ Porém:
+
+Configurações específicas podem **sobrescrever as globais**, o que pode gerar **configurações incorretas ou vulneráveis**.
+
+---
+
+# ⚠️ Configurações Perigosas no SMB
+
+Algumas configurações podem expor o servidor.
+
+### Exemplos:
+
+```
+browseable = yes
+read only = no
+writable = yes
+guest ok = yes
+logon script = script.sh
+magic script = script.sh
+magic output = script.out
+create mask = 0777
+directory mask = 0777
+```
+
+### 🔍 O que essas configurações fazem
+
+| Configuração       | Risco                            |
+| ------------------ | -------------------------------- |
+| `browseable = yes` | Permite listar compartilhamentos |
+| `read only = no`   | Permite modificar arquivos       |
+| `writable = yes`   | Permite criar arquivos           |
+| `guest ok = yes`   | Permite acesso sem autenticação  |
+| `logon script`     | Executa script no login          |
+| `magic script`     | Executa script ao fechar arquivo |
+| `0777`             | Permissões totais                |
+
+⚠️ Se encontrarmos essas configurações podemos:
+
+* navegar pelos compartilhamentos
+* baixar arquivos
+* inspecionar conteúdos sensíveis
+
+---
+
+# 🔓 Conexão SMB Anônima
+
+Podemos tentar acessar um servidor SMB **sem autenticação**.
+
+### Listar compartilhamentos
+
+```bash
+smbclient -N -L //<IP_SERVIDOR>
+```
+
+### Parâmetros
+
+* `-N` → conexão anônima
+* `-L` → listar compartilhamentos
+
+---
+
+### Conectar a um compartilhamento
+
+```bash
+smbclient -U "" -N //<IP>/sharename
+```
+
+Após conectar podemos:
+
+* `ls` → listar arquivos
+* `get` → baixar arquivos
+
+📌 Executar comandos locais:
+
+```
+!comando
+```
+
+---
+
+# 🔎 Footprinting SMB
+
+Durante a enumeração SMB podemos descobrir:
+
+* usuários do domínio
+* compartilhamentos abertos
+* arquivos sensíveis
+* backups expostos
+* credenciais
+
+---
+
+# 🛰️ Enumeração SMB com Nmap
+
+O **Nmap possui scripts NSE** para análise SMB.
+
+```bash
+sudo nmap <IP_ALVO> -sV -sC -p139,445
+```
+
+⚠️ Esses scans podem demorar.
+
+Por isso **também devemos fazer enumeração manual**.
+
+---
+
+# 🧰 Enumeração Manual com rpcclient
+
+Ferramenta utilizada para **extrair informações de servidores SMB**.
+
+### Conexão anônima
+
+```bash
+rpcclient -U "" <IP_ALVO>
+```
+
+Parâmetros:
+
+* `-U ""` → usuário vazio
+
+---
+
+## 📜 Comandos úteis no rpcclient
+
+| Comando           | Função                      |
+| ----------------- | --------------------------- |
+| `srvinfo`         | informações do servidor     |
+| `enumdomains`     | listar domínios             |
+| `querydominfo`    | informações do domínio      |
+| `netsharegetinfo` | info de um compartilhamento |
+| `enumdomusers`    | listar usuários             |
+| `queryuser RID`   | info de usuário             |
+
+---
+
+# 🔢 Descobrindo Usuários via RID
+
+Cada usuário possui um **RID (Relative Identifier)**.
+
+Podemos fazer **brute force de RID** para descobrir usuários.
+
+### Script de enumeração
+
+```bash
+for i in $(seq 500 1100); do
+rpcclient -N -U "" <IP_SERVER> -c "queryuser 0x$(printf '%x\n' $i)" \
+| grep "User Name\|user_rid\|group_rid" && echo ""
+done
+```
+
+### O que o script faz
+
+1️⃣ Testa vários RIDs
+2️⃣ Converte o número para **hexadecimal**
+3️⃣ Consulta o usuário
+4️⃣ Filtra os resultados com **grep**
+
+---
+
+# 🛠️ Ferramentas SMB Alternativas
+
+Outras ferramentas úteis para enumeração:
+
+* **samrdump.py**
+* **SMBMap**
+* **CrackMapExec**
+* **enum4linux-ng**
+
+💡 **Boa prática:**
+
+> Sempre usar **duas ou mais ferramentas**, pois elas podem retornar resultados diferentes.
+
+---
+
+# 📊 Fluxo de Enumeração SMB
+
+Fluxo recomendado durante um pentest:
+
+```
+1️⃣ Rodar Nmap
+2️⃣ Listar compartilhamentos (smbclient)
+3️⃣ Testar acesso anônimo
+4️⃣ Enumerar usuários (rpcclient)
+```
+
+---
+
 # 📂 NFS (Network File System)
 
 O **NFS** também permite **acessar arquivos remotos como se fossem locais**.
@@ -1741,5 +2060,9 @@ Eles podem revelar:
 * backups
 * scripts administrativos
 * usuários do domínio
+
+💡 Muitas vezes essas falhas levam a **Privilege Escalation ou acesso total ao domínio**.
+
+---
 
 
