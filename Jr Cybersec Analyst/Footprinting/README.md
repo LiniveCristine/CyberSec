@@ -860,9 +860,9 @@ Principais provedores:
 
 Esses serviços são muito utilizados porque oferecem:
 
-* escalabilidade
-* alta disponibilidade
-* integração com diversas aplicações
+- escalabilidade
+- alta disponibilidade
+- integração com diversas aplicações
 
 ⚠️ Porém, **configurações incorretas podem deixar dados expostos publicamente**.
 
@@ -872,18 +872,18 @@ Esses serviços são muito utilizados porque oferecem:
 
 Serviços de armazenamento em nuvem podem ser configurados como:
 
-* 🔒 **Privados**
-* 🌍 **Públicos**
+- 🔒 **Privados**
+- 🌍 **Públicos**
 
 Se estiverem **mal configurados**, qualquer pessoa pode acessar os arquivos.
 
 Isso pode expor:
 
-* backups
-* arquivos internos
-* documentos confidenciais
-* credenciais
-* chaves SSH
+- backups
+- arquivos internos
+- documentos confidenciais
+- credenciais
+- chaves SSH
 
 ---
 
@@ -899,11 +899,11 @@ Cada provedor possui seu próprio serviço de armazenamento.
 
 Esses serviços armazenam arquivos como:
 
-* imagens
-* backups
-* documentos
-* arquivos de configuração
-* dados de aplicações
+- imagens
+- backups
+- documentos
+- arquivos de configuração
+- dados de aplicações
 
 ---
 
@@ -943,10 +943,10 @@ O **Domain Glass** é uma ferramenta usada para **analisar informações de um d
 
 Ele mostra dados da infraestrutura, como:
 
-* endereço IP
-* nameservers
-* registros WHOIS
-* hostnames associados
+- endereço IP
+- nameservers
+- registros WHOIS
+- hostnames associados
 
 ---
 
@@ -965,15 +965,15 @@ Ele mostra dados da infraestrutura, como:
 
 Com o Domain Glass podemos descobrir:
 
-* se o domínio utiliza **serviços em nuvem**
-* se existem **CDNs ou proxies**
-* possíveis **mecanismos de proteção**
+- se o domínio utiliza **serviços em nuvem**
+- se existem **CDNs ou proxies**
+- possíveis **mecanismos de proteção**
 
 Exemplo:
 
-* Cloudflare
-* AWS
-* Azure
+- Cloudflare
+- AWS
+- Azure
 
 Isso indica que **podemos encontrar obstáculos nas próximas etapas do recon**.
 
@@ -985,10 +985,10 @@ O **GreyHat Warfare** é uma ferramenta OSINT usada para encontrar **arquivos p�
 
 Ele indexa arquivos encontrados em serviços como:
 
-* Amazon S3
-* Azure Blob Storage
-* Google Cloud Storage
-* DigitalOcean Spaces
+- Amazon S3
+- Azure Blob Storage
+- Google Cloud Storage
+- DigitalOcean Spaces
 
 ---
 
@@ -1014,17 +1014,17 @@ Se o bucket estiver **público**, qualquer pessoa pode acessar os arquivos.
 
 Muitas empresas configuram buckets como públicos para:
 
-* hospedar imagens
-* disponibilizar arquivos de download
+- hospedar imagens
+- disponibilizar arquivos de download
 
 Porém, às vezes arquivos **sensíveis são armazenados nesses buckets**.
 
 Exemplos:
 
-* backups de banco de dados
-* arquivos de configuração
-* logs
-* credenciais
+- backups de banco de dados
+- arquivos de configuração
+- logs
+- credenciais
 
 ---
 
@@ -1058,8 +1058,8 @@ Esses arquivos são usados para **autenticação SSH**.
 
 Se expostos publicamente, podem permitir:
 
-* acesso a servidores
-* comprometimento da infraestrutura
+- acesso a servidores
+- comprometimento da infraestrutura
 
 ---
 
@@ -1087,10 +1087,10 @@ G --> H
 
 Durante o recon queremos descobrir:
 
-* buckets públicos
-* arquivos sensíveis
-* configurações expostas
-* possíveis credenciais
+- buckets públicos
+- arquivos sensíveis
+- configurações expostas
+- possíveis credenciais
 
 Isso pode revelar **informações críticas sem precisar atacar diretamente o sistema**.
 
@@ -1119,10 +1119,10 @@ Buscar principalmente profissionais das áreas:
 
 Também podemos analisar:
 
-* habilidades listadas
-* projetos desenvolvidos
-* certificações
-* tecnologias mencionadas
+- habilidades listadas
+- projetos desenvolvidos
+- certificações
+- tecnologias mencionadas
 
 Essas informações podem indicar **quais tecnologias a empresa utiliza**.
 
@@ -1153,9 +1153,9 @@ Quando identificamos as tecnologias usadas pela empresa podemos:
 
 Muitas organizações seguem **configurações padrão**, o que pode resultar em:
 
-* nomes de arquivos previsíveis
-* diretórios padrão
-* configurações inseguras
+- nomes de arquivos previsíveis
+- diretórios padrão
+- configurações inseguras
 
 ---
 
@@ -1203,9 +1203,9 @@ Objetivo: descobrir detalhes técnicos de cada sistema.
 
 O **FTP** é um protocolo utilizado para:
 
-* enviar arquivos
-* baixar arquivos
-* gerenciar arquivos em servidores
+- enviar arquivos
+- baixar arquivos
+- gerenciar arquivos em servidores
 
 Ele opera na **camada de aplicação**, assim como:
 
@@ -1223,8 +1223,8 @@ O FTP **não é seguro**, pois envia dados em **texto puro (clear text)**.
 
 Isso inclui:
 
-* usuário
-* senha
+- usuário
+- senha
 
 Alternativas seguras:
 
@@ -1250,8 +1250,8 @@ Uma conexão FTP utiliza **dois canais diferentes**.
 
 Utilizado para:
 
-* envio de comandos
-* comunicação cliente-servidor
+- envio de comandos
+- comunicação cliente-servidor
 
 O servidor responde com **status codes**.
 
@@ -1261,13 +1261,13 @@ O servidor responde com **status codes**.
 
 Utilizado para:
 
-* transferência de arquivos
-* listagem de diretórios
+- transferência de arquivos
+- listagem de diretórios
 
 O protocolo pode:
 
-* detectar erros
-* retomar transferências interrompidas
+- detectar erros
+- retomar transferências interrompidas
 
 ---
 
@@ -1409,9 +1409,9 @@ Exemplo:
 
 O banner pode revelar:
 
-* versão do servidor
-* tipo de software
-* sistema operacional
+- versão do servidor
+- tipo de software
+- sistema operacional
 
 ---
 
@@ -1448,9 +1448,9 @@ put arquivo.txt
 
 Se o FTP estiver ligado a um **servidor web**, pode permitir:
 
-* upload de web shell
-* execução remota de código
-* elevação de privilégios
+- upload de web shell
+- execução remota de código
+- elevação de privilégios
 
 ---
 
@@ -1458,10 +1458,10 @@ Se o FTP estiver ligado a um **servidor web**, pode permitir:
 
 Um FTP mal configurado pode permitir:
 
-* acesso a arquivos sensíveis
-* **LFI (Local File Inclusion)**
-* **RCE (Remote Code Execution)**
-* exploração de logs
+- acesso a arquivos sensíveis
+- **LFI (Local File Inclusion)**
+- **RCE (Remote Code Execution)**
+- exploração de logs
 
 ---
 
@@ -1481,9 +1481,9 @@ Ferramenta mais utilizada:
 
 O **NSE** permite executar scripts para:
 
-* detectar vulnerabilidades
-* coletar informações
-* automatizar enumeração
+- detectar vulnerabilidades
+- coletar informações
+- automatizar enumeração
 
 Documentação:
 
@@ -1694,18 +1694,18 @@ Arquivo principal:
 
 /etc/samba/smb.conf
 
-````
+```
 
 Para visualizar **apenas as configurações ativas**:
 
 ```bash
 /etc/samba/smb.conf | grep -v "#\|\;"
-````
+```
 
 Isso remove:
 
-* comentários
-* linhas vazias
+- comentários
+- linhas vazias
 
 ---
 
@@ -1753,9 +1753,9 @@ directory mask = 0777
 
 ⚠️ Se encontrarmos essas configurações podemos:
 
-* navegar pelos compartilhamentos
-* baixar arquivos
-* inspecionar conteúdos sensíveis
+- navegar pelos compartilhamentos
+- baixar arquivos
+- inspecionar conteúdos sensíveis
 
 ---
 
@@ -1771,8 +1771,8 @@ smbclient -N -L //<IP_SERVIDOR>
 
 ### Parâmetros
 
-* `-N` → conexão anônima
-* `-L` → listar compartilhamentos
+- `-N` → conexão anônima
+- `-L` → listar compartilhamentos
 
 ---
 
@@ -1784,8 +1784,8 @@ smbclient -U "" -N //<IP>/sharename
 
 Após conectar podemos:
 
-* `ls` → listar arquivos
-* `get` → baixar arquivos
+- `ls` → listar arquivos
+- `get` → baixar arquivos
 
 📌 Executar comandos locais:
 
@@ -1799,11 +1799,11 @@ Após conectar podemos:
 
 Durante a enumeração SMB podemos descobrir:
 
-* usuários do domínio
-* compartilhamentos abertos
-* arquivos sensíveis
-* backups expostos
-* credenciais
+- usuários do domínio
+- compartilhamentos abertos
+- arquivos sensíveis
+- backups expostos
+- credenciais
 
 ---
 
@@ -1833,7 +1833,7 @@ rpcclient -U "" <IP_ALVO>
 
 Parâmetros:
 
-* `-U ""` → usuário vazio
+- `-U ""` → usuário vazio
 
 ---
 
@@ -1878,10 +1878,10 @@ done
 
 Outras ferramentas úteis para enumeração:
 
-* **samrdump.py**
-* **SMBMap**
-* **CrackMapExec**
-* **enum4linux-ng**
+- **samrdump.py**
+- **SMBMap**
+- **CrackMapExec**
+- **enum4linux-ng**
 
 💡 **Boa prática:**
 
@@ -1926,11 +1926,11 @@ A versão mais recente é:
 
 O NFS utiliza principalmente:
 
-* **2049**
+- **2049**
 
 Outras portas importantes:
 
-* **111** (RPC)
+- **111** (RPC)
 
 ---
 
@@ -1954,8 +1954,8 @@ echo '/minha_pasta/arquivo 10.129.14.0/24(sync,no_subtree_check)' >> /etc/export
 
 ### O que isso significa
 
-* Compartilha `/minha_pasta/arquivo`
-* Permite acesso à rede `10.129.14.0/24`
+- Compartilha `/minha_pasta/arquivo`
+- Permite acesso à rede `10.129.14.0/24`
 
 Todos os hosts dessa rede podem **acessar o conteúdo**.
 
@@ -1982,9 +1982,9 @@ Ela permite que um usuário **root remoto mantenha UID 0 no servidor**.
 
 Isso pode permitir:
 
-* modificar arquivos críticos
-* alterar scripts
-* escalar privilégios
+- modificar arquivos críticos
+- alterar scripts
+- escalar privilégios
 
 ---
 
@@ -1992,8 +1992,8 @@ Isso pode permitir:
 
 Durante a enumeração devemos procurar principalmente:
 
-* **porta 111**
-* **porta 2049**
+- **porta 111**
+- **porta 2049**
 
 Essas portas indicam serviço NFS ativo.
 
@@ -2041,9 +2041,9 @@ sudo mount -t nfs <IP_ALVO>:/caminho/do/arquivo /mnt/nfs -o nolock
 
 ### Parâmetros
 
-* `<IP_ALVO>` → servidor NFS
-* `/caminho/do/arquivo` → diretório exportado
-* `/mnt/nfs` → diretório local
+- `<IP_ALVO>` → servidor NFS
+- `/caminho/do/arquivo` → diretório exportado
+- `/mnt/nfs` → diretório local
 
 Após montar, os arquivos podem ser **acessados localmente**.
 
@@ -2055,11 +2055,11 @@ Serviços SMB e NFS são **alvos extremamente comuns em redes internas**.
 
 Eles podem revelar:
 
-* credenciais
-* arquivos de configuração
-* backups
-* scripts administrativos
-* usuários do domínio
+- credenciais
+- arquivos de configuração
+- backups
+- scripts administrativos
+- usuários do domínio
 
 💡 Muitas vezes essas falhas levam a **Privilege Escalation ou acesso total ao domínio**.
 
@@ -2220,7 +2220,7 @@ Fluxo simplificado de resolução:
 
 Usuário → DNS Resolver → Root Server → Authoritative Server → Resposta
 
-````
+```
 
 ### Etapas
 
@@ -2276,16 +2276,16 @@ Os **registros DNS** armazenam informações sobre um domínio.
 
 Cada tipo retorna uma informação diferente.
 
-| Registro | Função |
-|---|---|
-| **A** | Retorna endereço IPv4 |
-| **AAAA** | Retorna endereço IPv6 |
-| **MX** | Servidores de email |
-| **NS** | Servidores DNS do domínio |
-| **TXT** | Informações adicionais |
-| **CNAME** | Alias para outro domínio |
-| **PTR** | Resolução reversa |
-| **SOA** | Informações da zona |
+| Registro  | Função                    |
+| --------- | ------------------------- |
+| **A**     | Retorna endereço IPv4     |
+| **AAAA**  | Retorna endereço IPv6     |
+| **MX**    | Servidores de email       |
+| **NS**    | Servidores DNS do domínio |
+| **TXT**   | Informações adicionais    |
+| **CNAME** | Alias para outro domínio  |
+| **PTR**   | Resolução reversa         |
+| **SOA**   | Informações da zona       |
 
 ---
 
@@ -2297,7 +2297,7 @@ Ferramenta utilizada:
 
 ```bash
 dig soa exemplo.com
-````
+```
 
 ---
 
@@ -2327,9 +2327,9 @@ Afetam **todas as zonas DNS**.
 
 Arquivos comuns:
 
-* `named.conf.local`
-* `named.conf.options`
-* `named.conf.log`
+- `named.conf.local`
+- `named.conf.options`
+- `named.conf.log`
 
 ---
 
@@ -2345,8 +2345,8 @@ db.domain.com
 
 ⚠️ Regras obrigatórias:
 
-* Deve existir um **registro SOA**
-* Deve existir pelo menos **um registro NS**
+- Deve existir um **registro SOA**
+- Deve existir pelo menos **um registro NS**
 
 ---
 
@@ -2399,10 +2399,10 @@ dig any meusite.com @10.129.15.128
 
 Pode revelar:
 
-* emails
-* IPs
-* servidores DNS
-* infraestrutura interna
+- emails
+- IPs
+- servidores DNS
+- infraestrutura interna
 
 ---
 
@@ -2422,10 +2422,10 @@ empresa.com
 
 Contém:
 
-* subdomínios
-* IPs
-* servidores de email
-* aliases
+- subdomínios
+- IPs
+- servidores de email
+- aliases
 
 ---
 
@@ -2501,11 +2501,11 @@ Ferramentas também podem automatizar isso.
 
 Ferramentas muito utilizadas em segurança ofensiva:
 
-* **amass**
-* **subfinder**
-* **assetfinder**
-* **dnsrecon**
-* **dnsenum**
+- **amass**
+- **subfinder**
+- **assetfinder**
+- **dnsrecon**
+- **dnsenum**
 
 ---
 
@@ -2515,10 +2515,10 @@ A enumeração DNS é **uma das fases mais importantes do Recon**.
 
 Ela permite descobrir:
 
-* subdomínios esquecidos
-* sistemas internos
-* serviços expostos
-* ambientes de teste
+- subdomínios esquecidos
+- sistemas internos
+- serviços expostos
+- ambientes de teste
 
 Muitos bugs começam com **descoberta de subdomínios**.
 
@@ -2540,10 +2540,10 @@ Se o serviço for removido, um atacante pode **registrar novamente o recurso**.
 
 Plataformas comuns:
 
-* GitHub Pages
-* AWS
-* Heroku
-* Vercel
+- GitHub Pages
+- AWS
+- Heroku
+- Vercel
 
 ---
 
@@ -2577,10 +2577,10 @@ Identificação da infraestrutura
 
 A partir disso podemos descobrir:
 
-* servidores
-* aplicações
-* ambientes internos
-* superfícies de ataque
+- servidores
+- aplicações
+- ambientes internos
+- superfícies de ataque
 
 ---
 
@@ -2590,17 +2590,341 @@ Durante a enumeração DNS devemos perguntar:
 
 ### 🔎 O que está exposto?
 
-* Existem subdomínios internos?
-* Existem registros esquecidos?
-* Existe transferência de zona?
+- Existem subdomínios internos?
+- Existem registros esquecidos?
+- Existe transferência de zona?
 
 ### ⚠️ O que está mal configurado?
 
-* Recursão aberta?
-* allow-transfer habilitado?
-* CNAME quebrado?
+- Recursão aberta?
+- allow-transfer habilitado?
+- CNAME quebrado?
 
 Essas respostas podem revelar **toda a infraestrutura da empresa**.
 
+---
 
+# 📧 SMTP (Simple Mail Transfer Protocol)
 
+O **SMTP (Simple Mail Transfer Protocol)** é o protocolo responsável pelo **envio de emails na internet**.
+
+Ele pode ser utilizado entre:
+
+- **Cliente → Servidor de email**
+- **Servidor SMTP → Servidor SMTP**
+
+⚠️ O SMTP é utilizado **apenas para envio de emails**.
+
+Para **receber emails**, normalmente são utilizados outros protocolos:
+
+- **IMAP**
+- **POP3**
+
+---
+
+# 🚪 Portas Utilizadas
+
+As portas mais comuns utilizadas pelo SMTP são:
+
+| Porta   | Uso                   |
+| ------- | --------------------- |
+| **25**  | SMTP padrão           |
+| **587** | SMTP com autenticação |
+| **465** | SMTP com SSL/TLS      |
+
+---
+
+# ⚙️ Funcionamento do SMTP
+
+O processo de envio de email ocorre em várias etapas.
+
+### 📤 Envio de email
+
+1️⃣ O usuário utiliza um **cliente de email (MUA – Mail User Agent)**
+
+Exemplos:
+
+- Outlook
+- Thunderbird
+- Webmail
+
+---
+
+2️⃣ O cliente realiza **autenticação no servidor SMTP**
+
+Apenas **usuários autorizados podem enviar emails**, o que ajuda a **prevenir spam**.
+
+---
+
+3️⃣ O usuário envia as informações da mensagem:
+
+- Email do **remetente**
+- Email do **destinatário**
+- **Mensagem**
+
+---
+
+4️⃣ O servidor SMTP do remetente consulta o **DNS** para descobrir o servidor de email do destinatário.
+
+Ele busca o **registro MX** do domínio.
+
+---
+
+5️⃣ O email é transferido entre servidores SMTP.
+
+---
+
+6️⃣ O email chega ao servidor do destinatário.
+
+A partir daí ele poderá ser acessado usando:
+
+- **IMAP**
+- **POP3**
+
+---
+
+# 🔐 Segurança no SMTP
+
+Por padrão, o SMTP envia dados **sem criptografia**.
+
+Isso significa que as informações são transmitidas em:
+
+```
+
+Clear Text
+
+```
+
+Ou seja, podem ser **interceptadas na rede**.
+
+---
+
+## 🔒 SMTP com criptografia
+
+Para resolver esse problema, utiliza-se:
+
+- **SSL**
+- **TLS**
+
+Uma extensão chamada **ESMTP** permite suporte a TLS.
+
+**ESMTP = SMTP + TLS**
+
+---
+
+# ⚙️ Configuração do Servidor SMTP
+
+Um servidor SMTP comum em Linux utiliza o **Postfix**.
+
+Para visualizar configurações ativas:
+
+```bash
+cat /etc/postfix/main.cf | grep -v "#" | sed -r "/^\s*$/d"
+```
+
+Esse comando:
+
+- remove comentários
+- remove linhas vazias
+- mostra apenas configurações ativas
+
+---
+
+# 🧾 Comandos SMTP
+
+Durante uma sessão SMTP, vários comandos podem ser utilizados.
+
+| Comando        | Função                           |
+| -------------- | -------------------------------- |
+| **HELO**       | Identificação inicial do cliente |
+| **EHLO**       | Versão estendida do HELO         |
+| **AUTH PLAIN** | Autenticação do usuário          |
+| **MAIL FROM**  | Define o remetente               |
+| **RCPT TO**    | Define o destinatário            |
+| **DATA**       | Conteúdo da mensagem             |
+| **RSET**       | Cancela transmissão              |
+| **VRFY**       | Verifica se usuário existe       |
+| **NOOP**       | Solicita resposta do servidor    |
+| **QUIT**       | Encerra conexão                  |
+
+---
+
+# 🧪 Interagindo com SMTP usando Telnet
+
+Podemos interagir diretamente com um servidor SMTP usando **Telnet**.
+
+O Telnet apenas estabelece a **conexão TCP**, mas o comando **HELO/EHLO inicia a sessão SMTP**.
+
+---
+
+## Conectando ao servidor
+
+```bash
+telnet <IP_SERVIDOR_SMTP> 25
+```
+
+---
+
+## Iniciando sessão SMTP
+
+```bash
+HELO mail.example.com
+```
+
+ou
+
+```bash
+EHLO mail.example.com
+```
+
+---
+
+# 🔎 Enumeração de Usuários SMTP
+
+O comando **VRFY** pode verificar se um usuário existe no servidor.
+
+Exemplo:
+
+```bash
+VRFY root
+```
+
+O servidor pode responder informando se o usuário existe.
+
+⚠️ Nem todos os servidores permitem esse comando.
+
+---
+
+# 🤖 Automatizando Enumeração
+
+Ferramenta utilizada:
+
+**smtp-user-enum**
+
+Exemplo:
+
+```bash
+smtp-user-enum -M VRFY -U /usr/share/seclists/Usernames/top-usernames-shortlist.txt -t <IP>
+```
+
+### Parâmetros
+
+| Parâmetro | Função               |
+| --------- | -------------------- |
+| **-M**    | Método utilizado     |
+| **-U**    | Wordlist de usuários |
+| **-t**    | Alvo                 |
+
+⚠️ Esse tipo de ataque pode ser facilmente detectado por:
+
+- IDS
+- IPS
+
+---
+
+# 🔎 Footprinting SMTP
+
+Uma forma comum de enumerar servidores SMTP é utilizando **Nmap**.
+
+```bash
+sudo nmap <IP_SERVIDOR> -sC -sV -p25
+```
+
+### Parâmetros
+
+| Parâmetro | Função                     |
+| --------- | -------------------------- |
+| **-sC**   | Scripts padrão             |
+| **-sV**   | Detectar versão do serviço |
+| **-p25**  | Escanear porta SMTP        |
+
+---
+
+## Exemplo de resultado
+
+```
+25/tcp open  smtp  Postfix smtpd
+```
+
+### Informações importantes
+
+- **Postfix** → software do servidor de email
+- **smtp-commands** → lista de comandos aceitos pelo servidor
+
+Exemplo:
+
+```
+PIPELINING
+VRFY
+ETRN
+SMTPUTF8
+```
+
+⚠️ O comando **VRFY** pode permitir enumeração de usuários.
+
+---
+
+# 🚨 Open Relay SMTP
+
+Uma vulnerabilidade grave em servidores SMTP é o **Open Relay**.
+
+---
+
+## O que é Open Relay?
+
+Um **Open Relay** permite que **qualquer pessoa envie emails através do servidor sem autenticação**.
+
+Isso pode ser usado para:
+
+- Spam
+- Phishing
+- Distribuição de malware
+
+---
+
+# 🔎 Detectando Open Relay com Nmap
+
+Podemos utilizar um script NSE do Nmap:
+
+```bash
+sudo nmap <IP_ALVO> -p25 --script smtp-open-relay -v
+```
+
+O script simula um envio de email.
+
+---
+
+### Simulação realizada pelo Nmap
+
+```
+MAIL FROM: atacante@fake.com
+RCPT TO: vitima@gmail.com
+```
+
+Se o servidor aceitar o envio:
+
+```
+smtp-open-relay: Server is an open relay
+```
+
+⚠️ Isso indica **vulnerabilidade crítica de configuração**.
+
+---
+
+# 🧠 Importância em Pentest
+
+Servidores SMTP podem revelar diversas informações durante um pentest:
+
+- Usuários do sistema
+- Configuração do servidor
+- Versões de software
+- Possibilidade de **open relay**
+- Enumeração de contas de email
+
+Essas informações podem ser utilizadas para:
+
+- ataques de phishing
+- engenharia social
+- comprometer contas de usuários
+
+---
