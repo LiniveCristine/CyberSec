@@ -1,4 +1,3 @@
-
 # 🐘 PHP Básico
 
 ---
@@ -233,3 +232,198 @@ if ($idade >= 18) {
     echo "Maior de idade";
 }
 ```
+
+---
+
+# ⚙️ Funções, Closures e Loops em PHP
+
+## 📌 Funções
+
+Funções são blocos de código reutilizáveis que executam uma tarefa específica.
+
+### Definindo uma função
+
+```php
+function minha_funcao() {
+    echo "Olá mundo";
+}
+```
+
+Para executar a função:
+
+```php
+minha_funcao();
+```
+
+---
+
+## 📥 Parâmetros de Função
+
+Funções podem receber **parâmetros**, que são valores enviados durante a chamada da função.
+
+### Exemplo
+
+```php
+function exibir_mensagem($mensagem) {
+    echo $mensagem;
+}
+
+exibir_mensagem("Olá mundo");
+```
+
+📌 Nesse caso:
+
+- `$mensagem` → parâmetro da função
+- `"Olá mundo"` → argumento passado na chamada
+
+---
+
+## 🔐 Closures (Funções Anônimas)
+
+Closures são **funções sem nome**.
+
+Em PHP, **closures são objetos**, e cada closure é uma instância da classe:
+
+```
+Closure
+```
+
+### Características
+
+Closures podem:
+
+- Ser armazenadas em **variáveis**
+- Ser **passadas como argumentos**
+- **Acessar variáveis externas**
+
+---
+
+## 📦 Exemplo de Função Tradicional
+
+```php
+function somar($a, $b) {
+    return $a + $b;
+}
+
+echo somar(10, 15);
+```
+
+---
+
+## 🧩 Exemplo com Closure
+
+```php
+$somar = function($a, $b) {
+    return $a + $b;
+};
+
+echo $somar(10, 15);
+```
+
+📌 Aqui a função é armazenada dentro da variável `$somar`.
+
+---
+
+## 🔗 Acessando Variáveis Externas
+
+Closures podem acessar variáveis externas utilizando a palavra **`use`**.
+
+### Exemplo
+
+```php
+$num = 10;
+
+$soma = function($a) use ($num) {
+    return $a + $num;
+};
+
+echo $soma(5);
+```
+
+📌 A variável `$num` foi importada para dentro da closure.
+
+---
+
+## 🔄 Closure por Referência
+
+Podemos modificar uma variável externa usando **referência (`&`)**.
+
+### Exemplo
+
+```php
+$contador = 0;
+
+$incremento = function() use (&$contador) {
+    $contador++;
+};
+
+$incremento();
+$incremento();
+
+echo $contador;
+```
+
+📌 Nesse caso:
+
+- `$contador` não é uma variável local
+- A closure modifica a variável externa diretamente
+
+---
+
+# 🔁 Loops em PHP
+
+Loops permitem executar um bloco de código **várias vezes**.
+
+---
+
+# 🔄 While
+
+Executa o código **enquanto a condição for verdadeira**.
+
+```php
+while(true) {
+    echo "Executando...";
+}
+```
+
+⚠️ Se a condição nunca for falsa, o loop será **infinito**.
+
+---
+
+# 🔂 For
+
+Loop usado quando sabemos **quantas vezes queremos repetir algo**.
+
+```php
+for ($i = 0; $i < 10; $i++) {
+    echo $i;
+}
+```
+
+### Estrutura do `for`
+
+```php
+for (inicialização; condição; incremento)
+```
+
+| Parte     | Função               |
+| --------- | -------------------- |
+| `$i = 0`  | variável de controle |
+| `$i < 10` | condição do loop     |
+| `$i++`    | incremento           |
+
+---
+
+# 🧠 Resumo
+
+| Conceito      | Explicação                               |
+| ------------- | ---------------------------------------- |
+| **Função**    | Bloco de código reutilizável             |
+| **Parâmetro** | Valor recebido pela função               |
+| **Closure**   | Função anônima armazenada em variável    |
+| **use**       | Permite acessar variáveis externas       |
+| **&**         | Passagem por referência                  |
+| **while**     | Executa enquanto condição for verdadeira |
+| **for**       | Loop com controle de repetição           |
+
+---
