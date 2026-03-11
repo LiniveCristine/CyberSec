@@ -12,7 +12,6 @@ Um exemplo simples de código PHP:
 
 echo "Hello World";
 ```
-````
 
 O comando `echo` é utilizado para **exibir conteúdo na saída** (normalmente no navegador).
 
