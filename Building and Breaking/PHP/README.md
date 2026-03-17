@@ -616,4 +616,154 @@ foreach ($lista as $chave => $item) {
 ---
 
 
+# 🔁 Callbacks e Manipulação de Arrays em PHP
+
+## 📌 O que é Callback?
+
+Um **callback** é uma **função passada como argumento para outra função**.
+
+📌 Essa função será executada **dentro da função principal**.
+
+---
+
+## ⚙️ Exemplo de Callback
+
+```php
+function callback($nome) {
+    return "Olá $nome, a função callback retornou";
+}
+
+function recebe_callback($callB) {
+    $nome = readline("Digite seu nome: ");
+    echo $callB($nome);
+}
+
+recebe_callback("callback");
+````
+
+### 📌 Explicação:
+
+* `callback()` → função passada como argumento
+* `recebe_callback()` → função que recebe e executa o callback
+* `$callB($nome)` → executa a função recebida
+
+---
+
+# 🧩 Callback com Função Anônima
+
+Também podemos passar uma **closure (função anônima)** como callback.
+
+---
+
+## 📦 Exemplo
+
+```php
+function recebe_callback($callB) {
+    $nome = readline("Digite seu nome: ");
+    echo $callB($nome);
+}
+
+recebe_callback(function($nome) {
+    return "Olá $nome, callback com função anônima";
+});
+```
+
+📌 Aqui:
+
+* A função é criada **na hora**
+* Não precisa de nome
+* Muito usado em código moderno
+
+---
+
+# 📦 Manipulação de Arrays
+
+PHP possui várias funções úteis para trabalhar com arrays.
+
+---
+
+## 🔍 `in_array()`
+
+Verifica se um valor existe dentro de um array.
+
+```php
+$lista = ["maçã", "banana", "uva"];
+
+var_dump(in_array("banana", $lista)); // true
+```
+
+### 📌 Parâmetros:
+
+* Valor a buscar
+* Array
+
+---
+
+## 🔑 `array_key_exists()`
+
+Verifica se uma **chave existe** em um array associativo.
+
+```php
+$dados = ["nome" => "Maria", "idade" => 25];
+
+var_dump(array_key_exists("nome", $dados)); // true
+```
+
+---
+
+## ✅ `isset()`
+
+Verifica se uma variável (ou chave) **existe e não é null**.
+
+```php
+isset($dados["nome"]); // true
+```
+
+📌 Muito usado para validar inputs:
+
+```php
+if (isset($_POST["user"])) {
+    // variável existe
+}
+```
+
+---
+
+## 🔄 `array_values()`
+
+Remove as **chaves** de um array associativo, mantendo apenas os valores.
+
+```php
+$dados = ["a" => 1, "b" => 2];
+
+print_r(array_values($dados));
+```
+
+📌 Resultado:
+
+```text
+[1, 2]
+```
+
+---
+
+## 🔁 `array_keys()`
+
+Retorna apenas as **chaves** de um array.
+
+```php
+$dados = ["a" => 1, "b" => 2];
+
+print_r(array_keys($dados));
+```
+
+📌 Resultado:
+
+```text
+["a", "b"]
+```
+
+---
+
+
 
