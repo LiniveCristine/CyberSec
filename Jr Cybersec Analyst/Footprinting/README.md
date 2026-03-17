@@ -2928,3 +2928,209 @@ Essas informações podem ser utilizadas para:
 - comprometer contas de usuários
 
 ---
+
+# 📬 IMAP e POP3
+
+Protocolos utilizados para **recebimento de emails**.
+
+- **IMAP (Internet Message Access Protocol)**
+- **POP3 (Post Office Protocol v3)**
+
+---
+
+# 📥 IMAP (Internet Message Access Protocol)
+
+O **IMAP** permite acessar e gerenciar emails **diretamente no servidor**.
+
+## 🔑 Características
+
+- Acesso remoto à caixa de email
+- Suporte a **pastas (Inbox, Sent, Drafts, etc.)**
+- Permite múltiplos acessos simultâneos
+- Emails permanecem no servidor
+- Mais completo que o POP3
+
+---
+
+## 🌐 Portas
+
+| Porta | Descrição |
+|------|----------|
+| **143** | IMAP padrão (sem criptografia) |
+| **993** | IMAP com SSL/TLS (IMAPS) |
+
+---
+
+## 📌 IMAP vs SMTP
+
+- **SMTP** → envia emails  
+- **IMAP** → acessa e gerencia emails  
+
+📁 Fluxo:
+
+```text
+Envio (SMTP) → Armazenamento → Acesso (IMAP)
+````
+
+---
+
+## 🔐 Segurança
+
+Por padrão, o IMAP transmite dados em: Clear Text
+
+
+Para proteger:
+
+- SSL/TLS
+- IMAPS (porta 993)
+
+---
+
+# 📮 POP3 (Post Office Protocol)
+
+O **POP3** é mais simples e limitado que o IMAP.
+
+## 🔑 Características
+
+- Apenas:
+  - Listar emails
+  - Baixar emails
+  - Excluir emails
+- Normalmente baixa os emails para o cliente local
+- Não suporta organização em pastas
+
+---
+
+## 🌐 Portas
+
+| Porta | Descrição |
+|------|----------|
+| **110** | POP3 padrão |
+| **995** | POP3 com SSL/TLS |
+
+---
+
+# ⚠️ Configurações Perigosas
+
+Configurações incorretas podem expor informações sensíveis.
+
+## 🚨 Exemplos
+
+- **auth_debug** → ativa logs detalhados  
+- **auth_debug_passwords** → pode registrar senhas  
+- **auth_verbose** → registra falhas de login  
+- **auth_verbose_passwords** → registra senhas incorretas  
+- **auth_anonymous_username** → permite acesso anônimo  
+
+⚠️ Pode resultar em:
+
+- Vazamento de credenciais
+- Enumeração de usuários
+- Acesso não autorizado
+
+---
+
+# 🔎 Footprinting IMAP/POP3
+
+## 📡 Portas alvo
+
+- **IMAP:** 143, 993  
+- **POP3:** 110, 995  
+
+---
+
+## 🛰️ Nmap
+
+```bash id="g7nt7h"
+sudo nmap <IP_ALVO> -sV -p110,143,993,995 -sC
+````
+
+### Objetivo:
+
+* Identificar serviços ativos
+* Detectar versões
+* Descobrir possíveis vulnerabilidades
+
+---
+
+# 🌐 Testando com CURL (IMAP)
+
+```bash id="m7wq7h"
+curl -k 'imaps://<IP>' --user usuario:senha
+```
+
+## 📌 Explicação
+
+| Parâmetro    | Função                          |
+| ------------ | ------------------------------- |
+| **imaps://** | IMAP com SSL/TLS                |
+| **-k**       | Ignora validação de certificado |
+| **--user**   | Define usuário e senha          |
+
+💡 Use `-v` para modo **verbose** (mais detalhes do servidor).
+
+---
+
+# 🔐 Conexão com OpenSSL
+
+Permite criar conexões seguras manualmente.
+
+---
+
+## POP3
+
+```bash id="wh3j2p"
+openssl s_client -connect <IP>:pop3s
+```
+
+---
+
+## IMAP
+
+```bash id="v9t8r1"
+openssl s_client -connect <IP>:imaps
+```
+
+## 📌 O que acontece:
+
+* Cria conexão TCP
+* Realiza handshake TLS
+* Permite interação manual com o serviço
+
+---
+
+# 🧪 Interagindo com IMAP
+
+Após conectar, podemos executar comandos manualmente.
+
+## 📜 Comandos básicos
+
+```text
+a LOGIN user senha
+b LIST "" *
+c SELECT INBOX
+d FETCH 1 BODY[]
+```
+
+## 📌 Explicação
+
+| Comando          | Função                      |
+| ---------------- | --------------------------- |
+| **LOGIN**        | Autenticação                |
+| **LIST**         | Listar pastas               |
+| **SELECT INBOX** | Selecionar caixa de entrada |
+| **FETCH**        | Ler conteúdo do email       |
+
+---
+
+# 🧠 Resumo
+
+| Protocolo | Função           | Característica                      |
+| --------- | ---------------- | ----------------------------------- |
+| **IMAP**  | Gerenciar emails | Completo, remoto, múltiplos acessos |
+| **POP3**  | Baixar emails    | Simples, limitado                   |
+
+---
+
+
+
