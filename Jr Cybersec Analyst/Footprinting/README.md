@@ -3132,5 +3132,279 @@ d FETCH 1 BODY[]
 
 ---
 
+# 🗄️ MySQL
+
+## 📌 O que é MySQL?
+
+O **MySQL** é um **SGBD (Sistema de Gerenciamento de Banco de Dados Relacional)**:
+
+- Código aberto (mantido pela Oracle)
+- Baseado em **SQL**
+- Arquitetura **cliente-servidor**
+- Muito utilizado em **aplicações web dinâmicas**
+
+📂 Arquivos comuns:
+- `.sql`
+- dumps como `wordpress.sql`
+
+---
+
+# 🧠 Conceito de Banco de Dados
+
+Um **banco de dados** é:
+
+> Uma coleção estruturada de dados organizada para facilitar armazenamento, busca e manipulação.
+
+📊 Estrutura:
+- **Tabelas**
+- **Linhas (registros)**
+- **Colunas (atributos)**
+
+---
+
+# 🌐 Uso em Aplicações Web
+
+O MySQL é frequentemente usado com stacks como:
+
+## 🔧 LAMP
+- Linux
+- Apache
+- MySQL
+- PHP
+
+## 🔧 LEMP
+- Linux
+- Nginx
+- MySQL
+- PHP
+
+---
+
+# 📦 O que o MySQL Armazena?
+
+## 🌍 Dados da aplicação
+- Conteúdo do site (títulos, textos)
+- Meta tags (SEO)
+- Formulários
+
+## 👤 Dados de usuários
+- Nome de usuário
+- Email
+- Telefone
+
+## 🔐 Controle de acesso
+- Senhas
+- Permissões
+
+⚠️ Dados sensíveis:
+- Podem estar em **clear text** (má prática)
+- Ideal: **hash/criptografia no backend (PHP)**
+
+---
+
+# 🔄 Fluxo: Aplicação + Banco de Dados
+
+## 📥 1. Usuário envia dados
+
+```text
+Usuário: admin
+Senha: 123456
+````
+
+---
+
+## 🌐 2. Requisição HTTP
+
+Dados enviados ao servidor via formulário.
+
+---
+
+## ⚙️ 3. Backend (PHP)
+
+```php
+$username = $_POST['user'];
+$password = $_POST['pass'];
+
+$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+```
+
+---
+
+## 🗄️ 4. MySQL
+
+* Recebe a query
+* Processa internamente
+* Busca dados no banco
+
+---
+
+## 📤 5. Resultado
+
+* Retorna ao PHP
+* Aplicação responde ao usuário
+
+---
+
+# 💥 SQL Injection (SQLi)
+
+## 📍 Onde ocorre?
+
+Na **construção da query SQL**.
+
+---
+
+## ⚠️ Exemplo de vulnerabilidade
+
+```sql
+SELECT * FROM users
+WHERE username = 'admin'
+AND password = '' OR 1=1 --';
+```
+
+✅ Resultado:
+
+* Login **bypassado**
+* Acesso sem senha
+
+---
+
+## 🚨 Error-Based SQLi
+
+Mensagens de erro podem revelar:
+
+* Estrutura da query
+* Nome de tabelas
+* Tipo de banco de dados
+
+---
+
+# ⚙️ Configuração do MySQL
+
+## 📥 Instalação
+
+```bash
+sudo apt install mysql-server -y
+```
+
+---
+
+## 📄 Ver configurações ativas
+
+```bash
+cat /etc/mysql/mysql.conf.d/mysqld.cnf | grep -v "#" | sed -r '/^\s*$/d'
+```
+
+---
+
+# ⚠️ Configurações Perigosas
+
+| Configuração       | Risco                       |
+| ------------------ | --------------------------- |
+| `user`             | usuário do servidor         |
+| `password`         | senha exposta               |
+| `admin_address`    | acesso remoto indevido      |
+| `debug`            | vazamento de queries        |
+| `sql_warnings`     | exposição de info extra     |
+| `secure_file_priv` | leitura/escrita de arquivos |
+
+---
+
+# 🔎 Footprinting MySQL
+
+## 🚪 Porta padrão
+
+* **TCP 3306**
+
+---
+
+## 🛰️ Nmap
+
+```bash
+sudo nmap <IP> -sV -sC -p3306 --script mysql*
+```
+
+### 🔍 O que pode identificar:
+
+* Versão do MySQL
+* Usuários
+* Bancos de dados
+* Senhas vazias
+
+⚠️ **Muito barulhento (detectável por IDS/IPS)**
+
+---
+
+## 🚨 Pontos importantes no resultado
+
+### 🔓 Senha vazia
+
+```text
+mysql-empty-password
+```
+
+Teste:
+
+```bash
+mysql -h <IP> -u root
+```
+
+---
+
+### 👤 Enumeração de usuários
+
+```text
+mysql-enum
+```
+
+---
+
+### ℹ️ Informações do servidor
+
+```text
+mysql-info
+```
+
+---
+
+# 🔌 Conectando ao MySQL
+
+```bash
+mysql -h <IP> -u <user> -p
+```
+
+Ou:
+
+```bash
+mysql -u root -pP4SSw0rd -h <IP>
+```
+
+---
+
+# 🧬 Bancos de Dados Importantes
+
+| Banco                | Função              |
+| -------------------- | ------------------- |
+| `sys`                | métricas do sistema |
+| `information_schema` | estrutura do banco  |
+
+---
+
+# 🧰 Comandos Essenciais
+
+```sql
+show databases;
+use <database>;
+show tables;
+show columns from <tabela>;
+select * from <tabela>;
+select * from <tabela> where <coluna> = "valor";
+```
+
+⚠️ Sempre finalizar com `;`
+
+---
+
+
+
 
 
