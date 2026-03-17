@@ -1,0 +1,119 @@
+IdProduto;DescNomeProduto;DescDescricaoProduto;DescCategoriaProduto
+001 - Espada Longa;Espada Longa;Uma espada longa de aço.;espada
+002 - Espada Curta;Espada Curta;Espada leve e rápida.;espada
+003 - Armadura de Couro;Armadura de Couro;Armadura leve feita de couro.;armadura
+004 - Armadura de Placas;Armadura de Placas;Armadura pesada de placas metálicas.;armadura
+005 - Botas de Agilidade;Botas de Agilidade;Botas que aumentam a destreza.;botas
+006 - Botas de Força;Botas de Força;Botas reforçadas para guerreiros.;botas
+007 - Cajado de Fogo;Cajado de Fogo;Cajado mágico que lança fogo.;cajado
+008 - Cajado de Gelo;Cajado de Gelo;Cajado mágico que lança gelo.;cajado
+009 - Chapéu do Mago;Chapéu do Mago;Chapéu pontudo que aumenta inteligência.;chapeu
+010 - Chapéu do Sábio;Chapéu do Sábio;Chapéu que aumenta sabedoria.;chapeu
+011 - Espada Bastarda;Espada Bastarda;Espada de duas mãos.;espada
+012 - Armadura de Escamas;Armadura de Escamas;Armadura feita de escamas de dragão.;armadura
+013 - Botas Silenciosas;Botas Silenciosas;Botas que aumentam furtividade.;botas
+014 - Cajado da Vida;Cajado da Vida;Cajado que aumenta sabedoria.;cajado
+015 - Chapéu do Ladino;Chapéu do Ladino;Chapéu que aumenta destreza.;chapeu
+016 - Espada Curvada;Espada Curvada;Espada exótica e afiada.;espada
+017 - Armadura Mística;Armadura Mística;Armadura leve que aumenta inteligência.;armadura
+018 - Botas do Vento;Botas do Vento;Botas que aumentam velocidade.;botas
+019 - Cajado do Trovão;Cajado do Trovão;Cajado que invoca raios.;cajado
+020 - Chapéu do Guerreiro;Chapéu do Guerreiro;Chapéu que aumenta força.;chapeu
+021 - Espada Flamejante;Espada Flamejante;Espada que emite chamas.;espada
+022 - Armadura de Sombras;Armadura de Sombras;Armadura que aumenta furtividade.;armadura
+023 - Botas de Velocidade;Botas de Velocidade;Botas que aumentam a velocidade de movimento.;botas
+024 - Cajado da Terra;Cajado da Terra;Cajado que invoca tremores.;cajado
+025 - Espada do Caos;Espada do Caos;Espada que causa dano imprevisível.;espada
+026 - Armadura de Luz;Armadura de Luz;Armadura que aumenta sabedoria.;armadura
+027 - Botas de Ferro;Botas de Ferro;Botas pesadas que aumentam força.;botas
+028 - Cajado do Vento;Cajado do Vento;Cajado que invoca rajadas de vento.;cajado
+029 - Espada de Gelo;Espada de Gelo;Espada que congela inimigos.;espada
+030 - Armadura de Fogo;Armadura de Fogo;Armadura que protege contra chamas.;armadura
+031 - Botas de Ouro;Botas de Ouro;Botas que aumentam carisma.;botas
+032 - Cajado do Sol;Cajado do Sol;Cajado que emite luz intensa.;cajado
+033 - Espada do Dragão;Espada do Dragão;Espada feita de escamas de dragão.;espada
+034 - Armadura de Cristal;Armadura de Cristal;Armadura leve feita de cristal mágico.;armadura
+035 - Botas de Furtividade;Botas de Furtividade;Botas que aumentam furtividade.;botas
+036 - Cajado do Eclipse;Cajado do Eclipse;Cajado que invoca escuridão.;cajado
+037 - Chapéu do Guardião;Chapéu do Guardião;Chapéu que aumenta força e sabedoria.;chapeu
+038 - Espada do Vento;Espada do Vento;Espada leve que corta o ar.;espada
+039 - Armadura de Ferro;Armadura de Ferro;Armadura resistente feita de ferro.;armadura
+040 - Botas de Cristal;Botas de Cristal;Botas mágicas que aumentam inteligência.;botas
+041 - Cajado do Inferno;Cajado do Inferno;Cajado que invoca chamas infernais.;cajado
+042 - Chapéu do Arqueiro;Chapéu do Arqueiro;Chapéu que aumenta precisão e destreza.;chapeu
+043 - Espada de Luz;Espada de Luz;Espada que emite luz divina.;espada
+044 - Armadura de Ouro;Armadura de Ouro;Armadura pesada feita de ouro.;armadura
+045 - Botas de Lava;Botas de Lava;Botas resistentes ao calor extremo.;botas
+046 - Cajado do Tempo;Cajado do Tempo;Cajado que manipula o tempo.;cajado
+047 - Chapéu do Feiticeiro;Chapéu do Feiticeiro;Chapéu que aumenta inteligência e sabedoria.;chapeu
+048 - Espada do Caçador;Espada do Caçador;Espada leve e precisa.;espada
+049 - Armadura de Dragão;Armadura de Dragão;Armadura feita de escamas de dragão.;armadura
+050 - Botas de Veludo;Botas de Veludo;Botas confortáveis que aumentam furtividade.;botas
+051 - Cajado do Céu;Cajado do Céu;Cajado que invoca raios celestiais.;cajado
+052 - Chapéu do Mestre;Chapéu do Mestre;Chapéu que aumenta sabedoria e força.;chapeu
+053 - Espada de Prata;Espada de Prata;Espada feita de prata pura.;espada
+054 - Armadura de Diamante;Armadura de Diamante;Armadura feita de diamante.;armadura
+055 - Botas de Energia;Botas de Energia;Botas que aumentam força e velocidade.;botas
+056 - Cajado do Universo;Cajado do Universo;Cajado que manipula energia cósmica.;cajado
+057 - Chapéu do Alto Guardião;Chapéu do Alto Guardião;Chapéu que aumenta força e sabedoria.;chapeu
+058 - Espada do Apocalipse;Espada do Apocalipse;Espada lendária que destrói tudo em seu caminho.;espada
+059 - Armadura Celestial;Armadura Celestial;Armadura divina que protege contra qualquer ataque.;armadura
+060 - Botas do Relâmpago;Botas do Relâmpago;Botas que aumentam velocidade e força ao extremo.;botas
+061 - Cajado do Caos;Cajado do Caos;Cajado que manipula energia caótica.;cajado
+062 - Chapéu do Arcanjo;Chapéu do Arcanjo;Chapéu que aumenta inteligência e sabedoria divinas.;chapeu
+063 - Espada do Infinito;Espada do Infinito;Espada que corta até o próprio espaço-tempo.;espada
+064 - Armadura do Dragão Ancião;Armadura do Dragão Ancião;Armadura feita de escamas de dragões anciões.;armadura
+065 - Botas do Vácuo;Botas do Vácuo;Botas que permitem andar no vazio e aumentam destreza.;botas
+066 - Cajado do Cosmos;Cajado do Cosmos;Cajado que manipula o poder das estrelas.;cajado
+067 - Chapéu do Guardião Supremo;Chapéu do Guardião Supremo;Chapéu que aumenta força, sabedoria e inteligência.;chapeu
+068 - Adaga Sombria;Adaga Sombria;Adaga leve que aumenta furtividade.;adaga
+069 - Adaga de Prata;Adaga de Prata;Adaga feita de prata pura.;adaga
+070 - Adaga do Caçador;Adaga do Caçador;Adaga precisa e mortal.;adaga
+071 - Adaga Flamejante;Adaga Flamejante;Adaga que emite chamas.;adaga
+072 - Adaga do Vento;Adaga do Vento;Adaga leve que corta o ar.;adaga
+073 - Adaga de Gelo;Adaga de Gelo;Adaga que congela inimigos.;adaga
+074 - Adaga do Eclipse;Adaga do Eclipse;Adaga que invoca escuridão.;adaga
+075 - Adaga do Relâmpago;Adaga do Relâmpago;Adaga que emite descargas elétricas.;adaga
+076 - Adaga do Cosmos;Adaga do Cosmos;Adaga que manipula energia cósmica.;adaga
+077 - Adaga do Apocalipse;Adaga do Apocalipse;Adaga lendária que destrói tudo em seu caminho.;adaga
+1;Airflow Lover;;lovers
+10;Daily Loot;;rpg
+11;Lista de presença;;present
+12;Presença Streak;;present
+13;R Lover;;lovers
+14;Reembolso: Troca de Pontos StreamElements;;streamelements
+15;Resgatar Ponei;;ponei
+16;Torta;;food
+17;Troca de Pontos StreamElements;;streamelements
+18;Venda de Item: 1 - Bota das Sombras (200);;rpg
+19;Venda de Item: 10 - Couraça das Sombras (300);;rpg
+2;Batata;;food
+20;Venda de Item: 12 - Túnica Arcana (500);;rpg
+21;Venda de Item: 13 - Couraça do Berserker (600);;rpg
+22;Venda de Item: 14 - Espada Curta (150);;rpg
+23;Venda de Item: 15 - Machado de Batalha (300);;rpg
+24;Venda de Item: 16 - Adaga (100);;rpg
+25;Venda de Item: 17 - Martelo de Guerra (400);;rpg
+26;Venda de Item: 18 - Cajado Arcano (250);;rpg
+27;Venda de Item: 19 - Arco Longo (200);;rpg
+28;Venda de Item: 20 - Lança (220);;rpg
+29;Venda de Item: 21 - Maça (280);;rpg
+3;Bolo;;food
+30;Venda de Item: 22 - Espada Longa (250);;rpg
+31;Venda de Item: 23 - Adaga Envenenada (150);;rpg
+32;Venda de Item: 24 - Cajado Sagrado (250);;rpg
+33;Venda de Item: 25 - Ukulele das Trevas (250);;rpg
+34;Venda de Item: 3 - Chinélos Místicos (350);;rpg
+35;Venda de Item: 4 - Botas Berserker (450);;rpg
+36;Venda de Item: 5 - Botas Diversão (450);;rpg
+37;Venda de Item: 6 - Chapéu da Sombra (150);;rpg
+38;Venda de Item: 7 - Capacete de Ferro (400);;rpg
+39;Venda de Item: 8 - Chapéu Arcano (300);;rpg
+4;Cerveja;;food
+40;Venda de Item: 9 - Elmo do Berserker (350);;rpg
+41;join failed;;chat
+5;ChatMessage;;chat
+6;Churn_10pp;;churn_model
+7;Churn_2pp;;churn_model
+8;Churn_5pp;;churn_model
+9;Coca Cola;;food
