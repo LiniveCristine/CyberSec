@@ -427,3 +427,193 @@ for (inicialização; condição; incremento)
 | **for**       | Loop com controle de repetição           |
 
 ---
+
+# 🧵 Manipulação de Strings e Arrays em PHP
+
+## 🔤 Strings em PHP
+
+Uma **string** é basicamente um **array de caracteres**.
+
+### Exemplo
+
+```php
+$nome = "Marcos";
+
+echo $nome[0]; // M
+````
+
+📌 O índice sempre começa em **0**.
+
+---
+
+# 🔗 Concatenação de Strings
+
+Existem várias formas de juntar (concatenar) strings em PHP.
+
+---
+
+## 📌 Interpolação (forma recomendada)
+
+```php
+$nome = "Maria";
+$idade = 25;
+
+echo "{$nome} tem {$idade} anos";
+```
+
+---
+
+## 📌 Usando operador `.`
+
+```php
+echo $nome . " tem " . $idade . " anos";
+```
+
+---
+
+## 📌 Interpolação simples
+
+```php
+echo "$nome tem $idade anos";
+```
+
+---
+
+# 🛠️ Funções de String
+
+## 🔍 `str_contains()`
+
+Verifica se uma string contém outra.
+
+```php
+str_contains("Hello World", "World"); // true
+```
+
+### 📌 Parâmetros:
+
+* String principal
+* Substring
+
+### 📌 Retorno:
+
+* `true` ou `false`
+
+---
+
+## 🔁 `str_replace()`
+
+Substitui parte de uma string.
+
+```php
+echo str_replace("mundo", "PHP", "Olá mundo");
+```
+
+📌 Resultado:
+
+```text
+Olá PHP
+```
+
+### ⚠️ Importante:
+
+* **Não altera a string original**
+* Retorna uma **nova string**
+
+---
+
+# 📦 Arrays em PHP
+
+Arrays são estruturas que armazenam múltiplos valores.
+
+---
+
+## 📋 Array simples
+
+```php
+$lista = ["maçã", "pera", "uva", "banana"];
+
+echo $lista[0]; // maçã
+```
+
+📌 Índices começam em **0**
+
+---
+
+## 🔑 Array Associativo
+
+Permite definir **chaves personalizadas**.
+
+```php
+$lista = [
+    "item1" => "maçã",
+    "item2" => "pera",
+    "item3" => "banana"
+];
+
+echo $lista["item1"]; // maçã
+```
+
+---
+
+## 🧩 Arrays multidimensionais
+
+É possível ter arrays dentro de arrays:
+
+```php
+$dados = [
+    "frutas" => ["maçã", "banana"],
+    "cores" => ["azul", "verde"]
+];
+```
+
+---
+
+# 🔁 Loop com `foreach`
+
+Usado para percorrer arrays.
+
+---
+
+## 📌 Percorrendo valores
+
+```php
+foreach ($lista as $item) {
+    echo $item . "\n";
+}
+```
+
+📌 Cada elemento do array é armazenado em `$item`.
+
+---
+
+## 🔑 Percorrendo chave e valor
+
+```php
+foreach ($lista as $chave => $item) {
+    echo "$chave: $item\n";
+}
+```
+
+📌 Permite acessar:
+
+* **Chave**
+* **Valor**
+
+---
+
+# 🧠 Resumo
+
+| Conceito              | Explicação                          |
+| --------------------- | ----------------------------------- |
+| **String**            | Sequência de caracteres             |
+| **Concatenação**      | Junta strings (`.` ou interpolação) |
+| **str_contains()**    | Verifica substring                  |
+| **str_replace()**     | Substitui texto                     |
+| **Array**             | Lista de valores                    |
+| **Array associativo** | Usa chaves personalizadas           |
+| **foreach**           | Percorre arrays                     |
+
+---
+
+
+
