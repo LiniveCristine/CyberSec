@@ -184,3 +184,141 @@ SELECT coluna FROM tabela;
 | FK        | Relacionamento entre tabelas   |
 
 ---
+
+# 📌 Criação de Arquivo
+
+- Banco SQLite → extensão: `.sqlite` (ou `.db`)
+- Scripts SQL → extensão: `.sql`
+
+📌 No VS Code:
+- Executar queries: `Ctrl + Shift + Q`
+- Pode ser necessário selecionar o **database**
+
+---
+
+# 🧠 Comandos Básicos
+
+## 🔎 SELECT
+
+Usado para **selecionar dados**.
+
+```sql
+SELECT 'olá mundo';
+SELECT 1 + 1 * 10;
+````
+
+📌 Observações:
+
+* Não precisam de tabela
+* O resultado aparece abaixo
+* O cabeçalho mostra a expressão
+
+---
+
+# 📊 Selecionando Dados de Tabelas
+
+## 📌 Todas as colunas
+
+```sql
+SELECT * FROM clientes;
+```
+
+* `*` → todas as colunas
+* `clientes` → nome da tabela
+
+---
+
+## 📌 Colunas específicas
+
+```sql
+SELECT idcliente, QtdePontos FROM clientes;
+```
+
+📌 Seleciona apenas os atributos desejados
+
+---
+
+# 📋 Listar Tabelas
+
+## SQLite:
+
+```sql
+.tables
+```
+
+## MySQL:
+
+```sql
+SHOW TABLES;
+```
+
+📌 `.tables` não retorna dados, apenas lista
+
+---
+
+# 🔢 Limitando Resultados
+
+```sql
+SELECT * FROM clientes
+LIMIT 10;
+```
+
+📌 Retorna apenas:
+
+* As **10 primeiras linhas**
+
+⚠️ Regra:
+
+> `LIMIT` deve ser o **último elemento da query**
+
+---
+
+# 🧩 Ponto e Vírgula (`;`)
+
+Usado para separar múltiplas queries:
+
+```sql
+SELECT idcliente FROM clientes;
+SELECT 'testando';
+```
+
+---
+
+# 💬 Comentários
+
+## 📌 Linha única
+
+```sql
+-- comentário
+```
+
+---
+
+## 📌 Bloco
+
+```sql
+/* comentário
+   em várias linhas */
+```
+
+⚠️ Regra:
+
+> A última linha do arquivo **não deve ser comentário**
+
+---
+
+# 🧠 Resumo
+
+| Conceito   | Explicação             |
+| ---------- | ---------------------- |
+| SELECT     | Selecionar dados       |
+| *          | Todas as colunas       |
+| FROM       | Define tabela          |
+| LIMIT      | Limita resultados      |
+| .tables    | Lista tabelas (SQLite) |
+| ;          | Finaliza query         |
+| -- / /* */ | Comentários            |
+
+---
+
+
