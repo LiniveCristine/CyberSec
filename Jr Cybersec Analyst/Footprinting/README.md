@@ -3404,6 +3404,184 @@ select * from <tabela> where <coluna> = "valor";
 
 ---
 
+# 🗄️ MSSQL 
+
+## 📌 O que é MSSQL?
+
+O **MSSQL (Microsoft SQL Server)** é um **SGBD relacional** desenvolvido pela Microsoft.
+
+- Muito utilizado em ambientes corporativos
+- Fortemente integrado com **Windows / Active Directory**
+- Também disponível para **Linux e macOS** (menos comum)
+
+---
+
+# 🧠 Bancos de Dados do Sistema
+
+O MSSQL possui databases internos importantes:
+
+| Banco | Função |
+|------|------|
+| `master` | Gerencia informações da instância |
+| `model` | Template para novos bancos |
+| `msdb` | Agendamento de tarefas (SQL Server Agent) |
+| `tempdb` | Armazena dados temporários |
+| `resource` | Banco somente leitura |
+
+---
+
+# ⚠️ Configurações Perigosas
+
+Algumas más práticas comuns:
+
+- ❌ Conexões sem criptografia
+- ❌ Credenciais fracas ou padrão
+- ❌ Recursos perigosos habilitados (ex: `xp_cmdshell`)
+
+---
+
+# 🔎 Footprinting MSSQL
+
+## 🚪 Porta padrão
+
+- **TCP 1433**
+
+---
+
+## 🛰️ Nmap
+
+Ferramenta para enumeração do serviço:
+
+```bash
+sudo nmap <IP> -p1433 -sV -sC --script ms-sql*
+````
+
+---
+
+## 🔍 O que pode ser identificado?
+
+* Hostname
+* Nome do banco
+* Versão do MSSQL
+* Named Pipes habilitados
+
+---
+
+## 🔌 Named Pipes
+
+* Comunicação cliente-servidor **sem TCP/IP**
+* Muito comum em redes internas
+* Pode indicar ambiente corporativo (AD)
+
+---
+
+# ⚠️ Scripts importantes do Nmap
+
+| Script                  | Função                   |
+| ----------------------- | ------------------------ |
+| `ms-sql-info`           | Versão e detalhes        |
+| `ms-sql-empty-password` | Testa login sem senha    |
+| `ms-sql-config`         | Configuração do servidor |
+| `ms-sql-tables`         | Lista tabelas            |
+| `ms-sql-hasdbaccess`    | Acesso a databases       |
+
+---
+
+## 💥 Scripts críticos (Exploração)
+
+| Script               | Impacto                    |
+| -------------------- | -------------------------- |
+| `ms-sql-xp-cmdshell` | Execução de comandos (RCE) |
+| `ms-sql-dump-hashes` | Extração de hashes         |
+| `ms-sql-dac`         | Acesso administrativo      |
+| `ms-sql-ntlm-info`   | Infos de domínio (AD)      |
+
+⚠️ **Muito barulhento (detectável facilmente)**
+
+---
+
+# 🧰 Metasploit
+
+## 🔎 Scanner básico
+
+```bash
+use auxiliary/scanner/mssql/mssql_ping
+set rhosts <IP>
+run
+```
+
+📌 Identifica instâncias MSSQL ativas
+
+---
+
+# 🔌 Conectando ao MSSQL
+
+## 🥇 Método recomendado: Impacket
+
+```bash
+impacket-mssqlclient user:password@IP -windows-auth
+```
+
+---
+
+### 📌 Tipos de autenticação
+
+| Tipo         | Descrição                       |
+| ------------ | ------------------------------- |
+| Windows Auth | Usa credenciais do sistema / AD |
+| SQL Auth     | Usuário e senha do banco        |
+
+📌 Para usar SQL Auth:
+
+* Remover `-windows-auth`
+
+---
+
+# 🧬 Enumeração Básica
+
+## 📊 Listar databases
+
+```sql
+SELECT name FROM sys.databases;
+```
+
+---
+
+# 🧠 Resumo
+
+| Conceito    | Explicação           |
+| ----------- | -------------------- |
+| MSSQL       | SGBD da Microsoft    |
+| Porta       | 1433                 |
+| Named Pipes | Comunicação interna  |
+| master      | DB principal         |
+| tempdb      | dados temporários    |
+| xp_cmdshell | execução de comandos |
+| Impacket    | conexão recomendada  |
+
+---
+
+# 🎯 Importância para Cybersecurity
+
+## 🔎 O que buscar?
+
+* Senhas fracas ou vazias
+* `xp_cmdshell` habilitado → 💥 RCE
+* Integração com AD → movimento lateral
+* Vazamento de hashes
+* Má configuração
+
+---
+
+## 💥 Cenários de ataque
+
+* Login com credenciais padrão (`sa`)
+* Execução remota de comandos
+* Dump de hashes → ataque offline
+* Pivot para domínio (AD)
+
+---
+
 
 
 
