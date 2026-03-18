@@ -765,5 +765,316 @@ print_r(array_keys($dados));
 
 ---
 
+# 🌐 Query String 
+
+## 📌 O que é Query String?
+
+A **Query String** é a parte da URL usada para enviar dados ao servidor.
+
+```text
+https://site.com/pagina?chave=valor
+````
+
+---
+
+## 🧩 Estrutura
+
+* Formato: `chave=valor`
+* Múltiplos parâmetros: separados por `&`
+
+```text
+https://exemplo.com/busca?nome=linive&idade=29
+```
+
+---
+
+## ⚠️ Segurança
+
+> Dados da query string são **facilmente manipuláveis pelo usuário**
+
+💡 Nunca confiar nesses dados sem validação.
+
+---
+
+# 🐘 Acessando Query String no PHP
+
+## 📥 `$_GET`
+
+```php
+var_dump($_GET);
+
+$nome = $_GET['nome'];   // linive
+$idade = $_GET['idade']; // 29
+```
+
+📌 `$_GET` é um **array associativo**
+
+---
+
+# 📦 Dados no Request Body
+
+## 📥 `$_POST`
+
+Dados enviados no corpo da requisição (geralmente formulários):
+
+```bash
+curl http://localhost:8080/index.php -d "nome=linive&idade=29"
+```
+
+```php
+$nome = $_POST['nome'];
+```
+
+📌 Estrutura igual à query string, mas:
+
+* ❌ Não usa `?`
+* ✅ Vai no corpo da requisição
+
+---
+
+# 📡 Headers da Requisição
+
+## 📥 `$_SERVER`
+
+Contém informações da requisição:
+
+* Porta
+* URI
+* Método HTTP
+* Headers
+* Script executado
+
+---
+
+## 🧪 Exemplo com Header
+
+```bash
+curl http://localhost:8080/index.php -H "x-exemplo: teste"
+```
+
+```php
+echo $_SERVER['HTTP_X_EXEMPLO'];
+```
+
+📌 Headers customizados viram:
+
+* `HTTP_` + nome em maiúsculo
+
+---
+
+# 🔁 Método da Requisição
+
+```php
+echo $_SERVER['REQUEST_METHOD'];
+```
+
+## 📌 Exemplos:
+
+```bash
+curl -X GET http://localhost:8080
+curl -X POST http://localhost:8080
+curl -X PUT http://localhost:8080
+```
+
+---
+
+# 🔗 URI
+
+## 📌 O que é?
+
+Tudo que vem após o domínio:
+
+```text
+http://localhost:8080/index.php/?nome=linive
+```
+
+* URI: `/index.php/?nome=linive`
+
+---
+
+## 📥 Acessando no PHP
+
+```php
+$_SERVER['REQUEST_URI'];  // inclui query string
+$_SERVER['SCRIPT_NAME'];  // sem query string
+```
+
+---
+
+# 🌐 Entendendo HTTP
+
+## 📌 O que é HTTP?
+
+Protocolo de comunicação entre:
+
+* Cliente (browser, curl, etc.)
+* Servidor
+
+---
+
+## 🔄 Fluxo básico
+
+```text
+Cliente → Request → Servidor → Response → Cliente
+```
+
+---
+
+## 🔌 Conexão TCP
+
+Antes do HTTP:
+
+> É necessário estabelecer uma conexão **TCP**
+
+---
+
+# 📤 HTTP Request
+
+## 🧾 Estrutura
+
+```http
+POST /perfil?id=5 HTTP/1.1
+
+Host: site.com
+User-Agent: Mozilla/5.0
+Content-Type: application/json
+Content-Length: 345
+
+{
+  "data": "ABC123"
+}
+```
+
+---
+
+## 🧩 Partes
+
+### 🔹 Linha inicial
+
+```text
+POST /perfil?id=5 HTTP/1.1
+```
+
+* Método: `GET`, `POST`, `PUT`, `DELETE`
+* Endpoint: `/perfil`
+* Query: `?id=5`
+* Versão: `HTTP/1.1`
+
+---
+
+### 🔹 Headers
+
+* Informações extras
+* Ex:
+
+```text
+Host
+User-Agent
+Content-Type
+Content-Length
+```
+
+📌 `Content-Length`:
+
+* Obrigatório em POST
+* Define tamanho do corpo (bytes)
+
+---
+
+### 🔹 Body
+
+* Presente em requisições como `POST`
+* Contém os dados enviados
+
+---
+
+# 📥 HTTP Response
+
+## 🧾 Estrutura
+
+```http
+HTTP/1.1 403 Forbidden
+
+Server: Apache
+Content-Length: 678
+Content-Type: text/html
+
+<html>...</html>
+```
+
+---
+
+## 🧩 Partes
+
+### 🔹 Linha inicial
+
+```text
+HTTP/1.1 403 Forbidden
+```
+
+* Status code
+* Mensagem
+
+---
+
+### 🔹 Headers
+
+* Informações da resposta
+
+📌 `Content-Length`:
+
+* Tamanho do corpo (não inclui headers)
+
+---
+
+### 🔹 Body
+
+* Conteúdo retornado
+* HTML, JSON, etc.
+
+---
+
+# 🛠️ Ferramentas
+
+## 🔍 Burp Suite
+
+* Interceptar requests
+* Modificar parâmetros
+* Testar vulnerabilidades
+
+---
+
+# 🎯 Importância para Cybersecurity
+
+## 🔎 Onde isso entra?
+
+* Manipulação de parâmetros (GET/POST)
+* Testes de autenticação
+* Exploração de APIs
+* Análise de requisições
+
+---
+
+## 💥 Possíveis vulnerabilidades
+
+* SQL Injection
+* XSS
+* Parameter Tampering
+* Header Injection
+
+---
+
+# 🚀 Mentalidade
+
+> Tudo que vem do cliente pode ser manipulado
+
+💡 Se você controla a requisição:
+
+* Você pode testar limites
+* Você pode quebrar a lógica
+* Você pode explorar falhas
+
+
+
 
 
