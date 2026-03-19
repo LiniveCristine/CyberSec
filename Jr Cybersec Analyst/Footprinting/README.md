@@ -3582,6 +3582,393 @@ SELECT name FROM sys.databases;
 
 ---
 
+# 🗄️ Oracle TNS
+
+Este guia aborda **serviços críticos de rede** frequentemente encontrados em pentests e bug bounty, incluindo:
+
+- Oracle TNS (banco de dados)
+- IPMI (gerenciamento de hardware)
+- Protocolos de acesso remoto (Linux e Windows)
+
+🎯 **Objetivo:**
+Identificar, enumerar e explorar serviços que podem fornecer **acesso direto ao sistema ou dados sensíveis**.
+
+---
+
+# 🗄️ Oracle TNS (Transparent Network Substrate)
+
+O **Oracle TNS** é um protocolo usado para comunicação entre clientes e bancos de dados Oracle.
+
+📌 Permite **conexões remotas ao banco**.
+
+---
+
+## 🔍 Enumeração com Nmap
+
+📡 Porta padrão:
+- `TCP 1521`
+
+```bash
+nmap -p1521 -sV <IP>
+nmap -p1521 --script oracle-sid-brute <IP>
+````
+
+### 🧠 SID (System Identifier)
+
+* Nome da instância do banco Oracle
+* Necessário para conexão
+
+---
+
+## ⚙️ Enumeração com ODAT
+
+Ferramenta completa para Oracle:
+
+* Descobrir usuários
+* Brute force de senhas
+* Upload de arquivos
+* Escalação de privilégios
+
+```bash
+./odat.py all -s <IP>
+```
+
+---
+
+## 🔐 Acesso ao Banco
+
+```bash
+sqlplus usuario/senha@<IP>/XE
+```
+
+---
+
+## 🧪 Pós-Exploração
+
+### 📋 Listar tabelas
+
+```sql
+select table_name from all_tables;
+```
+
+### 🔑 Ver privilégios
+
+```sql
+select * from user_role_privs;
+```
+
+---
+
+## ⬆️ Escalação de Privilégios
+
+```bash
+sqlplus usuario/senha@<IP>/XE as sysdba
+```
+
+✔️ Acesso como administrador do banco
+
+---
+
+## 🔓 Coleta de Senhas
+
+```sql
+select name, password from sys.user$;
+```
+
+---
+
+## 📤 Upload de Arquivos (Possível RCE)
+
+📁 Diretórios comuns:
+
+* Linux: `/var/www/html`
+* Windows: `C:\inetpub\wwwroot`
+
+```bash
+./odat.py utlfile -s <IP> -d XE -U <user> -P <senha> \
+--sysdba --putFile C:\\inetpub\\wwwroot testing.txt ./testing.txt
+```
+
+### 🧪 Testar acesso
+
+```bash
+curl http://<IP>/testing.txt
+```
+
+🚨 Se funcionar → **Possível execução remota (RCE)**
+
+---
+
+## 📁 Arquivos Importantes
+
+### 🧾 tnsnames.ora (Cliente)
+
+Contém:
+
+* IP
+* Porta
+* Service Name
+
+---
+
+### 🧾 listener.ora (Servidor)
+
+Define:
+
+* Portas
+* Serviços ativos
+* Comportamento do listener
+
+---
+
+# 🖥️ IPMI (Intelligent Platform Management Interface)
+
+Protocolo para gerenciamento remoto de servidores a nível de hardware.
+
+⚠️ Funciona mesmo quando:
+
+* Sistema está desligado
+* Travado
+* Sem acesso ao SO
+
+---
+
+## 🔍 Enumeração
+
+📡 Porta:
+
+* `UDP 623`
+
+```bash
+nmap -sU -p 623 --script ipmi-version <IP>
+```
+
+🚨 Alto risco → Pode permitir acesso completo ao hardware
+
+---
+
+# 🐧 Protocolos de Acesso Remoto (Linux)
+
+Permitem controlar servidores remotamente.
+
+🎯 **Importância em Bug Bounty:**
+
+* Acesso direto ao sistema
+* Exposição de credenciais
+* Execução remota
+
+---
+
+## 🔐 SSH (Secure Shell)
+
+📡 Porta:
+
+* `TCP 22`
+
+### 🔑 Autenticação
+
+* Senha
+* Chave pública (mais seguro)
+
+---
+
+### ⚠️ Configurações Perigosas
+
+* `PasswordAuthentication yes` → permite brute force
+* `PermitRootLogin yes` → acesso direto como root
+* `Protocol 1` → criptografia fraca
+* `X11Forwarding yes` → explorável
+* `AllowTcpForwarding yes` → pivoting
+
+---
+
+### 🔍 Enumeração
+
+```bash
+nmap -p22 -sV <IP>
+ssh-audit <IP>
+```
+
+---
+
+## 🔄 Rsync
+
+Ferramenta de sincronização de arquivos.
+
+📡 Porta:
+
+* `TCP 873`
+
+---
+
+### 🔍 Enumeração
+
+```bash
+nmap -p873 -sV <IP>
+rsync -av --list-only rsync://<IP>/
+```
+
+---
+
+### ⚠️ Riscos
+
+* Diretórios sem autenticação
+* Arquivos sensíveis:
+
+  * `.ssh/`
+  * backups
+  * configs (`secrets.yaml`)
+
+---
+
+## ⚠️ R-Services (Legados e Inseguros)
+
+Incluem:
+
+* `rlogin`
+* `rsh`
+* `rexec`
+
+📡 Portas:
+
+* `TCP 512, 513, 514`
+
+---
+
+### ❌ Problemas
+
+* Sem criptografia
+* Confiam apenas em IP
+* Podem permitir login sem senha
+
+---
+
+### 📁 Arquivos Críticos
+
+* `/etc/hosts.equiv`
+* `.rhosts`
+
+---
+
+### 🔍 Enumeração
+
+```bash
+nmap -p512,513,514 -sV <IP>
+```
+
+---
+
+### 💥 Exploração
+
+```bash
+rlogin <IP> -l user
+```
+
+---
+
+## ✅ O que SEMPRE testar
+
+* SSH → brute force / credenciais fracas
+* Rsync → diretórios abertos
+* Arquivos sensíveis expostos
+* R-services ativos
+* Reuso de credenciais
+
+---
+
+# 🪟 Protocolos de Acesso Remoto (Windows)
+
+Permitem administrar máquinas remotamente.
+
+🎯 Possibilidades:
+
+* Execução de comandos
+* Enumeração de dados
+* Movimento lateral
+
+---
+
+## 🖥️ RDP (Remote Desktop Protocol)
+
+Acesso gráfico (GUI)
+
+📡 Porta:
+
+* `TCP 3389`
+
+---
+
+### 🔍 Enumeração
+
+```bash
+nmap -sV -sC <IP> -p3389 --script rdp*
+```
+
+📊 Informações obtidas:
+
+* Nome do host
+* Domínio
+* Versão do Windows
+* NLA habilitado
+
+---
+
+### 🔐 Acesso
+
+```bash
+xfreerdp /u:user /p:password /v:<IP>
+```
+
+---
+
+## ⚙️ WinRM (Windows Remote Management)
+
+📡 Portas:
+
+* `5985` (HTTP)
+* `5986` (HTTPS)
+
+---
+
+### 🔍 Enumeração
+
+```bash
+nmap -sV -sC <IP> -p5985,5986
+```
+
+---
+
+### 💥 Exploração
+
+```bash
+evil-winrm -i <IP> -u user -p password
+```
+
+✔️ Permite:
+
+* Execução remota (RCE)
+* Shell no sistema
+* Movimento lateral
+
+---
+
+## 🧠 WMI (Windows Management Instrumentation)
+
+📡 Porta:
+
+* `TCP 135`
+
+---
+
+### 🔍 Enumeração & Exploração
+
+```bash
+wmiexec.py user:password@<IP> "hostname"
+```
+
+---
+
+
 
 
 
