@@ -1,6 +1,6 @@
 <?php
 
-//$files_folder = './codigos-vulneraveis'; -> correção
+$files_folder = __DIR__; //-> correção
 
 if(!isset($_GET['filename'])){
     echo "Por favor, informe o filename na query string";
@@ -8,15 +8,21 @@ if(!isset($_GET['filename'])){
 }
     
 $filename = $_GET['filename'];
-//$filepatch = "{$files_folder}/{$filename}"; -> correção
+$filepatch = "{$files_folder}/{$filename}"; //-> correção
 
-//substituir por filepatch -> correção 
-if (!file_exists($filename)){ //A busca vai ficar restringinda ao diretório definido em $files_folder
+var_dump($filepatch);
+
+//substituir por filepatch -> correção
+if (!file_exists($filepatch)){ 
     echo "file not found";
     die();
 
 } 
+//A busca vai ficar restringinda ao diretório definido em $files_folder
 
-$content = file_get_contents($filename);
+
+$content = file_get_contents($filepatch);
 echo $content;
+
+
 
