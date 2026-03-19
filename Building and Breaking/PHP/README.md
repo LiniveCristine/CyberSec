@@ -1074,7 +1074,312 @@ HTTP/1.1 403 Forbidden
 * Você pode quebrar a lógica
 * Você pode explorar falhas
 
+---
 
+# 🌐 Como o Servidor PHP Encontra um Arquivo?
 
+## 📥 Requisição do Cliente
 
+Exemplo de request HTTP:
+
+```http
+GET /teste.php HTTP/1.1
+````
+
+📌 O cliente solicita o arquivo `teste.php`.
+
+---
+
+## 🖥️ Interpretação pelo Servidor
+
+O servidor traduz a URL em um caminho local:
+
+* Recebe: `/teste.php`
+* Procura: `./teste.php`
+
+📌 `.` representa o **diretório atual (root do servidor)**
+
+---
+
+## 📁 Diretório Raiz no PHP
+
+Ao iniciar um servidor PHP:
+
+```bash
+php -S localhost:8080
+```
+
+📌 O diretório atual automaticamente vira a raiz `/`
+
+Exemplo:
+
+```bash
+cd /exercicio
+php -S localhost:8080
+```
+
+✔️ `/exercicio` → vira a raiz do servidor
+
+---
+
+## ✅ Verificação do Arquivo
+
+* Se o arquivo existir → **executa o código PHP**
+* Se não existir → **404 Not Found**
+
+---
+
+## 📂 Subdiretórios
+
+Exemplo:
+
+```http
+GET /api/user.php
+```
+
+Servidor procura:
+
+```bash
+./api/user.php
+```
+
+---
+
+## 📄 Arquivos Não-PHP
+
+* NÃO são executados
+* Apenas retornados como resposta
+
+---
+
+# 💻 Execução de Código PHP
+
+## ⚡ Comportamento
+
+* Toda requisição → executa o arquivo PHP
+* Não mantém em memória (sem cache por padrão)
+
+---
+
+## 💣 Shell Upload
+
+Se um atacante conseguir enviar um arquivo `.php`:
+
+✔️ Pode executar código remotamente via URL
+
+Exemplo:
+
+```bash
+http://localhost:8080/shell.php
+```
+
+🚨 Isso pode levar a **RCE (Remote Code Execution)**
+
+---
+
+# 🧪 Mini Projeto: Leitura de Arquivos
+
+## 🎯 Objetivo
+
+Permitir que o usuário informe um arquivo para leitura.
+
+---
+
+## 📥 Recebendo Input do Usuário
+
+Via query string:
+
+```bash
+?filename=teste.php
+```
+
+Em PHP:
+
+```php
+isset($_GET['filename'])
+```
+
+✔️ Verifica se o parâmetro foi enviado
+
+---
+
+## 📁 Verificando se o Arquivo Existe
+
+```php
+file_exists($filename)
+```
+
+✔️ Retorna true se o arquivo existir
+
+---
+
+## 📖 Lendo o Conteúdo
+
+```php
+$content = file_get_contents($filename);
+echo $content;
+```
+
+---
+
+## ⚠️ Importante
+
+🔹 `file_get_contents()`:
+
+* Lê arquivos locais
+* Pode acessar URLs
+* NÃO executa código PHP
+
+---
+
+### 🧠 Diferença Importante
+
+| Método            | Comportamento      |
+| ----------------- | ------------------ |
+| Acesso via URL    | Executa o PHP      |
+| file_get_contents | Retorna como texto |
+
+---
+
+### 💡 Exemplo
+
+Arquivo:
+
+```php
+<?php system("whoami"); ?>
+```
+
+* Via navegador → EXECUTA
+* Via `file_get_contents` → retorna texto
+
+---
+
+# 🚨 LFI (Local File Inclusion)
+
+## 🧩 O que é?
+
+Vulnerabilidade que permite:
+
+* Ler arquivos locais do servidor
+* Incluir arquivos arbitrários
+
+---
+
+## ⚠️ Quando ocorre?
+
+* Falta de validação de input
+* Usuário controla o caminho do arquivo
+* Sem restrição de diretórios
+* Sem restrição de tipo de arquivo
+
+---
+
+# 💥 Exploração (Path Traversal)
+
+## 🧠 Conceito
+
+Técnica para navegar entre diretórios usando:
+
+```bash
+../
+```
+
+---
+
+## 📂 Exemplo de ataque
+
+```bash
+../../../../../../etc/passwd
+```
+
+📌 O servidor:
+
+* Volta diretórios até a raiz
+* Depois acessa arquivos sensíveis
+
+---
+
+## ⚠️ Importante
+
+* Não há limite de `../`
+* Quando chega na raiz (`/`), ele para
+
+---
+
+## 🧠 Conceito-chave
+
+**Path Traversal NÃO é vulnerabilidade.**
+
+✔️ É uma **técnica de exploração**
+
+---
+
+# 🔐 Mitigação de LFI
+
+## 📌 Problema comum
+
+```php
+file_get_contents($filename);
+```
+
+🚨 Permite acessar qualquer arquivo do sistema
+
+---
+
+## ✅ Solução: Restringir Diretório
+
+```php
+file_get_contents(__DIR__ . "/files/" . $filename);
+```
+
+### 🧠 **DIR**
+
+* Retorna o caminho do diretório atual
+* Ajuda a evitar erros de caminho
+
+---
+
+## ⚠️ Ainda Vulnerável!
+
+Mesmo com restrição:
+
+```bash
+?filename=../../../../etc/passwd
+```
+
+🚨 Ainda é possível sair do diretório
+
+---
+
+# 🧠 Ponto Crítico
+
+## 🚨 Atenção máxima:
+
+Se você ver:
+
+```php
+diretorio . input_usuario
+```
+
+🔥 Isso pode indicar:
+
+* LFI
+* Path Traversal
+* Leitura de arquivos sensíveis
+
+---
+
+# 🚀 Resumo Estratégico
+
+💡 Sempre teste:
+
+* Input controlando arquivos
+* Uso de `file_get_contents`
+* Falta de validação
+* Uso de concatenação de caminhos
+
+---
+
+🔥 **Regra de ouro:**
+Se o usuário controla o caminho de um arquivo → **há risco de LFI**.
 
