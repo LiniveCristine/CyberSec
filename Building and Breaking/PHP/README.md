@@ -1383,3 +1383,238 @@ diretorio . input_usuario
 🔥 **Regra de ouro:**
 Se o usuário controla o caminho de um arquivo → **há risco de LFI**.
 
+---
+
+# 🧩 Include e Require
+
+## 📌 O que são?
+
+- NÃO são funções
+- Funcionam como uma espécie de **"echo de código PHP"**
+
+✔️ Servem para **incluir arquivos PHP dentro de outros arquivos**
+
+---
+
+## 📁 Exemplo básico
+
+Estrutura:
+
+```
+
+index.php
+func.php
+
+````
+
+Uso:
+
+```php
+include __DIR__ . "/func.php";
+````
+
+📌 O conteúdo de `func.php` será inserido e executado dentro do `index.php`
+
+---
+
+## ⚙️ Como funciona?
+
+✔️ O PHP:
+
+1. Lê o arquivo incluído
+2. Insere o código no local
+3. Executa como se estivesse no mesmo arquivo
+
+---
+
+# ⚠️ Diferença entre Include e Require
+
+## 🔴 require
+
+```php
+require "arquivo.php";
+```
+
+* Se o arquivo NÃO existir → ❌ ERRO FATAL
+* O script **para completamente**
+
+---
+
+## 🟡 include
+
+```php
+include "arquivo.php";
+```
+
+* Se o arquivo NÃO existir → ⚠️ WARNING
+* O script **continua executando**
+
+---
+
+## 🧠 Resumo rápido
+
+| Comportamento      | include | require     |
+| ------------------ | ------- | ----------- |
+| Arquivo existe     | Executa | Executa     |
+| Arquivo não existe | Warning | Fatal Error |
+| Execução continua  | ✅       | ❌           |
+
+---
+
+# 🌐 Inclusão Dinâmica com Query String
+
+## 📥 Pegando valor do usuário
+
+```php
+$page = $_GET['page'];
+```
+
+Exemplo de URL:
+
+```bash
+?page=home
+```
+
+---
+
+## 🏗️ Montando o caminho
+
+```php
+require "{$page_folder}/{$page}.php";
+```
+
+📌 Aqui estamos:
+
+* Construindo dinamicamente o caminho
+* Limitando para `.php` (boa prática parcial)
+
+---
+
+## ⚠️ Problema de Segurança
+
+🚨 O usuário controla:
+
+* Nome do arquivo
+* Possivelmente o caminho
+
+---
+
+# 💥 Risco: LFI (Local File Inclusion)
+
+Se não houver validação:
+
+```bash
+?page=../../../../etc/passwd
+```
+
+Ou:
+
+```bash
+?page=../../../../var/www/html/shell
+```
+
+🔥 Isso pode permitir:
+
+* Leitura de arquivos sensíveis
+* Execução de código malicioso
+
+---
+
+# ⚠️ Remover o ".php" PIORA TUDO
+
+```php
+require "{$page_folder}/{$page}";
+```
+
+🚨 Agora o atacante pode incluir:
+
+* `.txt`
+* `.log`
+* Qualquer arquivo do sistema
+
+---
+
+# 💣 Execução de Código em Arquivos NÃO PHP
+
+## 🧠 Comportamento importante
+
+Se um arquivo tiver código PHP dentro:
+
+```php
+<?php system("whoami"); ?>
+```
+
+Mesmo que seja:
+
+* `.txt`
+* `.log`
+* `.bak`
+
+✔️ O PHP **VAI EXECUTAR** se for incluído com `include` ou `require`
+
+---
+
+## 🚨 Impacto
+
+Isso pode levar a:
+
+* RCE (Remote Code Execution)
+* Execução de payloads escondidos
+* Escalada de ataque
+
+---
+
+# 🔐 Boas Práticas (Mitigação)
+
+## ✅ 1. Nunca confiar no input do usuário
+
+Evite:
+
+```php
+require "{$page_folder}/{$page}.php";
+```
+
+---
+
+## ✅ 2. Use lista branca (whitelist)
+
+```php
+$pages = ['home', 'about', 'contact'];
+
+if (in_array($page, $pages)) {
+    require __DIR__ . "/pages/{$page}.php";
+}
+```
+
+---
+
+## ✅ 3. Evitar concatenação direta
+
+🚨 Cuidado com:
+
+```php
+diretorio . input_usuario
+```
+
+---
+
+## ✅ 4. Validar e sanitizar input
+
+* Remover `../`
+* Bloquear caminhos absolutos
+* Restringir caracteres
+
+---
+
+# 🧠 Ponto Crítico
+
+## 🚨 Sempre desconfie quando ver:
+
+* `include($_GET[...])`
+* `require($_GET[...])`
+* Construção dinâmica de caminhos
+
+---
+
+
+
