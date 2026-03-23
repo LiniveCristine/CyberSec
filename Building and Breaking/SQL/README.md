@@ -338,7 +338,6 @@ SELECT * FROM tabela
 WHERE coluna = 'valor';
 ```
 
-````
 
 📌 Interpretação:
 
