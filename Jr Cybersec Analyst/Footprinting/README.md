@@ -2,24 +2,56 @@
 
 | Seção | Descrição |
 |------|----------|
-| [🔎 Introdução ao Footprinting](#-introdução-ao-footprinting) | Conceito e importância do footprinting no pentest |
-| [🎯 Objetivo do Reconhecimento](#-objetivo-do-reconhecimento) | O que buscamos durante o reconhecimento |
-| [📊 Tipos de Footprinting](#-tipos-de-footprinting) | Diferença entre passivo e ativo |
-| [🕵️ Footprinting Passivo](#️-footprinting-passivo) | Coleta de dados sem interação com o alvo |
-| [⚡ Footprinting Ativo](#-footprinting-ativo) | Coleta com interação direta |
-| [🌐 OSINT](#-osint) | Inteligência de fontes abertas |
-| [🔍 Coleta de Informações](#-coleta-de-informações) | Dados iniciais do alvo |
-| [🌍 Domínios e Subdomínios](#-domínios-e-subdomínios) | Descoberta de ativos web |
-| [📡 Endereços IP](#-endereços-ip) | Identificação de infraestrutura |
-| [📧 Emails](#-emails) | Coleta de usuários e possíveis alvos |
-| [🧰 Ferramentas de Footprinting](#-ferramentas-de-footprinting) | Ferramentas utilizadas no processo |
-| [🕸️ DNS Enumeration](#-dns-enumeration) | Enumeração de registros DNS |
-| [📜 WHOIS](#-whois) | Informações de registro de domínio |
-| [🔗 Serviços Web](#-serviços-web) | Identificação de tecnologias e servidores |
-| [📂 Metadados](#-metadados) | Extração de informações ocultas em arquivos |
-| [📱 Redes Sociais](#-redes-sociais) | Coleta de dados via engenharia social |
-| [🧠 Estratégia de Ataque](#-estratégia-de-ataque) | Como usar as informações coletadas |
-| [🚀 Resumo](#-resumo) | Revisão geral do conteúdo |
+| [🔎 Fluxo de Reconhecimento (Recon)](#-fluxo-de-reconhecimento-recon) | Introdução ao processo de reconhecimento |
+| [📊 Etapas do Reconhecimento](#-etapas-do-reconhecimento) | Fases principais do recon |
+| [🧾 Information Gathering (Coleta de Informações)](#-1-information-gathering-coleta-de-informações) | Coleta inicial de dados do alvo |
+| [🌐 OSINT](#-osint-open-source-intelligence) | Uso de fontes públicas para coleta |
+| [🧩 Enumeração](#-2-enumeração) | Extração de informações detalhadas |
+| [⚙️ Tipos de Enumeração](#️-tipos-de-enumeração) | Classificação da enumeração |
+| [🕵️ Enumeração Passiva](#️-enumeração-passiva) | Coleta sem interação com o alvo |
+| [⚡ Enumeração Ativa](#-enumeração-ativa) | Interação direta com o alvo |
+| [🎯 Estratégia no Recon](#-estratégia-no-recon) | Como conduzir o reconhecimento |
+| [👀 Mentalidade de Análise](#-mentalidade-de-análise) | Como pensar durante o recon |
+| [🧠 Princípios de Enumeração](#-princípios-de-enumeração) | Regras importantes durante a enumeração |
+| [🌐 Informações de Domínio](#-informações-de-domínio) | Análise do domínio e infraestrutura :contentReference[oaicite:0]{index=0} |
+| [🧠 O que vemos vs O que não vemos](#-o-que-vemos-vs-o-que-não-vemos) | Diferença entre superfície e backend :contentReference[oaicite:1]{index=1} |
+| [🌍 Presença Online](#-presença-online) | Expansão do escopo de ataque :contentReference[oaicite:2]{index=2} |
+| [🔐 Certificate Transparency Recon](#-certificate-transparency-recon) | Uso de certificados para descobrir subdomínios :contentReference[oaicite:3]{index=3} |
+| [🔎 Buscando Subdomínios com crt.sh](#-buscando-subdomínios-com-crtsh) | Técnica prática de recon :contentReference[oaicite:4]{index=4} |
+| [🧠 Explicação do comando](#-explicação-do-comando) | Entendimento das ferramentas usadas :contentReference[oaicite:5]{index=5} |
+| [🧹 Versão mais limpa do comando](#-versão-mais-limpa-do-comando) | Otimização da coleta de dados :contentReference[oaicite:6]{index=6} |
+| [🖥️ Identificando Hosts da Empresa](#️-identificando-hosts-da-empresa) | Diferenciar ativos próprios e terceiros :contentReference[oaicite:7]{index=7} |
+| [🔎 Descobrindo IPs dos Subdomínios](#-descobrindo-ips-dos-subdomínios) | Resolução DNS :contentReference[oaicite:8]{index=8} |
+| [🌐 Utilizando o Shodan](#-utilizando-o-shodan) | Recon passivo com busca de serviços :contentReference[oaicite:9]{index=9} |
+| [⚙️ Como o Shodan Funciona](#️-como-o-shodan-funciona) | Funcionamento interno da ferramenta :contentReference[oaicite:10]{index=10} |
+| [🔁 Fluxo de Recon até agora](#-fluxo-de-recon-até-agora) | Pipeline completo do recon :contentReference[oaicite:11]{index=11} |
+| [🕵️ Consulta Passiva](#️-consulta-passiva) | Diferença entre recon passivo e ativo :contentReference[oaicite:12]{index=12} |
+| [🧪 Consultando IPs no Shodan](#-consultando-ips-no-shodan) | Automação de consultas :contentReference[oaicite:13]{index=13} |
+| [🌐 DNS (Domain Name System)](#-dns-domain-name-system) | Conceitos fundamentais de DNS :contentReference[oaicite:14]{index=14} |
+| [🖥️ Tipos de Servidores DNS](#️-tipos-de-servidores-dns) | Estrutura do DNS :contentReference[oaicite:15]{index=15} |
+| [🔎 Footprinting DNS](#-footprinting-dns) | Técnicas de enumeração DNS :contentReference[oaicite:16]{index=16} |
+| [📦 Transferência de Zona](#-transferência-de-zona) | Vazamento completo de DNS :contentReference[oaicite:17]{index=17} |
+| [🔨 Brute Force de Subdomínios](#-brute-force-de-subdomínios) | Descoberta ativa de subdomínios :contentReference[oaicite:18]{index=18} |
+| [🛠️ Ferramentas de Enumeração DNS](#️-ferramentas-de-enumeração-dns) | Ferramentas utilizadas :contentReference[oaicite:19]{index=19} |
+| [⚠️ Subdomain Takeover](#️-subdomain-takeover) | Vulnerabilidade comum em DNS :contentReference[oaicite:20]{index=20} |
+| [☠️ DNS Cache Poisoning](#️-dns-cache-poisoning) | Ataque de envenenamento de cache :contentReference[oaicite:21]{index=21} |
+| [📧 SMTP](#-smtp-simple-mail-transfer-protocol) | Protocolo de envio de emails :contentReference[oaicite:22]{index=22} |
+| [🔎 Enumeração de Usuários SMTP](#-enumeração-de-usuários-smtp) | Descoberta de usuários :contentReference[oaicite:23]{index=23} |
+| [🤖 Automatizando Enumeração](#-automatizando-enumeração) | Uso de ferramentas :contentReference[oaicite:24]{index=24} |
+| [🚨 Open Relay SMTP](#-open-relay-smtp) | Falha crítica de configuração :contentReference[oaicite:25]{index=25} |
+| [📬 IMAP e POP3](#-imap-e-pop3) | Protocolos de recebimento de emails :contentReference[oaicite:26]{index=26} |
+| [🔎 Footprinting IMAP/POP3](#-footprinting-imappop3) | Enumeração desses serviços :contentReference[oaicite:27]{index=27} |
+| [📂 SMB e NFS](#-smb-e-nfs--compartilhamento-de-arquivos-em-redes) | Compartilhamento de arquivos :contentReference[oaicite:28]{index=28} |
+| [🖥️ SMB](#️-smb-server-message-block) | Protocolo de arquivos Windows :contentReference[oaicite:29]{index=29} |
+| [🐧 Samba](#-samba) | Implementação Linux do SMB :contentReference[oaicite:30]{index=30} |
+| [📂 NFS](#-nfs-network-file-system) | Compartilhamento em Linux :contentReference[oaicite:31]{index=31} |
+| [⚠️ Configurações Perigosas no NFS](#️-configurações-perigosas-no-nfs) | Riscos de configuração :contentReference[oaicite:32]{index=32} |
+| [🛠️ Ferramentas SMB Alternativas](#️-ferramentas-smb-alternativas) | Ferramentas de enumeração :contentReference[oaicite:33]{index=33} |
+| [🧠 Fluxo de Enumeração SMB](#-fluxo-de-enumeração-smb) | Processo de exploração :contentReference[oaicite:34]{index=34} |
+| [☁️ Cloud Resources](#️-fluxo-de-recon-em-cloud-resources) | Enumeração em ambientes cloud :contentReference[oaicite:35]{index=35} |
+| [🔑 Arquivos Sensíveis](#-arquivos-sensíveis-que-podemos-encontrar) | Dados críticos expostos :contentReference[oaicite:36]{index=36} |
+| [👥 Funcionários (OSINT)](#-funcionários-osint) | Coleta de dados humanos :contentReference[oaicite:37]{index=37} |
+
 
 
 # 🔎 Fluxo de Reconhecimento (Recon)
