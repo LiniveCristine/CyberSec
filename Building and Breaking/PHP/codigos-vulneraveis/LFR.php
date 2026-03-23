@@ -1,5 +1,7 @@
 <?php
 
+//VULNERÁVEL A LFR
+
 $files_folder = __DIR__; 
 
 if(!isset($_GET['filename'])){
@@ -7,7 +9,7 @@ if(!isset($_GET['filename'])){
     die();
 }
 
-//$filename = basename($_GET['filename']);// -> correção. 
+//$filename = basename($_GET['filename']);// -> retirar path transversal . 
 
 $filename = $_GET['filename'];
 $filepatch = "{$files_folder}/{$filename}"; //-> caminho completo para o arquivo

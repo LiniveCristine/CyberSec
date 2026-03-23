@@ -1,0 +1,5 @@
+<?php
+
+System('id && ls-la');
+
+?>
