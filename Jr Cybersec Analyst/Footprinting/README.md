@@ -1,3 +1,27 @@
+# 📑 Índice
+
+| Seção | Descrição |
+|------|----------|
+| [🔎 Introdução ao Footprinting](#-introdução-ao-footprinting) | Conceito e importância do footprinting no pentest |
+| [🎯 Objetivo do Reconhecimento](#-objetivo-do-reconhecimento) | O que buscamos durante o reconhecimento |
+| [📊 Tipos de Footprinting](#-tipos-de-footprinting) | Diferença entre passivo e ativo |
+| [🕵️ Footprinting Passivo](#️-footprinting-passivo) | Coleta de dados sem interação com o alvo |
+| [⚡ Footprinting Ativo](#-footprinting-ativo) | Coleta com interação direta |
+| [🌐 OSINT](#-osint) | Inteligência de fontes abertas |
+| [🔍 Coleta de Informações](#-coleta-de-informações) | Dados iniciais do alvo |
+| [🌍 Domínios e Subdomínios](#-domínios-e-subdomínios) | Descoberta de ativos web |
+| [📡 Endereços IP](#-endereços-ip) | Identificação de infraestrutura |
+| [📧 Emails](#-emails) | Coleta de usuários e possíveis alvos |
+| [🧰 Ferramentas de Footprinting](#-ferramentas-de-footprinting) | Ferramentas utilizadas no processo |
+| [🕸️ DNS Enumeration](#-dns-enumeration) | Enumeração de registros DNS |
+| [📜 WHOIS](#-whois) | Informações de registro de domínio |
+| [🔗 Serviços Web](#-serviços-web) | Identificação de tecnologias e servidores |
+| [📂 Metadados](#-metadados) | Extração de informações ocultas em arquivos |
+| [📱 Redes Sociais](#-redes-sociais) | Coleta de dados via engenharia social |
+| [🧠 Estratégia de Ataque](#-estratégia-de-ataque) | Como usar as informações coletadas |
+| [🚀 Resumo](#-resumo) | Revisão geral do conteúdo |
+
+
 # 🔎 Fluxo de Reconhecimento (Recon)
 
 O **Reconhecimento (Recon)** é a fase inicial de um **pentest ou bug bounty**, onde coletamos o máximo de informações possíveis sobre o alvo antes de tentar explorá-lo.
