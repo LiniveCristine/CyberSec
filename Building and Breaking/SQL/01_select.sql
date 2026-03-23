@@ -1,5 +1,12 @@
 
 
-SELECT * FROM produtos
+SELECT *
+FROM produtos
 
-LIMIT 5;
+WHERE DescNomeProduto LIKE '%de%'
+
+
+
+
+
+

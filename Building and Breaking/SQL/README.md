@@ -191,6 +191,7 @@ SELECT coluna FROM tabela;
 - Scripts SQL → extensão: `.sql`
 
 📌 No VS Code:
+
 - Executar queries: `Ctrl + Shift + Q`
 - Pode ser necessário selecionar o **database**
 
@@ -205,13 +206,13 @@ Usado para **selecionar dados**.
 ```sql
 SELECT 'olá mundo';
 SELECT 1 + 1 * 10;
-````
+```
 
 📌 Observações:
 
-* Não precisam de tabela
-* O resultado aparece abaixo
-* O cabeçalho mostra a expressão
+- Não precisam de tabela
+- O resultado aparece abaixo
+- O cabeçalho mostra a expressão
 
 ---
 
@@ -223,8 +224,8 @@ SELECT 1 + 1 * 10;
 SELECT * FROM clientes;
 ```
 
-* `*` → todas as colunas
-* `clientes` → nome da tabela
+- `*` → todas as colunas
+- `clientes` → nome da tabela
 
 ---
 
@@ -265,7 +266,7 @@ LIMIT 10;
 
 📌 Retorna apenas:
 
-* As **10 primeiras linhas**
+- As **10 primeiras linhas**
 
 ⚠️ Regra:
 
@@ -309,16 +310,147 @@ SELECT 'testando';
 
 # 🧠 Resumo
 
-| Conceito   | Explicação             |
-| ---------- | ---------------------- |
-| SELECT     | Selecionar dados       |
-| *          | Todas as colunas       |
-| FROM       | Define tabela          |
-| LIMIT      | Limita resultados      |
-| .tables    | Lista tabelas (SQLite) |
-| ;          | Finaliza query         |
-| -- / /* */ | Comentários            |
+| Conceito     | Explicação             |
+| ------------ | ---------------------- |
+| SELECT       | Selecionar dados       |
+| \*           | Todas as colunas       |
+| FROM         | Define tabela          |
+| LIMIT        | Limita resultados      |
+| .tables      | Lista tabelas (SQLite) |
+| ;            | Finaliza query         |
+| -- / /\* \*/ | Comentários            |
 
 ---
 
+# 🔍 WHERE (Filtrando Dados)
 
+A cláusula **WHERE** é usada em SQL para **filtrar registros (linhas)** em uma consulta.
+
+🎯 **Objetivo:**
+Retornar apenas os dados que atendem a uma **condição específica**.
+
+---
+
+# 🧩 Sintaxe Básica
+
+```sql
+SELECT * FROM tabela
+WHERE coluna = 'valor';
+```
+
+````
+
+📌 Interpretação:
+
+- `SELECT *` → seleciona todas as colunas
+- `FROM tabela` → define a tabela
+- `WHERE` → aplica um filtro
+
+---
+
+## ⚠️ Regras Importantes
+
+- `'valor'` → **aspas simples = valor**
+- `"coluna"` → **aspas duplas = nome de coluna (dependendo do SGBD)**
+- Comparações podem ser:
+  - `=` → igual
+  - `!=` → diferente
+  - `>=` → maior igual
+  - `<=` → menor igual
+
+---
+
+## 🧠 Exemplo
+
+```sql
+SELECT * FROM usuarios
+WHERE nome = 'teste';
+```
+
+✔️ Retorna todos os usuários com nome **teste**
+
+---
+
+## 🔤 Case Sensitive
+
+⚠️ Dependendo do banco:
+
+- Pode diferenciar **maiúsculas/minúsculas**
+- `'Teste'` ≠ `'teste'`
+
+---
+
+# 🔗 Combinando Filtros
+
+## 🔹 OR (OU)
+
+```sql
+WHERE coluna = 'teste1' OR coluna = 'teste2';
+```
+
+✔️ Retorna registros que atendem **qualquer uma das condições**
+
+---
+
+## 🔹 IN (Lista de valores)
+
+```sql
+WHERE coluna IN ('valor1', 'valor2', 'valor3');
+```
+
+✔️ Equivalente a vários `OR`
+
+---
+
+## 🧠 Exemplo
+
+```sql
+SELECT * FROM usuarios
+WHERE nome IN ('ana', 'joao', 'maria');
+```
+
+---
+
+# 🔎 Buscas Parciais com LIKE
+
+A cláusula **LIKE** permite buscar padrões em textos.
+
+---
+
+## 🔹 Começa com
+
+```sql
+WHERE coluna LIKE 'Teste%';
+```
+
+✔️ Retorna valores que **começam com "Teste"**
+
+---
+
+## 🔹 Termina com
+
+```sql
+WHERE coluna LIKE '%Teste';
+```
+
+✔️ Retorna valores que **terminam com "Teste"**
+
+---
+
+## 🔹 Contém (no meio)
+
+```sql
+WHERE coluna LIKE '%Teste%';
+```
+
+✔️ Retorna valores que **contêm "Teste" em qualquer posição**
+
+---
+
+## 🧠 Coringa (%)
+
+- `%` → representa **qualquer quantidade de caracteres**
+
+---
+
+````
