@@ -1,3 +1,27 @@
+# 📑 Índice
+
+| Seções (1) | Seções (2) |
+|-----------|-----------|
+| [🌍 O que é HTTP?](#-o-que-é-http) | [📤 HTTP Request](#-http-request) |
+| [🔄 Fluxo HTTP](#-fluxo-http) | [📥 HTTP Response](#-http-response) |
+| [🔗 Estrutura de uma URL](#-estrutura-de-uma-url) | [🧠 HTTP Headers](#-http-headers) |
+| [🧩 Componentes](#-componentes) | [🍪 Cookies & Autenticação](#-cookies--autenticação) |
+| [⚠️ Observações](#️-observações) | [🧪 Técnicas Importantes](#-técnicas-importantes) |
+| [🧠 Fluxo Completo HTTP](#-fluxo-completo-http) | [🌐 Browser DevTools](#-browser-devtools) |
+| [👥 Participantes](#-participantes) | [🔁 Métodos HTTP](#-métodos-http) |
+| [🔄 Processo](#-processo) | [📊 Status Codes](#-status-codes) |
+| [🧪 cURL (Client URL)](#-curl-client-url) | [📬 GET vs POST](#-get-vs-post) |
+| [🔧 Uso básico](#-uso-básico) | [🧪 Enviando POST com cURL](#-enviando-post-com-curl) |
+| [📥 Baixar arquivos](#-baixar-arquivos) | [📦 Dados JSON](#-dados-json) |
+| [⚙️ Flags importantes](#️-flags-importantes) | [🌐 APIs e CRUD](#-apis-e-crud) |
+| [🔐 HTTPS (HTTP Secure)](#-https-http-secure) | [📥 READ (GET)](#-read-get) |
+| [🧩 Diferença](#-diferença) | [📤 CREATE (POST)](#-create-post) |
+| [🔒 TLS (Transport Layer Security)](#-tls-transport-layer-security) | [🔄 UPDATE (PUT / PATCH)](#-update-put--patch) |
+| [🔄 Fluxo HTTPS](#-fluxo-https) | [❌ DELETE](#-delete) |
+| [🤝 Handshake](#-handshake) | [⚠️ Pontos Críticos de Segurança](#️-pontos-críticos-de-segurança) |
+| [⚠️ DNS e Privacidade](#️-dns-e-privacidade) | [🧠 Mentalidade de Ataque](#-mentalidade-de-ataque) |
+|  | [🚀 Resumo Estratégico](#-resumo-estratégico) |
+
 # 🌍 O que é HTTP?
 
 **HTTP (HyperText Transfer Protocol)** é o protocolo usado para comunicação entre cliente e servidor.
