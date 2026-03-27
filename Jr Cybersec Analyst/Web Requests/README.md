@@ -376,3 +376,254 @@ ffuf -w wordlist.txt -u http://IP -H "Host: FUZZ.site.com"
 - `500 Internal Server Error`
 
 ---
+
+# 📬 GET vs POST
+
+## 🔹 GET
+
+- Parâmetros na **URL**
+- Visível no navegador
+- Usado para **buscar dados**
+
+```bash
+http://site.com/login?user=admin
+```
+
+---
+
+## 🔹 POST
+
+- Parâmetros no **corpo da requisição**
+- Suporta **grandes volumes de dados**
+- Pode enviar **dados binários**
+
+---
+
+# 🧪 Enviando POST com cURL
+
+```bash
+curl -X POST -d "conteudo" http://site.com
+```
+
+## ⚙️ Parâmetros
+
+| Flag | Função                 |
+| ---- | ---------------------- |
+| `-X` | Define método HTTP     |
+| `-d` | Dados enviados no body |
+
+---
+
+# 🍪 Cookies
+
+## 🧠 O que são?
+
+- Armazenam **sessão do usuário**
+- Criados após login
+- Evitam reautenticação
+
+---
+
+## 🔍 Onde ver?
+
+- DevTools → Storage → Cookies
+- `curl -i` → headers da resposta
+
+---
+
+## 📤 Enviando cookies com cURL
+
+```bash
+curl -H "Cookie: chave=valor" http://site.com
+```
+
+ou
+
+```bash
+curl -b "chave=valor" http://site.com
+```
+
+---
+
+## ⚠️ Importância em segurança
+
+- Mantêm sessão ativa
+- Alvo comum de ataques como:
+  - XSS
+  - Session Hijacking
+
+---
+
+# 📦 Dados JSON
+
+APIs modernas utilizam JSON no body:
+
+```json
+{
+  "nome": "usuario",
+  "idade": 25
+}
+```
+
+---
+
+## ⚠️ Header obrigatório
+
+```bash
+-H "Content-Type: application/json"
+```
+
+---
+
+# 🌐 APIs e CRUD
+
+## 🧠 O que é CRUD?
+
+| Operação | Método HTTP |
+| -------- | ----------- |
+| Create   | POST        |
+| Read     | GET         |
+| Update   | PUT / PATCH |
+| Delete   | DELETE      |
+
+---
+
+## 📌 Observação
+
+- Algumas ações exigem autenticação:
+  - Cookie
+  - JWT (Bearer Token)
+
+---
+
+# 📥 READ (GET)
+
+## 🔍 Buscar registro específico
+
+```bash
+curl http://<IP>:<PORT>/api.php/tabela/linha
+```
+
+---
+
+## 📊 Formatar JSON com jq
+
+```bash
+curl -s http://<IP>:<PORT>/api.php/tabela/linha | jq
+```
+
+✔️ `jq` → formata JSON
+
+---
+
+## 📋 Buscar todos os registros
+
+```bash
+curl http://<IP>:<PORT>/api.php/tabela/ | jq
+```
+
+---
+
+# 📤 CREATE (POST)
+
+```bash
+curl -X POST http://<IP>:<PORT>/api.php/city/ \
+-d '{"city_name":"HTB_City", "country_name":"HTB"}' \
+-H "Content-Type: application/json"
+```
+
+---
+
+## 🔍 Validar criação
+
+```bash
+curl -s http://<IP>:<PORT>/api.php/city/HTB_City | jq
+```
+
+---
+
+# 🔄 UPDATE (PUT / PATCH)
+
+## 🔹 PUT (Atualização completa)
+
+```bash
+curl -X PUT http://<IP>:<PORT>/api.php/city/london \
+-d '{"city_name":"New_HTB_City", "country_name":"HTB"}' \
+-H "Content-Type: application/json"
+```
+
+---
+
+## 🔹 PATCH (Atualização parcial)
+
+✔️ Modifica apenas campos específicos
+
+---
+
+## 🔍 Verificar métodos disponíveis
+
+```bash
+curl -X OPTIONS http://<IP>:<PORT>/api.php/
+```
+
+---
+
+# ❌ DELETE
+
+```bash
+curl -X DELETE http://<IP>:<PORT>/api.php/tabela/linha
+```
+
+---
+
+## 🔍 Validar exclusão
+
+```bash
+curl -s http://<IP>:<PORT>/api.php/tabela/linha | jq
+```
+
+---
+
+# ⚠️ Pontos Críticos de Segurança
+
+## 🚨 Falhas comuns
+
+- Falta de autenticação
+- Controle de acesso fraco
+- Exposição de endpoints
+- Manipulação de métodos HTTP
+
+---
+
+## 🔥 Riscos
+
+- Criar dados maliciosos
+- Alterar informações sensíveis
+- Deletar registros importantes
+- Escalar privilégios
+
+---
+
+# 🧠 Mentalidade de Ataque
+
+Pergunte-se:
+
+- Precisa de autenticação?
+- Posso alterar métodos (GET → PUT)?
+- Posso acessar outras tabelas?
+- Posso manipular JSON?
+
+---
+
+# 🚀 Resumo Estratégico
+
+💡 APIs são alvos principais em bug bounty:
+
+- Baseadas em HTTP
+- Usam JSON
+- Controladas por métodos (CRUD)
+
+---
+
+🔥 **Regra de ouro:**
+Se você controla a requisição → você controla a API.
