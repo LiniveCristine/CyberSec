@@ -184,3 +184,372 @@ Analisar:
   - Não valida autorização
 
 ---
+
+# 🌐 Layout de Aplicações Web
+
+## 📌 Conceito Geral
+
+* Nenhuma aplicação web é **100% igual**
+* Podem ser parecidas, mas o **backend sempre varia**
+* Divididas em três pilares:
+
+```md
+INFRAESTRUTURA → Onde roda?
+COMPONENTES → Do que é feito?
+ARQUITETURA → Como tudo se conecta?
+```
+
+---
+
+## 🏗️ Categorias de Layout
+
+## 🔧 Infraestrutura (Base Técnica)
+
+Responsável por manter a aplicação funcionando.
+
+**Inclui:**
+
+* Servidores
+* Banco de Dados
+* Rede
+* Sistema Operacional
+* Serviços de hospedagem
+
+---
+
+## 🧩 Componentes (Funcionalidades)
+
+Partes que o usuário interage.
+
+**Inclui:**
+
+* UI (Interface)
+* UX (Experiência)
+* Client-side (Front-end)
+* Server-side (Back-end)
+
+---
+
+## 🧠 Arquitetura (Organização)
+
+Define como tudo se conecta.
+
+**Define:**
+
+* Fluxo de dados
+* Comunicação Cliente ↔ Servidor ↔ Banco de Dados
+
+---
+
+## 🏛️ Modelos de Arquitetura
+
+## 🔹 Cliente-Servidor
+
+* Modelo padrão
+* Cliente: navegador
+* Servidor: processa requisições
+
+---
+
+### 🔹 Um Servidor
+
+* Tudo em um único servidor
+* ❌ Alto risco
+
+  * Se comprometido → tudo cai
+
+---
+
+### 🔹 Muitos Servidores + 1 Banco de Dados
+
+* BD separado
+* Vários servidores web
+
+**Vantagens:**
+
+* Distribuição de carga
+* Comprometimento isolado
+
+---
+
+### 🔹 Muitos Servidores + Muitos Bancos
+
+* Cada servidor com seu BD
+
+**Vantagens:**
+
+* Redundância
+* Alta disponibilidade
+
+**Desvantagem:**
+
+* Alta complexidade
+
+---
+
+## ☁️ Serverless (Sem Servidor)
+
+* Infra gerenciada (AWS, GCP)
+* Você escreve apenas funções
+
+**Comunicação:**
+
+* APIs
+* Eventos
+
+---
+
+## 🧱 Microsserviços
+
+* Aplicação dividida em serviços menores
+
+**Exemplo:**
+
+* Usuário
+* Carrinho
+* Pagamento
+
+**Características:**
+
+* Independentes
+* Linguagens diferentes
+* Comunicação via API
+
+---
+
+# ⚙️ Componentes da Aplicação
+
+## 🖥️ Cliente (Front-end)
+
+* HTML, CSS, JS
+* Executado no navegador
+
+---
+
+## 🗄️ Servidor (Back-end)
+
+### 🔹 Servidor Web
+
+* Recebe requisições HTTP
+* Ex: Apache, Nginx
+
+### 🔹 Lógica da Aplicação
+
+* Regras de negócio
+* Autenticação
+
+### 🔹 Banco de Dados
+
+* Armazena dados
+
+### 🔹 Frameworks
+
+* Ex: Laravel, Express, ASP.NET
+
+---
+
+### 🔗 Serviços
+
+* APIs externas (pagamento, login Google)
+* Comunicação entre microsserviços
+
+---
+
+## 🔐 Segurança da Arquitetura
+
+> Muitas vulnerabilidades estão no **design**, não no código.
+
+---
+
+## 🎨 Front-end vs Back-end
+
+### 🖼️ Front-end
+
+* Interface com usuário
+* Tecnologias: HTML, CSS, JS
+
+**Conceitos:**
+
+* UI → Interface
+* UX → Experiência
+
+---
+
+### ⚙️ Back-end
+
+* Processa dados
+* Controla funcionalidades
+
+**Responsabilidades:**
+
+* Lógica da aplicação
+* Banco de dados
+* APIs
+* Integrações
+
+---
+
+# 🚨 Erros Comuns de Segurança
+
+## 🔥 Principais Falhas
+
+1. Falta de validação (SQLi, XSS)
+2. Confiar no usuário
+3. Criar criptografia própria
+4. Segurança como último passo
+5. Senhas em texto puro
+6. Senhas fracas
+7. Dados sem criptografia
+8. Validação só no front-end
+9. Código de terceiros vulnerável
+10. SQL Injection não tratada
+11. RFI (Remote File Inclusion)
+12. XSS / dados não sanitizados
+13. Logs inexistentes
+14. WAF mal configurado
+
+---
+
+## 🛡️ OWASP Top 10
+
+* Broken Access Control
+* Falhas criptográficas
+* Injeções
+* Design inseguro
+* Security Misconfiguration
+* Componentes vulneráveis
+* Falhas de autenticação
+* Integridade de dados
+* Logging insuficiente
+* SSRF
+
+---
+
+
+# 🌍 HTML
+
+## 🔐 Percent Encoding (URL Encoding)
+
+Transforma caracteres especiais em formato seguro:
+
+```md
+% + código hexadecimal
+```
+
+**Exemplo:**
+
+```
+João Silva → Jo%C3%A3o%20Silva
+```
+
+---
+
+## 🧱 Estrutura HTML
+
+```html
+<head>
+  <!-- Configurações -->
+</head>
+
+<body>
+  <!-- Conteúdo visível -->
+</body>
+```
+
+---
+
+## 🌳 DOM (Document Object Model)
+
+* Representação do HTML em árvore
+* Permite manipulação via JS
+
+---
+
+
+# 🎨 CSS
+
+* Estiliza o HTML
+
+```css
+body {
+  background-color: black;
+}
+```
+
+## 📦 Frameworks
+
+* Bootstrap
+* SASS
+* Bulma
+* Foundation
+
+---
+
+
+# ⚡ JavaScript
+
+## 📌 Função
+
+* Adicionar interatividade
+
+### 🧪 Exemplo
+
+```javascript
+document.getElementById("button1").innerHTML = "Changed Text!";
+```
+
+---
+
+### 🔄 AJAX
+
+* Requisições sem recarregar página
+
+---
+
+### 🧰 Frameworks
+
+* React
+* Angular
+* Vue
+* jQuery
+
+---
+
+
+# 🧨 Vulnerabilidades Front-end
+
+> Geralmente afetam o **usuário**, não diretamente o servidor
+
+---
+
+## 🔍 Exposição de Dados Sensíveis
+
+**Onde encontrar:**
+
+* Código fonte (Ctrl+U)
+* JS
+* Burp Suite
+
+**Buscar por:**
+
+```
+api_key, token, auth, password, secret
+```
+
+---
+
+## 💉 HTML Injection
+
+Quando entrada do usuário é exibida sem validação.
+
+**Tipos:**
+
+* Stored
+* Reflected
+* DOM-based
+
+⚠️ Não é XSS (não executa JS diretamente)
+
+---
+
+
