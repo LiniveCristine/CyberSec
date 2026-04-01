@@ -827,4 +827,251 @@ Aplicação que gerencia requisições HTTP.
 
 ---
 
+# 🗄️ Banco de Dados & Segurança em Aplicações Web
+
+## 📌 O que é um Banco de Dados?
+Um **banco de dados (Database)** permite que aplicações web:
+- Armazenem dados
+- Recuperem dados
+- Gerem conteúdo dinâmico para cada usuário
+
+---
+
+## 🧩 Tipos de Banco de Dados
+
+### 🔷 Relacional (SQL)
+- Dados organizados em **tabelas (linhas e colunas)**
+- Possuem:
+  - **PK (Primary Key)** → identificador único
+  - **FK (Foreign Key)** → cria relacionamentos entre tabelas
+
+#### 📊 Exemplos:
+- MySQL
+- MSSQL
+- Oracle
+- PostgreSQL
+- SQLite
+- MariaDB
+
+---
+
+### 🔶 Não Relacional (NoSQL)
+- **Não utilizam tabelas**
+- Estrutura flexível (ideal para dados não estruturados)
+- Não possuem relacionamentos tradicionais
+
+#### 🧱 Modelos:
+
+#### 🔑 1. Chave-Valor
+- Estrutura simples (tipo dicionário)
+```json
+"100001": {
+  "date": "01-01-2021",
+  "content": "Welcome"
+}
+````
+
+#### 📄 2. Documentos
+
+* Dados em formato JSON
+
+```json
+{
+  "id": 123,
+  "nome": "Linive",
+  "idade": 20
+}
+```
+
+📌 Diferença:
+
+* **Key-Value:** trata tudo como um bloco único
+* **Documento:** permite acessar campos internos
+
+#### 🧱 3. Coluna Larga
+
+* Estrutura orientada a colunas (alta escalabilidade)
+
+#### 🔗 4. Grafos
+
+* Baseado em relacionamentos (nós e conexões)
+
+#### 📊 Exemplos:
+
+* MongoDB
+* ElasticSearch
+* Apache Cassandra
+
+---
+
+## 🌐 Uso em Aplicações Web
+
+A aplicação:
+
+1. Conecta ao banco
+2. Envia queries
+3. Recebe resultados
+
+### 💻 Exemplo (PHP)
+
+```php
+$conn = new mysqli("localhost", "user", "senha", "db");
+
+$query = "SELECT * FROM tabela";
+
+$result = $conn->query($query);
+```
+
+---
+
+## 💉 SQL Injection (SQLi)
+
+Ocorre quando:
+
+* Input do usuário é usado **sem validação**
+
+```php
+$searchInput = $_POST['findUser'];
+
+$query = "SELECT * FROM users WHERE name LIKE '%$searchInput%'";
+```
+
+⚠️ Risco:
+
+* Execução de comandos SQL maliciosos
+* Vazamento de dados
+* Controle do banco
+
+---
+
+# ⚙️ Frameworks & APIs
+
+## 🧰 Frameworks
+
+Facilitam o desenvolvimento com funções prontas:
+
+* Laravel (PHP)
+* Express (Node.js)
+* Django (Python)
+* Rails (Ruby)
+
+---
+
+## 🔌 APIs
+
+Permitem comunicação entre **Front-end ↔ Back-end**
+
+### 🧾 SOAP
+
+* Baseado em **XML**
+* Estrutura rígida:
+
+  * Envelope
+  * Header
+  * Body
+  * Fault
+
+⚠️ Vulnerabilidades:
+
+* XXE
+* SOAP Action Abuse
+* Fault Leakage
+
+---
+
+### 🌐 REST
+
+* Usa HTTP + JSON
+* Mais simples e popular
+
+---
+
+# 🚨 Vulnerabilidades Comuns (OWASP)
+
+## 🔐 Broken Authentication
+
+* Falha em **autenticação (quem você é)**
+* Login sem credenciais válidas
+
+## 🔓 Broken Access Control
+
+* Falha em **autorização (o que você pode fazer)**
+* Usuário comum acessa áreas restritas
+
+---
+
+## 📁 Malicious File Upload
+
+* Upload sem validação
+* Permite envio de scripts maliciosos
+
+---
+
+## 💻 Command Injection
+
+* Execução de comandos no SO via input do usuário
+
+---
+
+## 💉 SQL Injection (SQLi)
+
+* Manipulação de queries SQL via input
+
+---
+
+# 🌍 Vulnerabilidades Públicas
+
+## 🆔 CVE (Common Vulnerabilities and Exposures)
+
+* Identificador único de vulnerabilidades
+* Contém:
+
+  * Descrição
+  * Versões afetadas
+  * Referências
+
+---
+
+## 💣 Exploit
+
+* Código que explora uma vulnerabilidade
+
+### 🔎 Onde encontrar:
+
+* Exploit-DB
+* Rapid7
+* Vulnerability Lab
+
+### 🧠 Como usar:
+
+1. Identificar tecnologia
+2. Descobrir versão
+3. Buscar exploit
+4. Testar
+
+---
+
+# 📊 CVSS (Pontuação de Risco)
+
+## 🔢 Versão 2.0
+
+* Baixo: 0.0 – 3.9
+* Médio: 4.0 – 6.9
+* Alto: 7.0 – 10
+
+## 🔢 Versão 3.0
+
+* Nenhum: 0
+* Baixo: 0.1 – 3.9
+* Médio: 4.0 – 6.9
+* Alto: 7.0 – 8.9
+* Crítico: 9.0 – 10
+
+📌 Usado para:
+
+* Avaliar impacto da vulnerabilidade
+* Incluir no relatório
+
+---
+
 
