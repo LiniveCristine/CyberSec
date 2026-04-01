@@ -552,4 +552,279 @@ Quando entrada do usuário é exibida sem validação.
 
 ---
 
+# 💥 XSS (Cross-Site Scripting)
+
+Vulnerabilidade onde o atacante injeta **JavaScript malicioso** em uma aplicação web.
+
+📌 **Diferença importante:**
+
+- HTML Injection → apenas HTML
+- XSS → **executa JavaScript**
+
+---
+
+# 🧩 Tipos de XSS
+
+## 🔁 Reflected XSS
+
+- O payload é enviado na requisição
+- O servidor reflete o conteúdo na resposta
+- Executado no navegador da vítima
+
+📌 Exemplo:
+
+```bash
+https://site.com/search?q=<script>alert(1)</script>
+````
+
+⚠️ Requer interação da vítima (clicar no link)
+
+---
+
+## 💾 Stored XSS
+
+* Payload é armazenado no banco de dados
+* Executa automaticamente ao acessar a página
+
+🚨 **Mais perigoso**
+
+* Não precisa de interação
+* Afeta múltiplos usuários
+
+---
+
+## 🧠 DOM XSS
+
+* Ocorre **totalmente no navegador**
+* Não envolve o servidor
+* JavaScript manipula o DOM com input do usuário sem validação
+
+---
+
+### 💻 Exemplo Prático
+
+```html
+<button onclick="inputFunction()">Click</button>
+<p id="output"></p>
+```
+
+```javascript
+function inputFunction() {
+    var input = prompt("Enter your name", "");
+
+    if (input != null) {
+        document.getElementById("output").innerHTML = "Your name is " + input;
+    }
+}
+```
+
+🚨 Problema:
+
+* `innerHTML` insere input do usuário sem validação
+
+---
+
+### 💣 Payload
+
+```html
+"><img src=/ onerror=alert(document.cookie)>
+```
+
+---
+
+## 🧠 Regra do Payload
+
+1. **Quebrar contexto** → `">`
+2. **Injetar tag** → `<img>`
+3. **Executar evento** → `onerror=`
+
+---
+
+## 🧪 Payloads Comuns
+
+```html
+"><script>alert(1)</script>
+<img src=x onerror=alert(1)>
+</script><script>alert(1)</script>
+<svg/onload=alert(1)>
+```
+
+---
+
+## 🔗 XSS via URL
+
+* Utiliza `#` (hash)
+
+```javascript
+element.innerHTML = location.hash
+```
+
+📌 Com `#` → existe input
+📌 Sem `#` → não há input
+
+---
+
+# 🛑 CSRF (Cross-Site Request Forgery)
+
+Ataque onde o atacante faz a vítima executar ações **sem perceber**.
+
+---
+
+## 🎯 Objetivo
+
+* Explorar uma sessão autenticada
+* Enviar requisições sem consentimento
+
+---
+
+## 🧠 Funcionamento
+
+1. Usuário está logado
+2. Atacante envia link ou página maliciosa
+3. Navegador da vítima executa a requisição automaticamente
+
+---
+
+## ⚔️ CSRF vs XSS
+
+| CSRF               | XSS                  |
+| ------------------ | -------------------- |
+| Engana o navegador | Controla o navegador |
+| Usa sessão ativa   | Executa JS malicioso |
+| Não lê resposta    | Pode ler respostas   |
+
+---
+
+## 🔥 Combinação XSS + CSRF
+
+* XSS pode:
+
+  * Fazer requisições
+  * Ler respostas
+  * Controlar totalmente a sessão
+
+🚨 Resultado: **controle total da vítima**
+
+---
+
+# 🛡️ Prevenção
+
+## 🧹 Sanitização
+
+* Remover caracteres perigosos
+* Ex: `< > " '`
+
+---
+
+## ✅ Validação
+
+* Garantir formato correto
+* Ex: email válido
+
+---
+
+## 🧱 Outras Proteções
+
+* WAF (Web Application Firewall)
+* Tokens CSRF
+* Escaping de saída
+
+---
+
+# 🖥️ Servidores Back-end
+
+Responsáveis por executar a aplicação web.
+
+---
+
+## 🧩 Componentes
+
+* Sistema Operacional (Linux / Windows)
+* Web Server
+* Aplicação (PHP, Java, etc)
+* Banco de dados
+
+---
+
+# 🏗️ Stacks Comuns
+
+| Stack | Componentes                           |
+| ----- | ------------------------------------- |
+| LAMP  | Linux + Apache + MySQL + PHP          |
+| WAMP  | Windows + Apache + MySQL + PHP        |
+| WINS  | Windows + IIS + .NET + SQL Server     |
+| MAMP  | macOS + Apache + MySQL + PHP          |
+| XAMPP | Cross-platform + Apache + MySQL + PHP |
+
+📌 Pode ser distribuído (cloud / múltiplos servidores)
+
+---
+
+# 🌐 Servidores Web
+
+Aplicação que gerencia requisições HTTP.
+
+---
+
+## ⚙️ Funções
+
+* Receber requisições
+* Processar
+* Retornar respostas
+
+---
+
+## 📡 Portas
+
+* HTTP → 80
+* HTTPS → 443
+
+---
+
+## 🔄 Fluxo
+
+1. Recebe request
+2. Processa
+3. Retorna status:
+
+```http
+200 OK
+404 Not Found
+403 Forbidden
+```
+
+---
+
+## 📥 Tipos de Entrada
+
+* JSON
+* Arquivos (binário)
+
+---
+
+# 🧠 Tipos de Web Server
+
+## 🟥 Apache
+
+* +40% dos sites
+* Código aberto
+
+---
+
+## 🟩 Nginx
+
+* ~30% dos sites
+* Alta performance
+* Muito usado em alto tráfego
+
+---
+
+## 🟦 IIS
+
+* Servidor da Microsoft
+* Usado com .NET
+* ~15% dos sites
+
+---
+
 
