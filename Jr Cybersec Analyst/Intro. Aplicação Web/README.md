@@ -1,3 +1,10 @@
+# 📑 Índice
+
+| Coluna 1 | Coluna 2 |
+|----------|----------|
+| - [🧩 O que são Aplicações Web?](#-o-que-são-aplicações-web) <br> - [🏗️ Arquitetura](#️-arquitetura) <br> - [📐 Modelo Cliente-Servidor](#-modelo-cliente-servidor) <br> - [🎨 Front-end](#-front-end-cliente) <br> - [⚙️ Back-end](#️-back-end-servidor) <br> - [💡 Exemplos](#-exemplos) <br> - [🌍 Web 1.0 vs Web 2.0](#-web-10-vs-web-20) <br> - [💻 Web Apps vs Apps Nativas](#-web-apps-vs-apps-nativas) <br> - [📦 Distribuição](#-distribuição-de-aplicações-web) <br> - [⚠️ Segurança](#️-segurança-em-aplicações-web) <br> - [💥 Vulnerabilidades](#-vulnerabilidades-comuns) <br> - [🌐 Layout](#-layout-de-aplicações-web) <br> - [⚙️ Componentes](#️-componentes-da-aplicação) <br> - [🔐 Segurança da Arquitetura](#-segurança-da-arquitetura) <br> - [🎨 Front vs Back](#-front-end-vs-back-end) | - [🚨 Erros Comuns](#-erros-comuns-de-segurança) <br> - [🛡️ OWASP Top 10](#️-owasp-top-10) <br> - [🌍 HTML](#-html) <br> - [🎨 CSS](#-css) <br> - [⚡ JavaScript](#-javascript) <br> - [🧨 Vulnerabilidades Front](#-vulnerabilidades-front-end) <br> - [💥 XSS](#-xss-cross-site-scripting) <br> - [🛑 CSRF](#-csrf-cross-site-request-forgery) <br> - [🛡️ Prevenção](#️-prevenção) <br> - [🖥️ Servidores](#️-servidores-back-end) <br> - [🏗️ Stacks](#️-stacks-comuns) <br> - [🌐 Web Servers](#-servidores-web) <br> - [🧠 Tipos de Server](#-tipos-de-web-server) <br> - [🗄️ Banco de Dados](#️-banco-de-dados--segurança-em-aplicações-web) <br> - [⚙️ APIs & Frameworks](#️-frameworks--apis) <br> - [🌍 CVE / Exploits](#-vulnerabilidades-públicas) <br> - [📊 CVSS](#-cvss-pontuação-de-risco) |
+
+
 # 🧩 O que são Aplicações Web?
 
 - Aplicações executadas no **navegador**
