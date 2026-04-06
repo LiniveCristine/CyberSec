@@ -1,132 +1,229 @@
-# ⏱️ Estrutura Fixa de Estudo — Hack The Box (CPTS)
-
-Cronograma pensado para **3 sessões semanais (~80 min)**, com foco em **consistência** e **zero burnout**.
+# 📚 Módulos Organizados 
 
 ---
 
-## 📅 Organização Semanal
+## 🔹 Fundamentos de Cybersecurity
 
-- **Dia 1:** Conteúdo novo  
-- **Dia 2:** Continuação + Labs  
-- **Dia 3:** Finalização + Revisão  
+🎯 **Meta:** dominar vocabulário e mentalidade
 
----
+### 📘 Essenciais
+- Introdução à Cybersecurity  
+- CIA Triad  
+- Threats, Vulnerabilities & Risk  
+- Conceitos básicos de segurança  
 
-## 🗺️ Cronograma Geral — Hack The Box (CPTS)
+### ⚡ Contexto
+- Blue Team vs Red Team  
 
----
-
-## 🔹 Semanas 1–2 — Fundamentos de Cybersecurity
-*(2 semanas)*
-
-### Conteúdos
--✅ Introdução à Cybersecurity  
--✅ CIA Triad  
--✅ Threats, Vulnerabilities & Risk  
--✅ Blue Team vs Red Team  
--✅ Conceitos básicos de segurança  
-
-🎯 **Meta:**  
-Dominar o vocabulário e os conceitos base.
+📌 **Observação:** sem ferramentas — apenas mentalidade
 
 ---
 
-## 🔹 Semanas 3–5 — Networking Fundamentals
-*(3 semanas)*
+## 🔹 Networking Fundamentals
 
-### Conteúdos
-- ✅ OSI Model  
-- ✅ TCP/IP  
-- ✅ HTTP, HTTPS, DNS, FTP, SSH  
-- ✅ Portas  
-- ✅ Subnetting (básico)  
-- ✅ Labs de rede  
+🎯 **Meta:** entender como o tráfego funciona
 
-🎯 **Meta:**  
-Explicar com clareza como o tráfego de rede funciona.
+### 📘 Essenciais
+- Networking Overview  
+- Networking Models  
+- OSI Model  
+- TCP/IP Model  
+- TCP/UDP Connections  
+- MAC Addresses  
+- IP Addresses  
+- Ports  
+- DNS  
+- DNS Hierarchy  
+- DNS Resolution Process  
+- Network Data Flow Process  
+
+### ⚡ Superficial
+- Subnetting  
+- NAT / PAT  
+- DHCP / DORA  
+- Wireless Networks  
+- VPNs  
 
 ---
 
-## 🔹 Semanas 6–9 — Linux Fundamentals + Web Fundamentals
-*(4 semanas)*
+## 🔹 Network Enumeration (Nmap)
 
-### 🐧 Linux Fundamentals
-- Sistema de arquivos  
-- Comandos essenciais  
-- Pipes e redirecionamento  
-- Usuários e permissões  
-- Processos e serviços  
-- Labs de Linux  
+🎯 **Meta:** identificar hosts e serviços
 
-### 🌐 Web Fundamentals
-- HTTP requests e responses  
-- Cookies e sessions  
-- HTML e JavaScript (conceitos)  
+### 📡 Essenciais
+- Introduction to Nmap  
+- Host Discovery  
+- Host and Port Scanning  
+- Service Enumeration  
+- Saving the Results  
+
+### ⚡ Conhecer
+- Nmap Scripting Engine  
+- Performance  
+- Firewall / IDS Evasion  
+
+---
+
+## 🔹 Linux Fundamentals
+
+🎯 **Meta:** operar com autonomia no terminal
+
+### 🐧 Essenciais
+- Linux Structure  
+- Introduction to Shell  
+- Navigation  
+- Working with Files and Directories  
+- Editing Files  
+- Find Files and Directories  
+- File Descriptors & Redirections  
+- Filter Contents  
+- Regular Expressions  
+- Package Management  
+- Network Services  
+- Working with Web Services  
+
+### ⚡ Superficial
+- User Management  
+- Permission Management  
+- Service & Process Management  
+- Firewall Setup  
+- Logs e Monitoring  
+
+---
+
+## 🔹 Footprinting (Recon)
+
+🎯 **Meta:** mapear o alvo
+
+### 🧭 Essenciais
+- Enumeration Principles  
+- Enumeration Methodology  
+- Domain Information  
+- DNS  
+- Cloud Resources  
+- Staff Enumeration (OSINT)  
+
+### ⚡ Conhecer
+- FTP / SMB / NFS  
+- SMTP / IMAP / POP3  
+- SNMP  
+- Databases (MySQL, MSSQL, Oracle)  
+
+---
+
+## 🔹 Web Fundamentals
+
+🎯 **Meta:** entender como aplicações funcionam
+
+### 🌐 Web Requests
+- HTTP  
+- HTTPS  
+- Requests & Responses  
+- Headers  
+- Methods  
+- Status Codes  
+- GET / POST  
+
+---
+
+### 🌍 Web Applications
+- Front-end vs Back-end  
+- Web Servers  
+- Databases  
 - Funcionamento de aplicações web  
-- Labs introdutórios  
+- Common Web Vulnerabilities  
 
-🎯 **Meta:**  
-- Usar Linux com conforto no terminal  
-- Entender como aplicações web funcionam “por baixo do capô”  
-
-💡 *Aqui você já começa a conectar Linux + Web, o que ajuda muito nos labs ofensivos depois.*
+### ⚡ Conhecer
+- HTML  
+- CSS  
+- JavaScript  
+- Frameworks  
+- APIs  
 
 ---
 
-## 🔹 Semanas 10–13 — Windows Fundamentals + Security Fundamentals
-*(4 semanas)*
+## 🔹 Pentest Process
 
-### 🪟 Windows Fundamentals
+🎯 **Meta:** entender o fluxo real
+
+### 🧠 Introduction to Penetration Testing
+- Structure of a Penetration Test  
+- Methodologies & Frameworks  
+- Web App Pentesting  
+- Required Skills  
+- Ethics  
+
+---
+
+### 🧠 Pentest in a Nutshell
+- Scope & Rules of Engagement  
+- Publicly Available Data  
+- Network and Service Scanning  
+- Linux Information Gathering  
+- Proof-of-Concept  
+- Documentation & Reporting  
+
+---
+
+## 🔹 Vulnerabilidades Web Essenciais
+
+🎯 **Meta:** reconhecer padrões reais
+
+### 🌐 Essenciais
+- SQL Injection  
+- Cross-Site Scripting (XSS)  
+- Cross-Site Request Forgery (CSRF)  
+- Sensitive Data Exposure    
+
+---
+
+# ❌ Módulos Removidos (Jr Cybersec)
+
+📌 Removidos por **não terem relação direta com Bug Bounty inicial**
+
+---
+
+## 🪟 Windows
 - Arquitetura do Windows  
 - Users & Groups  
 - NTFS Permissions  
-- Serviços e processos  
-- PowerShell básico  
-- Labs em ambiente Windows  
-
-### 🔐 Security Fundamentals
-- Authentication vs Authorization  
-- Hashing vs Encryption  
-- MFA e Passwords  
-- Security Controls  
-- Threat Modeling (básico)  
-
-🎯 **Meta:**  
-- Entender o funcionamento interno básico do Windows  
-- Consolidar os conceitos centrais de segurança  
+- PowerShell  
+- Serviços Windows  
 
 ---
 
-## 🔹 Semanas 14–16 — Vulnerabilidades & Ataques Comuns + Defensive Security
-*(3 semanas)*
-
-### ⚔️ Vulnerabilidades & Ataques Comuns
-- Phishing  
-- Malware  
-- Brute Force  
-- SQL Injection (conceito)  
-- XSS (conceito)  
-- Labs guiados  
-
-### 🛡️ Defensive Security (Blue Team)
+## 🛡️ Defensive Security (Blue Team)
 - Logs  
+- SIEM  
 - Alertas  
 - Incident Response  
-- SIEM (conceito)  
-- Análise inicial de incidentes  
-
-🎯 **Meta:**  
-- Reconhecer ataques comuns e suas bases técnicas  
-- Entender como detectar e responder a incidentes  
+- Análise de incidentes    
 
 ---
 
-## 💡 Dicas para Manter o Ritmo
-
-- Se perder uma semana → **não tente compensar**  
-- **Labs > teoria**  
-- Anote **comandos, fluxos e erros**, não parágrafos  
-- Sempre revise no início da próxima sessão  
+## ☁️ Cloud (profundo)
+- Hardening de cloud  
+- Monitoramento  
+- Arquiteturas avançadas  
 
 ---
 
+## 🔐 Segurança Defensiva Geral
+- Security Monitoring  
+- Blue Team Operations  
+- Defesa ativa  
+
+---
+
+# 🧠 Conclusão
+
+Este roadmap é focado em:
+
+- 🎯 **Ataque (não defesa)**
+- 🌐 **Web (não infraestrutura completa)**
+- ⚡ **Velocidade + eficiência**
+
+---
+
+> 🔥 Você não precisa saber tudo.  
+> Precisa saber **o suficiente para encontrar falhas reais.**
