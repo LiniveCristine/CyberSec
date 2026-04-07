@@ -1,349 +1,459 @@
-# 📘 CRONOGRAMA INTEGRADO — 25 SEMANAS  
-**Versão Carreira • Executável • Mentalidade de Campo**
----
 
-## ⚠️ Aviso Importante sobre Ritmo de Estudo
-
-Este cronograma foi planejado considerando, **em média, apenas 3 dias de estudo por semana**, com sessões de **70–90 minutos**.
-
-👉 **O cronograma pode (e deve) ser ajustado à disponibilidade de cada pessoa**, mantendo a ordem dos conteúdos e a lógica de progressão.
-
-O foco aqui é **consistência no longo prazo**, não velocidade.
+# 📚 CRONOGRAMA ZERO AO BOUNTY
 
 ---
 
-## 🎯 Base do Treinamento
+## 🔹 BLOCO 1 — RECON & SUPERFÍCIE DE ATAQUE
+🎯 **Meta:** identificar todos os pontos de entrada possíveis
 
-- **HC (Hacking Club)** — visão prática + mentalidade
-- **HTB Academy — Web Pen Tester**
-- **HTB Academy — Penetration Tester (selecionado)**
-- **HTB Machines / Challenges**
-- **Bug Bounty** (HackerOne / Bugcrowd)
+### 📘 Hacking Club
+- O que é Recon e como funciona
+- Subdomain Discovery
+- Application Discovery
+- Parameter Discovery
+- Content Discovery
+- Fuzzing de pasta e arquivos (wfuzz, ffuf)
+- PortScan
+- Fuzz
 
-## ℹ️ Nota sobre Fontes de Estudo
+### 🌐 Pentest Web — Information Gathering
+- Introduction
+- WHOIS
+- DNS & Subdomains
+- Fingerprinting
+- Crawling
+- Discovery
+- Automation
 
-A internet está cheia de **conteúdo gratuito e de alta qualidade** — com tempo e determinação, é totalmente possível montar um plano sólido apenas garimpando materiais abertos.
+### 🌐 Pentest Web — Using Web Proxies
+- Getting Started
+- Web Proxy
+- Web Fuzzer
+- Web Scanner
 
-Neste cronograma, optei por utilizar **conteúdos pagos** principalmente por **praticidade** e **falta de tempo para uma busca detalhada**, não por serem a única forma de aprender.
+### 🌐 Pentest Web — Web Fuzzing
+- Introduction
+- Directory and File Fuzzing
+- Parameter and Value Fuzzing
+- Virtual Host and Subdomain Fuzzing
+- Filtering
+- Validation
+- APIs
 
-👉 O método e a progressão continuam válidos independentemente da fonte escolhida.
+### 📘 Hacking Club
+- Git Exposed Attack
 
----
+### 🧪 Labs Extras (PortSwigger)
+- Information disclosure
+- Directory traversal
+- Hidden directories
+- API discovery
+- Parameter discovery
 
-📅 **Ritmo fixo:** 3 sessões por semana (70–90 min)
-
----
-
-## 🔁 Regra Global (Do Início ao Fim)
-
-📌 **Após CADA vulnerabilidade estudada:**
-- ➡️ 1 sessão dedicada **exclusivamente a reports reais**, substituindo revisão genérica.
-
-### 🧠 Formato Fixo da Sessão de Reports
-Para **2–3 reports reais**:
-1. Onde o hacker começou?
-2. Qual sinal levantou suspeita?
-3. O que foi testado antes de achar o bug?
-4. Qual detalhe fez a diferença?
-5. Gerar **checklist prático reutilizável**
-
-📌 **Objetivo:**  
-Criar **instinto de campo**, não apenas conhecimento técnico.
-
----
-
-# 🗓 SEMANAS 1–6 — FUNDAMENTOS + RECON (SEM BOUNTY)
-
-🎯 **Objetivo:** base técnica + metodologia  
-❌ **Nada de caçar bugs ainda**
-
----
-
-## 🔹 Semanas 1–2 — Fundamentos & Metodologia
-
-### Sessões
-#### 📘 Teoria / Labs
-- 🟦 HC: Metodologia, mentalidade, HTTP  
-- 🟦 HTB-W: Web Requests, HTTP Basics  
-- 🟦 HTB-P: Penetration Testing Process  
-
-#### 🧪 Prática
-- 🟩 Labs HTTP  
-- 🟥 Starting Point — Meow, Fawn  
-
-#### 🧠 Reports
-- Apenas leitura leve  
-- ❌ Sem checklist (ainda)
-
-📌 *Aqui você aprende a pensar, não a atacar.*
+### 🧠 Leitura de Reports
+- Recon → exploração encadeada
+- Vazamento via Git
+- Descoberta de endpoints ocultos
 
 ---
 
-## 🔹 Semanas 3–4 — Proxies & Parameter Discovery
+## 🔹 BLOCO 2 — XSS
+🎯 **Meta:** executar código no navegador da vítima
 
-### Sessões
-#### 📘
-- 🟦 HC: Burp, Parameter Discovery  
-- 🟦 HTB-W: Web Proxies, Parameter Fuzzing  
-- 🟦 HTB-P: Intercepting Web Traffic  
+### 📘 Hacking Club
+- XSS - Cross-site scripting (Reflected)
+- XSS Reflected
+- XSS - Cross-site scripting (Stored)
+- XSS Stored
+- XSS - Cross-site scripting (Dom based)
+- XSS Dom Based
 
-#### 🧪
-- 🟩 Labs Burp / FFUF  
-- 🟥 Web Challenge — Parameters  
+### 🌐 Pentest Web — XSS
+- XSS Basics
+- XSS Attacks
+- XSS Prevention
 
-#### 🧠 Reports (obrigatórios)
-- Parameter pollution  
-- Hidden parameters  
+### 🌐 Pentest Web — JavaScript Deobfuscation
+- Introduction
+- Obfuscation
+- Deobfuscation
+- Examples
 
-📌 *Você está aprendendo onde olhar, não onde atacar.*
+### 🧪 Labs Extras (PortSwigger)
+- Reflected XSS
+- Stored XSS
+- DOM XSS
+- Filter bypass
+- Context-based XSS
 
----
-
-## 🔹 Semanas 5–6 — DNS & Infra Web
-
-### Sessões
-#### 📘
-- 🟦 HC: DNS, Infra, Takeover  
-- 🟦 HTB-W: DNS + Subdomain Enumeration  
-- 🟦 HTB-P: DNS Enumeration  
-
-#### 🧪
-- 🟩 Amass / dnsrecon  
-- 🟥 Academy Labs — Subdomain Takeover  
-
-#### 🧠 Reports
-- Subdomain takeover reais  
-- Enumeração ignorada por devs  
-
-📌 *Aqui nasce o olhar de recon profissional.*
+### 🧠 Leitura de Reports
+- XSS → takeover
+- XSS → roubo de sessão
+- Blind XSS
 
 ---
 
-# 🗓 SEMANAS 7–8 — XSS (PRIMEIRA VULN REAL)
+## 🔹 BLOCO 3 — SQL INJECTION
+🎯 **Meta:** manipular banco de dados
 
-🚫 **Ainda sem caça**  
-🎯 **Objetivo:** reconhecer padrões antes de agir
+### 📘 Hacking Club
+- SQL Injection Manual
+- SQL injection manual
+- SQL Injection (WebShell)
+- SQL Injection Webshell
+- SQL Injection Time Based Blind
+- SQL Injection Blind Time-Based
+- Wasps
 
----
+### 🌐 Pentest Web — SQL Injection Fundamentals
+- Introduction
+- Databases
+- MySQL
+- SQL Injection
+- Exploitation
+- Mitigation
 
-## 🔹 Semana 7 — XSS Fundamentals
+### 🌐 Pentest Web — SQLMap
+- SQLMap Overview
+- Getting Started with SQLMap
+- SQLMap Output Description
+- Running SQLMap on an HTTP Request
+- Handling SQLMap Errors
+- Attack Tuning
+- Database Enumeration
+- Advanced Database Enumeration
+- Bypassing Web Application Protections
+- OS Exploitation
 
-#### 📘
-- 🟦 HC: Reflected / Stored / DOM  
-- 🟦 HTB-W: XSS  
-- 🟦 HTB-P: Client-Side Attacks  
+### 🧪 Skills Assessment
+- Skills Assessment
 
-#### 🧪
-- 🟩 Academy Labs — XSS  
+### 🧪 Labs Extras (PortSwigger)
+- UNION SQLi
+- Blind SQLi
+- Error-based SQLi
+- Auth bypass
 
-#### 🧠 Reports
-- XSS simples  
-- Checklist: contextos, sinks, reflection  
-
----
-
-## 🔹 Semana 8 — XSS Avançado
-
-#### 📘
-- 🟦 HC: Blind XSS  
-- 🟦 HTB-W: Advanced XSS / Filter Evasion  
-
-#### 🧪
-- 🟥 Web Challenge — XSS  
-
-#### 🧠 Reports
-- Blind XSS reais  
-- Payloads “improváveis”  
-
-📌 *Você aprende a reconhecer cheiro de bug.*
-
----
-
-# 🗓 SEMANAS 9–12 — SQLi + RCE  
-⚠️ **Entrada Guiada em Bug Bounty**
-
----
-
-## 🔹 Semana 9 — SQL Injection Manual
-
-#### 📘
-- 🟦 HC: SQLi manual  
-- 🟦 HTB-W: SQLi Fundamentals  
-- 🟦 HTB-P: SQLi Attacks  
-
-#### 🧪
-- 🟥 Starting Point — Appointment  
-
-#### 🧠 Reports
-- SQLi reais  
-
-#### 🎯 Bug Bounty (guiado)
-- 1 alvo  
-- Apenas parâmetros óbvios  
-- Zero expectativa de bug  
+### 🧠 Leitura de Reports
+- SQLi → RCE
+- SQLi → vazamento massivo
+- SQLi em APIs
 
 ---
 
-## 🔹 Semana 10 — SQLi Avançado
+## 🔹 BLOCO 4 — COMMAND INJECTION
+🎯 **Meta:** executar comandos no servidor
 
-#### 📘
-- 🟦 HC: UNION / Time-based  
-- 🟦 HTB-W: Advanced SQLi  
+### 📘 Hacking Club
+- Command injection
+- Command Injection
 
-#### 🧪
-- 🟥 Web Challenge — SQLi  
+### 🌐 Pentest Web — Command Injection
+- Introduction
+- Exploitation
+- Filter Evasion
+- Prevention
 
-#### 🧠 Reports
-- SQLi avançados  
+### 🧪 Labs Extras (PortSwigger)
+- Basic OS injection
+- Blind injection
+- Filter bypass
 
-🎯 *Caça focada exclusivamente em SQLi.*
-
----
-
-## 🔹 Semana 11 — Command Injection
-
-#### 📘
-- 🟦 HC: Command Injection  
-- 🟦 HTB-W: Command Injection  
-
-#### 🧪
-- 🟥 Machine — Bashed  
-
-#### 🧠 Reports
-- RCE reais  
-
-🎯 *Caça apenas em funções “system-like”.*
+### 🧠 Leitura de Reports
+- RCE real
+- Injection via headers
 
 ---
 
-## 🔹 Semana 12 — LFI / RFI
+## 🔹 BLOCO 5 — CSRF & OPEN REDIRECT
+🎯 **Meta:** manipular ações do usuário
 
-#### 📘
-- 🟦 HC: File Inclusion  
-- 🟦 HTB-W: File Inclusion  
+### 📘 Hacking Club
+- CSRF - Cross-site request forgery
+- CSRF
+- OpenRedirect
+- Open Redirect
 
-#### 🧪
-- 🟥 Machine — Nineveh  
+### 🌐 Pentest Web
+- Example 2: Reporting CSRF
 
-#### 🧠 Reports
-- LFI / RFI reais  
+### 🧪 Labs Extras (PortSwigger)
+- CSRF básico
+- CSRF bypass token
+- SameSite bypass
+- Open redirect
 
-🎯 *Caça focada em parâmetros de path.*
-
-📌 *Aqui você já é ativo, mesmo sem achar nada.*
-
----
-
-# 🗓 SEMANAS 13–16 — AUTH, IDOR & APIs  
-✅ **Bug Bounty Real**
-
----
-
-## 🔹 Semana 13 — Broken Access Control
-
-#### 📘
-- 🟦 HC: Auth / IDOR  
-- 🟦 HTB-W: Broken Access Control  
-- 🟦 HTB-P: Auth Attacks  
-
-#### 🧪
-- 🟩 Academy Labs — BAC  
-
-#### 🧠 Reports
-- IDOR / BOLA  
-
-🎯 *Bug bounty sério começa aqui.*
+### 🧠 Leitura de Reports
+- CSRF → mudança de senha
+- Open redirect → phishing
 
 ---
 
-## 🔹 Semana 14 — CSRF & Logic Flaws
+## 🔹 BLOCO 6 — FILE INCLUSION
+🎯 **Meta:** acessar arquivos internos
 
-#### 📘
-- 🟦 HC: CSRF / lógica  
-- 🟦 HTB-W: CSRF Attacks  
+### 📘 Hacking Club
+- Local File Inclusion
+- LFI
+- Remote File Inclusion
+- RFI
 
-#### 🧪
-- 🟥 Web Challenge — Auth  
+### 🌐 Pentest Web — File Inclusion
+- Introduction
+- File Disclosure
+- RCE
+- Automation
+- Prevention
 
-#### 🧠 Reports
-- Falhas de lógica reais  
+### 🧪 Labs Extras (PortSwigger)
+- Path traversal
+- LFI → RCE
 
-🎯 *Testes de fluxo completo.*
-
----
-
-## 🔹 Semana 15 — APIs REST & NoSQL
-
-#### 📘
-- 🟦 HC: REST / NoSQL  
-- 🟦 HTB-W: API Attacks  
-
-#### 🧪
-- 🟥 Machine — Stocker  
-
-#### 🧠 Reports
-- APIs reais  
-
-🎯 *Caça focada em endpoints.*
+### 🧠 Leitura de Reports
+- LFI → credenciais
+- LFI → execução remota
 
 ---
 
-## 🔹 Semana 16 — GraphQL & API Auth
+## 🔹 BLOCO 7 — NoSQL INJECTION
+🎯 **Meta:** explorar bancos modernos
 
-#### 📘
-- 🟦 HC: GraphQL  
-- 🟦 HTB-W: GraphQL Attacks  
+### 📘 Hacking Club
+- NoSQL Injection
+- NoSQL Injection
 
-#### 🧪
-- 🟥 Web Challenge — API  
+### 🧪 Labs Extras (PortSwigger)
+- MongoDB injection
+- Auth bypass
 
-#### 🧠 Reports
-- GraphQL reais  
-
-🎯 *Caça focada em auth bypass.*
-
-📌 *Aqui você já é operacional em Bug Bounty.*
+### 🧠 Leitura de Reports
+- NoSQL → login bypass
 
 ---
 
-# 🗓 SEMANAS 17–18 — UPLOAD & MISCONFIGS
+## 🔹 BLOCO 8 — IDOR & WEB ATTACKS
+🎯 **Meta:** quebrar autorização
 
-#### 📘
-- 🟦 HC: Upload / WebDAV  
-- 🟦 HTB-W: Upload & Misconfigs  
+### 📘 Hacking Club
+- IDOR
+- IDOR
 
-#### 🧪
-- 🟥 Shocker / ScriptKiddie  
+### 🌐 Pentest Web — Web Attacks
+- HTTP Verb Tampering
+- IDOR
+- XXE
 
-#### 🧠 Reports
-- Casos reais  
+### 🧪 Labs Extras (PortSwigger)
+- IDOR
+- XXE
+- Mass assignment
 
-🎯 *Caça direcionada.*
-
----
-
-# 🗓 SEMANA 19 — CONSOLIDAÇÃO
-
-- 🟥 Machine Easy → Medium  
-- 📝 Writeup estilo pentest  
-- 🧠 Checklist final por vulnerabilidade  
-- 🎯 1 sessão livre de bounty  
+### 🧠 Leitura de Reports
+- IDOR → vazamento crítico
 
 ---
 
-# 🗓 SEMANAS 20–25 — BUG BOUNTY FOCUSED PHASE
+## 🔹 BLOCO 9 — AUTHENTICATION & BRUTE FORCE
+🎯 **Meta:** quebrar login
 
-❌ Nenhum conteúdo novo  
-✅ Apenas execução e refinamento
+### 🌐 Pentest Web — Login Brute Forcing
+- Introduction
+- Password Security Fundamentals
+- Brute Force Attacks
+- Dictionary Attacks
+- Hybrid Attacks
+- Hydra
+- Basic HTTP Authentication
+- Login Forms
+- Medusa
+- Web Services
+- Custom Wordlists
 
-### Estrutura Semanal
-- 🎯 2 sessões de bug bounty  
-- 🧠 1 sessão de reports + checklist  
+### 🌐 Pentest Web — Broken Authentication
+- What is Authentication
+- Attacks on Authentication
+- Enumerating Users
+- Brute-Forcing Passwords
+- Brute-Forcing Password Reset Tokens
+- Brute-Forcing 2FA Codes
+- Weak Brute-Force Protection
+- Default Credentials
+- Vulnerable Password Reset
+- Authentication Bypass via Direct Access
+- Authentication Bypass via Parameter Modification
+- Attacking Session Tokens
+- Further Session Attacks
 
-### 🎯 Objetivo Realista
-- 1 bug **low/medium válido** **OU**  
-- Domínio completo do processo  
+### 🧪 Skills Assessment
+- Skills Assessment
 
-📌 *Ambos são vitória.*
+### 🧪 Labs Extras (PortSwigger)
+- Brute force
+- 2FA bypass
+
+### 🧠 Leitura de Reports
+- Account takeover
 
 ---
+
+## 🔹 BLOCO 10 — FILE UPLOAD & WEBSHELL
+🎯 **Meta:** execução persistente
+
+### 📘 Hacking Club
+- Unrestricted file upload
+- Unrestricted File Upload
+- Webshell (webdav)
+- Webshell (Webdav)
+
+### 🌐 Pentest Web — File Upload Attacks
+- Intro to File Upload Attacks
+- Absent Validation
+- Upload Exploitation
+- Client-Side Validation
+- Blacklist Filters
+- Whitelist Filters
+- Type Filters
+- Limited File Uploads
+- Other Upload Attacks
+- Preventing File Upload Vulnerabilities
+
+### 🧪 Skills Assessment
+- Skills Assessment
+
+### 🧪 Labs Extras (PortSwigger)
+- Upload bypass
+- MIME bypass
+
+### 🧠 Leitura de Reports
+- Upload → RCE
+
+---
+
+## 🔹 BLOCO 11 — APIs & GRAPHQL
+🎯 **Meta:** backend direto
+
+### 📘 Hacking Club
+- API REST
+- Rest API
+- API GraphQL
+- Graphql
+
+### 🌐 Pentest Web — API Attacks
+- Introduction to API Attacks
+- Introduction to Lab
+- OWASP API Top 10
+- Broken Object Level Authorization
+- Broken Authentication
+- Broken Object Property Level Authorization
+- Unrestricted Resource Consumption
+- Broken Function Level Authorization
+- Unrestricted Access to Sensitive Business Flows
+- Server Side Request Forgery
+- Security Misconfiguration
+- Improper Inventory Management
+- Unsafe Consumption of APIs
+
+### 🌐 Pentest Web — GraphQL
+- Introduction to GraphQL
+- Information Disclosure
+- IDOR
+- Injection Attacks
+- DoS & Batching
+- Mutations
+- Tools
+- Prevention
+
+### 🧪 Labs Extras (PortSwigger)
+- API abuse
+- GraphQL exploitation
+
+### 🧠 Leitura de Reports
+- API → vazamento
+
+---
+
+## 🔹 BLOCO 12 — SERVER-SIDE ATTACKS
+🎯 **Meta:** exploração avançada
+
+### 🌐 Pentest Web
+- SSRF
+- SSTI
+- Outros
+- SSI Injection
+- XSLT Injection
+
+### 🧪 Labs Extras (PortSwigger)
+- SSRF
+- SSTI
+
+### 🧠 Leitura de Reports
+- SSRF → cloud takeover
+
+---
+
+## 🔹 BLOCO 13 — SECURITY MISCONFIGURATION
+🎯 **Meta:** falhas simples
+
+### 📘 Hacking Club
+- Subdomain Takeover
+- Security Missing Configuration
+- Security Misconfiguration
+
+### 🧪 Labs Extras (PortSwigger)
+- CORS
+- Headers
+
+### 🧠 Leitura de Reports
+- Misconfig crítica
+
+---
+
+## 🔹 BLOCO 14 — APLICAÇÕES REAIS
+🎯 **Meta:** ambiente real
+
+### 🌐 Pentest Web — Attacking Common Applications
+- WordPress
+- Joomla
+- Drupal
+- Tomcat
+- Jenkins
+- Splunk
+- PRTG
+- GitLab
+- CGI / Shellshock
+- Thick Clients
+- ColdFusion
+- LDAP
+- IIS Tilde
+- Mass Assignment
+- Integrações
+
+### 🧠 Leitura de Reports
+- Exploits reais
+
+---
+
+## 🔹 BLOCO 15 — MÁQUINAS
+🎯 **Meta:** consolidar
+
+### 📘 Hacking Club
+- Lion
+- Calc
+- Retro
+
+---
+
+## 🔹 BLOCO 16 — BUG BOUNTY
+🎯 **Meta:** monetização
+
+### 🌐 Pentest Web
+- Bug Bounty Programs
+- Writing a Good Report
+- Interacting with Organizations
+- Reporting Stored XSS
+- Reporting CSRF
+- Reporting RCE
+
+### 🧠 Leitura Final
+- Reports reais aceitos
+- Comparação de impacto
