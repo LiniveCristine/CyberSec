@@ -1,7 +1,34 @@
+# 📑 Índice
+
+| Seção | Descrição | Seção | Descrição |
+|------|----------|------|----------|
+| [🔹 BLOCO 1 — Recon & Superfície de Ataque](#-bloco-1--recon--superfície-de-ataque) | Mapeamento inicial do alvo | [🔹 BLOCO 9 — Authentication & Brute Force](#-bloco-9--authentication--brute-force) | Ataques de login |
+| [🔹 BLOCO 2 — XSS](#-bloco-2--xss) | Execução de código no navegador | [🔹 BLOCO 10 — File Upload & Webshell](#-bloco-10--file-upload--webshell) | Execução persistente |
+| [🔹 BLOCO 3 — SQL Injection](#-bloco-3--sql-injection) | Ataques a banco de dados | [🔹 BLOCO 11 — APIs & GraphQL](#-bloco-11--apis--graphql) | Backend direto |
+| [🔹 BLOCO 4 — Command Injection](#-bloco-4--command-injection) | Execução de comandos | [🔹 BLOCO 12 — Server-Side Attacks](#-bloco-12--server-side-attacks) | Exploração avançada |
+| [🔹 BLOCO 5 — CSRF & Open Redirect](#-bloco-5--csrf--open-redirect) | Manipulação de usuário | [🔹 BLOCO 13 — Security Misconfiguration](#-bloco-13--security-misconfiguration) | Falhas simples |
+| [🔹 BLOCO 6 — File Inclusion](#-bloco-6--file-inclusion) | Acesso a arquivos internos | [🔹 BLOCO 14 — Aplicações Reais](#-bloco-14--aplicações-reais) | Ambientes reais |
+| [🔹 BLOCO 7 — NoSQL Injection](#-bloco-7--nosql-injection) | Bancos modernos | [🔹 BLOCO 15 — Máquinas](#-bloco-15--máquinas) | Consolidação prática |
+| [🔹 BLOCO 8 — IDOR & Web Attacks](#-bloco-8--idor--web-attacks) | Quebra de autorização | [🔹 BLOCO 16 — Bug Bounty](#-bloco-16--bug-bounty) | Monetização |
+
+---
+
+> ⚠️ **Aviso Importante**
+>
+> Os conteúdos base deste cronograma são pagos (Hacking Club e Hack The Box Academy), **não por serem a única ou melhor fonte de conhecimento**.
+>
+> Existe uma infinidade de conteúdos gratuitos disponíveis na internet — basta ter **tempo, curiosidade e disposição para procurar**.
+>
+> A escolha por conteúdos pagos foi feita por **praticidade e organização do aprendizado**.
+>
+> 👉 **Mas é totalmente possível seguir este cronograma sem eles.**
+
+---
 
 # 📚 CRONOGRAMA ZERO AO BOUNTY
 
 ---
+
 
 ## 🔹 BLOCO 1 — RECON & SUPERFÍCIE DE ATAQUE
 🎯 **Meta:** identificar todos os pontos de entrada possíveis
