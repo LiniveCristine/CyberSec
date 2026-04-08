@@ -1617,4 +1617,144 @@ diretorio . input_usuario
 ---
 
 
+# 🧠 Programação Orientada a Objetos (POO)
+
+A Programação Orientada a Objetos organiza o código em **classes e objetos**, tornando-o mais reutilizável, organizado e fácil de manter.
+
+---
+
+# 🧩 Analogia
+
+Pense em uma **Pessoa**:
+
+- Possui características:
+  - nome
+  - idade
+  - altura
+  - cor dos olhos
+
+- Realiza ações:
+  - andar
+  - correr
+  - dormir
+
+---
+
+# 🏗️ Conceitos Fundamentais
+
+## 📦 Classe
+
+É o **molde (modelo)** para criar objetos.
+
+```php
+class Pessoa {
+    public $nome;
+    public $idade;
+    public $altura;
+
+    public function andar(){
+        echo "Pessoa está andando";
+    }
+
+    public function dormir(){
+        echo "Pessoa está dormindo";
+    }
+}
+```
+
+---
+
+## 🧬 Propriedades
+
+* Representam as **características do objeto**
+* São variáveis dentro da classe
+
+```php
+public $nome;
+public $idade;
+```
+
+---
+
+## ⚙️ Métodos
+
+* Representam as **ações do objeto**
+* São funções dentro da classe
+
+```php
+public function andar(){
+    echo "Pessoa está andando";
+}
+```
+
+---
+
+# 👤 Instanciando um Objeto
+
+Criando uma instância da classe:
+
+```php
+$paulo = new Pessoa();
+```
+
+👉 Agora `$paulo` é um **objeto da classe Pessoa**
+
+---
+
+## ▶️ Acessando métodos
+
+```php
+$paulo->andar();
+```
+
+---
+
+# 🧠 Palavra-chave `this`
+
+O `$this` é usado **dentro da classe** para acessar:
+
+* propriedades
+* métodos
+
+do próprio objeto
+
+---
+
+## 📌 Exemplo completo
+
+```php
+class Pessoa {
+    public $cansada = false;
+
+    public function acordar(){
+        $this->cansada = true;
+    }
+
+    public function dormir(){
+        $this->cansada = false;
+    }
+
+    public function verificar_disposicao(){
+        if ($this->cansada){
+            echo "Tomar monster";
+        } else {
+            echo "Pessoa descansada";
+        }
+    }
+}
+```
+
+---
+
+# 🎯 Resumo
+
+* Classe → modelo
+* Objeto → instância da classe
+* Propriedades → características
+* Métodos → ações
+* `$this` → referência ao próprio objeto
+
+---
+
+
 
