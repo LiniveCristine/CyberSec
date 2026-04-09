@@ -178,13 +178,12 @@ Ferramenta de recon passivo poderosa.
 
 ---
 
-# 🔄 Fluxo Profissional
+# 🔄 Fluxo até o momento
 
 Combinação de ferramentas para melhor resultado:
 
 ```bash
 subfinder -d meusite.com -o subs.txt
-dnsx -l subs.txt -a -resp -o resolved.txt
 httpx -l subs.txt -title -status-code -tech-detect
 ```
 
@@ -193,8 +192,7 @@ httpx -l subs.txt -title -status-code -tech-detect
 ## 📊 Pipeline
 
 1. **subfinder** → coleta subdomínios (passivo)
-2. **dnsx** → resolve DNS
-3. **httpx** → identifica ativos e tecnologias
+2. **httpx** → identifica ativos e tecnologias
 
 ---
 
@@ -208,11 +206,270 @@ httpx -l subs.txt -title -status-code -tech-detect
 
 ---
 
-# 🎯 Conclusão
+# 📚 APPLICATION DISCOVERY
 
-Recon é a base de qualquer teste de segurança:
+> 🎯 **Objetivo:** Descobrir **endpoints, parâmetros e conteúdos ocultos** de uma aplicação para ampliar a superfície de ataque.
 
-* Quanto mais informação → maior a chance de sucesso
-* Subdomínios esquecidos = oportunidades
-* Automação + análise manual = melhor abordagem
+---
+
+# 🔎 VISÃO GERAL
+
+Application Discovery se divide em 3 pilares:
+
+```text
+1. URL Discovery        → Encontrar endpoints/rotas
+2. Parameter Discovery  → Encontrar entradas (inputs)
+3. Content Discovery    → Analisar conteúdo e comportamento
+```
+
+---
+
+# 🌐 URL DISCOVERY
+
+> 🎯 Encontrar **todas as URLs possíveis** de um domínio
+
+## 🛠️ Ferramentas
+
+* `gau` → coleta URLs históricas (**passivo**)
+* `wfuzz`, `ffuf`, `dirsearch` → brute force de diretórios
+
+---
+
+## ⚙️ GAU (GetAllURLs)
+
+* Faz **recon passivo**
+* Busca URLs em:
+
+  * Wayback Machine
+  * Common Crawl
+* Retorna **muito conteúdo (incluindo lixo)**
+
+---
+
+## 🔁 Fluxo básico
+
+```bash
+subfinder → subdomínios
+gau       → coleta URLs
+httpx     → valida ativos
+```
+
+---
+
+## 🧪 Pipeline completo (filtrado)
+
+```bash
+subfinder -d teste.com.br -silent \
+| gau \
+| grep -Ev "\.(jpg|jpeg|png|gif|svg|ico|css|woff|woff2|ttf|eot)(\?|$)" \
+| httpx -silent -mc 200,301,302,403 \
+| sort -u \
+| tee urls_filtradas.txt
+```
+
+---
+
+## 💡 Pontos importantes
+
+* `httpx`:
+
+  * Verifica **status code**
+  * Pode testar paths → `-path /admin/`
+  * Pode escanear portas
+
+* Filtrar extensões evita:
+
+  * imagens
+  * fontes
+  * arquivos irrelevantes
+
+---
+
+# 🔑 PARAMETER DISCOVERY
+
+> 🎯 Descobrir **inputs da aplicação** (`?id=`, `?page=`, etc.)
+
+---
+
+## 🛠️ Ferramentas
+
+* `paramspider` → busca URLs com parâmetros (**passivo**)
+* `gf` → padrões de vulnerabilidade
+* `parth` → extração de parâmetros
+* `kxss` → análise de reflexão (XSS)
+* `ffuf` → brute force
+
+---
+
+## ⚙️ ParamSpider
+
+* Mais **focado que o gau**
+* Retorna apenas URLs com `?param=`
+
+💡 Alternativa com GAU:
+
+```bash
+grep "=" urls.txt > params.txt
+```
+
+---
+
+## ⚙️ KXSS (detecção de reflexão)
+
+> 🔥 Detecta se um parâmetro:
+
+* aceita caracteres especiais (`< >`)
+* reflete no HTML
+
+➡️ Indício de possível **XSS**
+
+---
+
+## 🧪 Fluxo ideal
+
+```text
+ParamSpider → KXSS → FFUF
+```
+
+---
+
+## 🧪 Exemplo prático
+
+```bash
+cat resultados.txt \
+| kxss \
+| tee potenciais_xss.txt
+```
+
+---
+
+
+## 🧠 Insight importante
+
+* KXSS **reduz drasticamente** o escopo
+* FFUF fica:
+
+  * mais rápido
+  * mais preciso
+
+---
+
+# 📂 CONTENT DISCOVERY
+
+> 🎯 Entender o **conteúdo e comportamento** da aplicação
+
+---
+
+## 🛠️ Ferramentas
+
+* `httpx` → valida endpoints
+* `aquatone` → visual recon
+* `secretFinder` → busca segredos em JS
+
+---
+
+## ⚙️ Aquatone
+
+> 🔥 Ferramenta de **visual recon**
+
+### O que faz:
+
+* Tira **prints em massa**
+* Identifica:
+
+  * tecnologias
+  * servidores
+* Gera relatório HTML interativo
+
+---
+
+## 🧪 Uso
+
+```bash
+cat urls_vivas.txt | aquatone
+```
+
+Abrir relatório:
+
+```bash
+brave-browser aquatone_report.html
+```
+
+---
+
+## 💡 Vantagem
+
+* Evita acessar manualmente cada domínio
+* Ajuda a encontrar:
+
+  * painéis admin
+  * páginas interessantes
+  * superfícies de ataque visuais
+
+---
+
+# 🔄 FLUXO COMPLETO
+
+## 🧠 Pipeline geral
+
+```text
+1. Recon & Validação
+   subfinder → gau → httpx
+
+2. Parameter Mining e Visual Recon (em paralelo)
+   paramspider e aquatone
+
+3. Análise inicial (no resultado do paramspider)
+   kxss
+
+4. Exploração
+   ffuf
+   
+```
+
+---
+
+## 🧪 Exemplo completo
+
+```bash
+# Execução em Paralelo (Abra dois terminais)
+
+# Terminal 1: Focado em descobrir páginas VIVAS e VER o site
+subfinder -d alvo.com -silent | gau --subs | sort -u | httpx -mc 200,301,302,403 -o urls_vivas.txt
+cat urls_vivas.txt | aquatone -out ./aquatone_results
+
+
+# Terminal 2: Focado em minerar PARÂMETROS (independente de estarem vivas no httpx)
+paramspider -d alvo.com
+cat results/alvo.com.txt | grep -Ev "\.(jpg|jpeg|png|gif|svg|ico|css|js)" | sort -u | kxss | tee potenciais_xss.txt
+```
+
+---
+
+# 🧪 TESTE PRÁTICO (XSS)
+
+Alvo: `xss-game.appspot.com`
+
+```bash
+paramspider -d xss-game.appspot.com
+cat resultado.txt | kxss | tee possiveis_xss.txt
+```
+
+➡️ Teste manual:
+
+```html
+<script>alert(1)</script>
+```
+
+---
+
+# 🧠 RESUMO FINAL 
+
+- ✔ **URL Discovery** → Onde posso entrar?
+- ✔ **Parameter Discovery** → Onde posso injetar?
+- ✔ **Content Discovery** → O que tem dentro?
+
+
+
+
 
