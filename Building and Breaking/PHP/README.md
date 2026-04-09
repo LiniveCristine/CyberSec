@@ -1756,5 +1756,103 @@ class Pessoa {
 
 ---
 
+# 🔐 MODIFICADORES DE ACESSO (POO em PHP)
+
+Os modificadores de acesso definem **quem pode acessar propriedades e métodos** dentro de uma classe.
+
+---
+
+## 🌍 PUBLIC
+
+Pode ser acessado de qualquer lugar:
+
+- Dentro da classe ✅  
+- Fora da classe ✅  
+- Pelas classes filhas (herança) ✅  
+
+👉 É o nível mais aberto de acesso.
+
+---
+
+## 🔒 PRIVATE
+
+Só pode ser acessado **dentro da própria classe**:
+
+- Dentro da classe ✅  
+- Fora da classe ❌  
+- Classes filhas ❌  
+
+👉 Usado para **esconder dados sensíveis**
+
+### 💡 Exemplo:
+```php
+class Usuario{
+    private $senha;
+
+    public function setSenha($senha){
+        $this->senha = $senha;
+    }
+
+    public function getSenha(){
+        return $this->senha;
+    }
+}
+````
+
+### 🧠 Conceitos importantes:
+
+* Não é possível acessar diretamente `$senha` fora da classe
+* Para interagir com ela, usamos métodos públicos
+
+👉 **Getter (`get`)**: acessa o valor
+👉 **Setter (`set`)**: altera o valor
+
+✔ Técnica para acessar o valor sem expor diretamente a propriedade
+✔ Controle total sobre leitura e modificação
+
+---
+
+## 🛡️ PROTECTED (PROTECT)
+
+Pode ser acessado:
+
+* Dentro da classe ✅
+* Por classes filhas (herança) ✅
+* Fora da classe ❌
+
+### 💡 Exemplo:
+
+```php
+class Usuario {
+    protected $email;
+}
+
+class Admin extends Usuario {
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+}
+```
+
+---
+
+## ⚖️ RESUMO
+
+| Modificador | Classe | Filhas | Fora |
+| ----------- | ------ | ------ | ---- |
+| public      | ✅      | ✅      | ✅    |
+| protected   | ✅      | ✅      | ❌    |
+| private     | ✅      | ❌      | ❌    |
+
+---
+
+## 🎯 IDEIA PRINCIPAL
+
+* `public` → acesso livre
+* `protected` → acesso controlado (herança)
+* `private` → acesso restrito (segurança)
+
+
+
 
 

@@ -1,33 +1,20 @@
 
 <?php
 
-class Pessoa{
-    public $cansada = false;
 
-    public function acordar(){
-        $this -> cansada = true;
+
+class Usuario{
+    private $senha;
+
+    public function setSenha($senha){
+        $this->senha = $senha;
     }
 
-    public function dormir(){
-
-        $this-> cansada = false;
+    public function getSenha(){
+        return $this->senha;
     }
-
-
-    public function verificar_dosposicao(){
-        
-        if ($this -> cansada){
-            echo "Tomar monster";
-        } else{
-            echo "Pessoa dormindo" ;
-        }
-            
-    }
-
 }
 
-$linive = new Pessoa();
-$linive ->acordar();
-
-$linive->verificar_dosposicao();
-
+$linive = new Usuario();
+$linive->setSenha('123456');
+echo $linive->getSenha();
