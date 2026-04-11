@@ -1,3 +1,26 @@
+# 📑 Índice Geral
+
+| Conteúdo | Descrição |
+|----------|----------|
+| [🕵️ Recon & Intelligence Gathering](#️-recon--intelligence-gathering) | Coleta inicial de informações do alvo |
+| [🔎 Subdomain Discovery](#-subdomain-discovery) | Descoberta de subdomínios |
+| [🕰️ Histórico de Subdomínios](#️-histórico-de-subdomínios) | Análise de dados antigos |
+| [💣 Bruteforce (Método Ativo)](#-bruteforce-método-ativo) | Descoberta ativa de subdomínios |
+| [🧠 Métodos Passivos (Mais Stealth)](#-métodos-passivos-mais-stealth) | Reconhecimento sem interação direta |
+| [⚡ Subfinder](#-subfinder) | Ferramenta principal de recon passivo |
+| [🔄 Fluxo até o momento](#-fluxo-até-o-momento) | Pipeline inicial de recon |
+| [⚠️ Boas Práticas](#️-boas-práticas) | Recomendações gerais |
+| [📚 Application Discovery](#-application-discovery) | Descoberta de endpoints e inputs |
+| [🌐 URL Discovery](#-url-discovery) | Mapeamento de URLs |
+| [🔑 Parameter Discovery](#-parameter-discovery) | Identificação de parâmetros |
+| [📂 Content Discovery](#-content-discovery) | Análise de conteúdo da aplicação |
+| [🔄 Fluxo Completo](#-fluxo-completo) | Pipeline completo de discovery |
+| [🔎 Fuzzing](#-fuzzing) | Descoberta ativa via brute force |
+| [🧪 Técnicas de Fuzzing](#-técnicas-de-fuzzing) | Métodos de fuzzing |
+| [🌐 PortScan](#-portscan) | Identificação de portas abertas |
+| [🛰️ NMAP](#️-nmap) | Ferramenta de varredura de portas |
+
+---
 
 # 🕵️ Recon & Intelligence Gathering
 
@@ -468,6 +491,214 @@ cat resultado.txt | kxss | tee possiveis_xss.txt
 - ✔ **URL Discovery** → Onde posso entrar?
 - ✔ **Parameter Discovery** → Onde posso injetar?
 - ✔ **Content Discovery** → O que tem dentro?
+
+---
+
+# 🔎 FUZZING
+
+O **Fuzzing** faz parte do **reconhecimento ativo**, onde interagimos diretamente com o alvo.
+
+Seu objetivo é realizar **bruteforce** em:
+- Diretórios
+- Arquivos
+- Parâmetros
+
+Com isso, conseguimos:
+- Descobrir recursos ocultos
+- Encontrar endpoints não documentados
+- Identificar exposição de dados sensíveis
+
+---
+
+# 🧠 Conceitos Importantes
+
+## ⚖️ Diferença entre KXSS e Fuzzing
+
+- **KXSS**
+  - Recon ativo focado em **XSS**
+  - Testa parâmetros em busca de vulnerabilidades
+
+- **Fuzzing**
+  - Recon ativo focado em:
+    - **BAC (Broken Access Control)**
+    - **Exposição de dados**
+
+---
+
+# 🔄 Fluxo de Reconhecimento
+
+Até aqui, o fluxo segue:
+
+- `subfinder + gau + httpx` → Descoberta de subdomínios
+- `paramspider` → URLs com parâmetros
+- `Aquatone` → Visualização dos serviços
+- `KXSS` → Teste de parâmetros
+
+## 📍 Onde entra o Fuzzing?
+
+O **Fuzzing entra após a validação com o httpx**.
+
+⚠️ Não devemos fuzzar todas as URLs:
+- Gera muito ruído
+- Pode ativar o **WAF**
+- Pode causar bloqueio
+
+---
+
+# 🎯 Seleção de Alvos
+
+Antes de fuzzar, precisamos escolher bem os alvos.
+
+## 🔍 Como selecionar domínios?
+
+- Analisar o relatório do **Aquatone**
+- Cruzar informações de todas as ferramentas
+- Buscar:
+  - Aplicações interessantes
+  - Sistemas sensíveis
+  - Alvos esquecidos (muito valiosos)
+
+💡 A experiência melhora essa escolha com o tempo.
+
+---
+
+# 🛠️ Ferramenta Principal
+
+## ⚡ FFUF
+
+Ferramenta usada para fuzzing de:
+- Diretórios
+- Arquivos
+- Parâmetros
+
+---
+
+# 🧪 Técnicas de Fuzzing
+
+## 🔢 Intervalo Numérico
+
+Testa uma sequência de números:
+
+```bash
+seq 1 1000 | ffuf -u "http://www.itsecgames.com/usuarios.php?id=FUZZ" -w - -fc 404 -c -o resultados.json
+````
+
+### Explicação:
+
+* `seq 1 1000` → gera números de 1 a 1000
+* `FUZZ` → será substituído pelos valores
+* `-w -` → lê entrada via stdin
+* `-fc 404` → ignora respostas 404
+* `-c` → saída colorida
+* `-o` → salva resultado (JSON por padrão)
+
+---
+
+## 📚 Uso de Wordlist
+
+```bash
+ffuf -u http://www.itsecgames.com/FUZZ -w wordlist.txt -fc 404 -c -o resultados.json
+```
+
+* Usa listas de palavras (ex: **SecLists**)
+* Ideal para:
+
+  * Diretórios
+  * Arquivos comuns
+  * Endpoints conhecidos
+
+---
+
+## 🔁 Fuzzing Recursivo
+
+Permite fuzzar múltiplos pontos ao mesmo tempo:
+
+```bash
+ffuf -u http://<MACHINE-IP>:9090/FUZZ1/FUZZ2.bak \
+-w common.txt:FUZZ1 \
+-w common.txt:FUZZ2 \
+-e .bak -c -t 50 -o resultado.json
+```
+
+### Conceitos:
+
+* `FUZZ1` → primeiro parâmetro
+* `FUZZ2` → segundo parâmetro
+* `-w lista:FUZZ` → define wordlist para cada ponto
+* `-e .bak` → busca arquivos de backup
+* `-t 50` → número de threads
+
+⚠️ Muitas threads:
+
+* Aumentam velocidade
+* Mas geram ruído e risco de bloqueio
+
+---
+
+# 🌐 PortScan
+
+Objetivo:
+
+* Identificar **portas abertas**
+
+Ferramenta principal:
+
+* `nmap`
+
+---
+
+# 🛰️ NMAP
+
+## ⚙️ Funcionamento
+
+Por padrão:
+
+1. Verifica se o host está ativo (ICMP)
+2. Realiza a varredura de portas
+
+---
+
+## 🔍 Tipos de Scan
+
+### 🕵️ SYN Scan (root)
+
+```bash
+-sS
+```
+
+* Não completa o handshake (3WHS)
+* Mais **furtivo**
+* Menos logs
+
+---
+
+### 🔗 Connect Scan (sem root)
+
+```bash
+-sT
+```
+
+* Realiza o **3-way handshake completo**
+* Mais detectável
+* Gera logs no servidor
+
+---
+
+## 🚫 ICMP e Firewalls
+
+* Muitos firewalls bloqueiam **ping (ICMP)**
+
+### ⚠️ Opção importante:
+
+```bash
+-Pn
+```
+
+* Não envia ICMP
+* Assume que o host está ativo
+* Útil em ambientes reais
+
+---
 
 
 
