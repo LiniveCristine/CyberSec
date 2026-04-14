@@ -376,3 +376,172 @@ ffuf -w xss_targets.txt:URL -w xss_payloads.txt:PAYLOAD -u "URLPAYLOAD" -mr "PAY
   * Recon passivo + ativo
 * Automatize, mas valide manualmente
 
+---
+
+# 🌐 Subdomínios
+
+## 🎯 Importância dos Subdomínios
+
+Subdomínios são extremamente valiosos no processo de reconhecimento porque podem revelar superfícies de ataque esquecidas ou mal protegidas:
+
+* 🧪 **Novos subdomínios** → frequentemente usados para testes (dev, staging) e podem ter falhas
+* 🔐 **Logins escondidos** → painéis administrativos expostos sem proteção adequada
+* 🧓 **Sistemas legados** → aplicações antigas com vulnerabilidades conhecidas
+* 📂 **Informações sensíveis** → credenciais, configs internas ou dados vazados
+
+---
+
+## 🔍 Enumeração de Subdomínios
+
+Processo de descobrir subdomínios associados a um domínio principal.
+
+### 💣 Bruteforce
+
+Consiste em testar possíveis nomes de subdomínios usando uma **wordlist**.
+
+#### 📚 Tipos de Wordlist
+
+* **Genérica**
+  Ideal quando você não conhece o alvo
+  Exemplos: `dev`, `admin`, `test`, `mail`
+
+* **Focada**
+  Baseada no nicho do alvo (ex: fintech, e-commerce)
+  Usa padrões e tecnologias específicas
+
+* **Customizada**
+  Criada por você com base em informações coletadas do alvo
+
+📎 Wordlists úteis:
+[https://github.com/danielmiessler/SecLists/tree/master/Discovery/DNS](https://github.com/danielmiessler/SecLists/tree/master/Discovery/DNS)
+
+---
+
+### ⚙️ Etapas do Bruteforce
+
+1. **Interaction and Querying**
+
+   * Gera possíveis subdomínios a partir da wordlist
+
+2. **DNS Lookup**
+
+   * Verifica se o subdomínio resolve para um IP
+
+3. **Filtering and Validation**
+
+   * Filtra apenas os válidos
+   * Validações adicionais podem ser feitas depois
+
+---
+
+## 🔄 Transferência de Zona (Zone Transfer)
+
+Método **menos invasivo** que o bruteforce para descobrir subdomínios.
+
+### ⚙️ Como Funciona
+
+* 🔁 Um servidor secundário solicita dados ao primário
+* 📦 O primário envia todos os registros DNS
+
+#### Etapas:
+
+* **Zone Transfer Request** → pedido de transferência (AXFR)
+* **SOA Record Transfer** → envio do registro SOA
+* **DNS Records Transmission** → envio de todos os registros
+* **Zone Transfer Complete** → finalização
+* **Acknowledgement** → confirmação do secundário
+
+---
+
+### 🚨 Vulnerabilidade de Zone Transfer
+
+O problema ocorre quando **qualquer um pode solicitar a transferência**.
+
+👉 Isso permite obter **todos os registros DNS do domínio**
+
+---
+
+### 🛠️ Como Explorar
+
+1. Descobrir o servidor DNS:
+
+```bash
+dig ns meusite.com
+```
+
+2. Solicitar transferência:
+
+```bash
+dig axfr @servidor.alvo meusite.com
+```
+
+📌 **Importante:**
+
+* O alvo é o **servidor DNS**
+* A **zona** é o conjunto de dados (não o domínio em si)
+
+---
+
+# 🖥️ Virtual Hosts (VHosts)
+
+Permite hospedar múltiplos sites em um único servidor/IP.
+
+## 🔄 Diferença entre VHost e Subdomínio
+
+| Característica | Subdomínio   | VHost                      |
+| -------------- | ------------ | -------------------------- |
+| DNS necessário | ✅            | ❌                          |
+| Baseado em     | DNS          | HTTP Header                |
+| Exemplo        | api.site.com | interno.site.com (sem DNS) |
+
+---
+
+## 🧠 Como Funciona
+
+* Usa o header HTTP `Host` para identificar qual site deve responder
+
+---
+
+## 🏗️ Tipos de Virtual Hosting
+
+* 🌐 **Name-Based**
+  Usa apenas o `Host Header` (mais comum)
+
+* 🧾 **IP-Based**
+  Cada site tem seu próprio IP
+
+* 🔌 **Port-Based**
+  Cada site usa uma porta diferente
+
+---
+
+## 🔧 Descoberta de VHosts
+
+Ferramentas comuns:
+
+* **ffuf**
+* **gobuster**
+
+### 💥 Exemplo com FFUF
+
+```bash
+ffuf -w wordlist.txt -u http://IP -H "Host: FUZZ.alvo.com" -mc 200
+```
+
+ou
+
+```bash
+ffuf -w wordlist.txt -u http://meusite.com -H "Host: FUZZ.meusite.com"
+```
+
+---
+
+## ⚠️ Observações Importantes
+
+* 🚨 Pode ser detectado por **WAF/IDS**
+* 🐢 Evite muitas requisições rápidas (rate limit)
+* 🎯 Combine técnicas (bruteforce + zone transfer + ferramentas passivas)
+
+---
+
+
