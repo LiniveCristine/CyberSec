@@ -2,19 +2,29 @@
 <?php
 
 
+abstract class carro{
+	protected $motor = false;
+	protected $velocidade = 0;
 
-class Usuario{
-    private $senha;
+	abstract public function ligar();
+	abstract public function acelerar();
 
-    public function setSenha($senha){
-        $this->senha = $senha;
+}
+
+class Fiat extends carro{
+    public function ligar()
+    {
+        $this->motor=true;
+        echo $this->motor;
     }
 
-    public function getSenha(){
-        return $this->senha;
+    public function acelerar()
+    {
+        $this->velocidade += 10;
+        echo $this->velocidade;
     }
 }
 
-$linive = new Usuario();
-$linive->setSenha('123456');
-echo $linive->getSenha();
+$meu_fiat = new Fiat();
+
+$meu_fiat->acelerar();

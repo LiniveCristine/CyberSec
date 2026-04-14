@@ -1852,7 +1852,171 @@ class Admin extends Usuario {
 * `protected` → acesso controlado (herança)
 * `private` → acesso restrito (segurança)
 
+---
 
 
+# 🧱 Classe Abstrata e Interface (POO)
 
+## 🧩 Classe Abstrata
 
+### 📌 O que é
+
+Uma **classe que não pode ser instanciada diretamente**.
+Ela serve como um **modelo/base** para outras classes (filhas).
+
+### 🎯 Objetivo
+
+* Definir **estrutura padrão**
+* Compartilhar **atributos e métodos**
+* Obrigar classes filhas a seguirem um padrão
+
+---
+
+### ⚙️ Características
+
+* ❌ Não pode criar objeto diretamente (`new`)
+* ✅ Pode ter atributos e métodos normais
+* ✅ Pode ter **métodos abstratos**
+* 👨‍👩‍👧 Usada por classes filhas (herança)
+
+---
+
+### 🚗 Exemplo
+
+```php
+abstract class Carro {
+    protected $motor = false;
+    protected $velocidade = 0;
+
+    abstract public function ligar();
+    abstract public function acelerar();
+}
+```
+
+Classe filha:
+
+```php
+class Fiat extends Carro {
+    public function ligar() {
+        $this->motor = true;
+        echo $this->motor;
+    }
+
+    public function acelerar() {
+        $this->velocidade += 10;
+        echo $this->velocidade;
+    }
+}
+
+$meu_fiat = new Fiat();
+$meu_fiat->acelerar();
+```
+
+---
+
+## 🧪 Métodos Abstratos
+
+### 📌 O que são
+
+São métodos **sem implementação (sem corpo)** na classe abstrata.
+
+```php
+abstract public function ligar();
+```
+
+### ⚠️ Regra importante
+
+* A classe filha **DEVE obrigatoriamente implementar** esses métodos
+
+---
+
+## 📜 Interface
+
+### 📌 O que é
+
+Uma **interface é um contrato** que define regras que outras classes devem seguir.
+
+👉 Ela **não possui lógica**, apenas declara métodos.
+
+---
+
+### 🎯 Objetivo
+
+* Padronizar comportamentos
+* Garantir que classes diferentes implementem os mesmos métodos
+
+---
+
+### ⚙️ Características
+
+* ❌ Não possui atributos
+* ❌ Não possui implementação (sem lógica)
+* ✅ Apenas métodos obrigatórios
+* 🔗 Usada com `implements`
+
+---
+
+### 🔐 Exemplo
+
+```php
+interface Autenticavel {
+    public function login($user, $senha);
+}
+```
+
+Implementações:
+
+```php
+class Usuario implements Autenticavel {
+    public function login($user, $senha) {
+        echo "Login do usuário...";
+    }
+}
+
+class Funcionario implements Autenticavel {
+    public function login($user, $senha) {
+        echo "Login do funcionário...";
+    }
+}
+```
+
+---
+
+## ⚖️ Interface vs Classe Abstrata
+
+| Característica    | Classe Abstrata | Interface           |
+| ----------------- | --------------- | ------------------- |
+| Instanciação      | ❌ Não           | ❌ Não               |
+| Métodos com corpo | ✅ Sim           | ❌ Não               |
+| Métodos abstratos | ✅ Sim           | ✅ Sim (todos)       |
+| Atributos         | ✅ Sim           | ❌ Não               |
+| Relação           | Herança (forte) | Contrato (flexível) |
+
+---
+
+## 🧠 Conceito-chave
+
+### 🔗 Classe Abstrata → **"É UM"**
+
+* Ex: Cachorro **é um** Animal
+* Existe relação direta de herança
+
+---
+
+### ⚙️ Interface → **"PODE FAZER"**
+
+* Ex: Usuário **pode fazer login**
+* Classes diferentes compartilham comportamento
+
+---
+
+## 🧩 Resumo Final
+
+* 🧱 **Classe Abstrata** → base + herança + pode ter lógica
+* 📜 **Interface** → contrato + sem lógica + mais flexível
+* ⚖️ Use:
+
+  * Classe abstrata → quando há relação direta
+  * Interface → quando quer padronizar comportamentos
+
+---
