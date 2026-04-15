@@ -1,30 +1,18 @@
 
 <?php
 
+class Pessoa {
+    private $nome;
+    private $idade;
+    private $altura;
 
-abstract class carro{
-	protected $motor = false;
-	protected $velocidade = 0;
+    public function __construct($nome, $idade, $altura){
+        $this->nome = $nome;
+        $this->idade = $idade;
+        $this-> altura = $altura;
 
-	abstract public function ligar();
-	abstract public function acelerar();
-
-}
-
-class Fiat extends carro{
-    public function ligar()
-    {
-        $this->motor=true;
-        echo $this->motor;
-    }
-
-    public function acelerar()
-    {
-        $this->velocidade += 10;
-        echo $this->velocidade;
+        echo "Seu nome é $nome. Você tem $idade anos e $altura m de altura\n";
     }
 }
 
-$meu_fiat = new Fiat();
-
-$meu_fiat->acelerar();
+  $linive = new Pessoa("Linive", 29, 1.65);

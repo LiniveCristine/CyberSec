@@ -2020,3 +2020,185 @@ class Funcionario implements Autenticavel {
   * Interface → quando quer padronizar comportamentos
 
 ---
+
+
+# 🧙‍♂️ Métodos Mágicos em PHP
+
+## O que são
+
+- São **métodos especiais** que começam com `__` (dois underscores)
+- São executados **automaticamente** em situações específicas dentro de uma classe
+- Permitem controlar comportamentos como criação, destruição e uso de objetos
+
+---
+
+## Principais métodos
+
+### __construct()
+
+- Executado quando o objeto é criado
+
+```php
+class Exemplo {
+    public function __construct() {
+        echo "Classe criada";
+    }
+}
+
+$teste = new Exemplo();
+````
+
+---
+
+### __destruct()
+
+* Executado quando o objeto é destruído
+* Pode acontecer:
+
+  * Com `unset($obj)`
+  * Ou automaticamente quando o script termina (memória é limpa)
+
+```php
+unset($teste);
+```
+
+---
+
+### __toString()
+
+* Define **como o objeto será convertido para string**
+* Sem esse método, não é possível usar `echo` em um objeto
+
+```php
+$obj = new Pessoa();
+echo $obj; // ❌ Erro se não tiver __toString()
+```
+
+#### Exemplo funcionando:
+
+```php
+class Pessoa {
+    public $nome = "Ana";
+
+    public function __toString() {
+        return $this->nome;
+    }
+}
+
+$obj = new Pessoa();
+echo $obj; // ✅ Ana
+```
+
+💡 O `__toString()` diz **como o objeto vira texto**
+
+---
+
+### __get($nome)
+
+* Executado ao tentar acessar uma propriedade:
+
+  * **privada**
+  * ou **inexistente**
+
+```php
+class Exemplo {
+    private $propriedade = true;
+
+    public function __get($name) {
+        echo "A propriedade $name é privada.";
+    }
+}
+
+$teste = new Exemplo();
+$teste->propriedade;
+```
+
+---
+
+### __set($nome, $valor)
+
+* Executado ao tentar definir valor em uma propriedade:
+
+  * inexistente
+  * ou inacessível
+
+```php
+$teste->propriedade = 10;
+```
+
+---
+
+### __invoke()
+
+* Permite usar o objeto como se fosse uma função
+
+```php
+class Exemplo {
+    public function __invoke() {
+        echo "Como função";
+    }
+}
+
+$teste = new Exemplo();
+$teste(); // chama __invoke()
+```
+
+---
+
+### __call($metodo, $args)
+
+* Executado ao chamar um método:
+
+  * inexistente
+  * ou inacessível
+
+```php
+class Exemplo {
+    public function __call($name, $arguments) {
+        var_dump([$name, $arguments]);
+    }
+}
+
+$teste = new Exemplo();
+$teste->teste("argv");
+```
+
+💡 O `__call()` intercepta chamadas de métodos que não existem
+
+---
+
+## Exemplo real com __construct()
+
+```php
+class Pessoa {
+    private $nome;
+    private $idade;
+    private $altura;
+
+    public function __construct($nome, $idade, $altura) {
+        $this->nome = $nome;
+        $this->idade = $idade;
+        $this->altura = $altura;
+
+        echo "Seu nome é $nome. Você tem $idade anos e $altura m de altura\n";
+    }
+}
+
+$linive = new Pessoa("Linive", 29, 1.65);
+```
+
+---
+
+## 🧩 Resumo
+
+* Métodos mágicos começam com `__`
+* São chamados automaticamente pelo PHP
+* Permitem controlar o comportamento dos objetos
+* Muito usados em:
+
+  * Frameworks
+  * Segurança
+  * Manipulação avançada de objetos
+
+
+
