@@ -545,3 +545,280 @@ ffuf -w wordlist.txt -u http://meusite.com -H "Host: FUZZ.meusite.com"
 ---
 
 
+# 🔎 Fingerprinting (Reconhecimento Ativo/Passivo)
+
+## 📌 O que é
+Fingerprinting é o processo de **extrair detalhes técnicos de um alvo**, como:
+
+- Tecnologias utilizadas
+- Sistema operacional
+- Versões de software
+
+---
+
+## 🎯 Para que serve
+Ajuda a:
+
+- Priorizar alvos
+- Identificar configurações incorretas
+- Detectar softwares desatualizados
+- Criar uma visão geral da infraestrutura
+
+---
+
+## ⚙️ Técnicas de Fingerprinting
+
+### 🧾 Banner Grabbing
+Captura banners de serviços para identificar:
+
+- Software do servidor
+- Versões
+
+**Exemplo:**
+```bash
+curl -I https://meusite.com
+````
+
+---
+
+### 🌐 HTTP Headers
+
+Análise dos cabeçalhos HTTP retornados pelo servidor.
+
+---
+
+### 🎯 Probing for Specific Responses
+
+Envio de requisições elaboradas para obter respostas específicas:
+
+* Manipulação de headers
+* Requisições inválidas
+* Testes de métodos HTTP
+
+---
+
+### 📄 Analyzing Page Content
+
+Análise de:
+
+* HTML
+* Scripts
+* Estrutura da página
+
+---
+
+## 🛠️ Ferramentas
+
+* **httpx**
+
+  ```bash
+  httpx -tech-detect
+  ```
+* **nmap**
+* **wappalyzer-cli**
+
+---
+
+## 🛡️ Identificando WAF (Web Application Firewall)
+
+**Exemplo com httpx:**
+
+```bash
+httpx meusite.com -status-code -title -web-server
+```
+
+Outras ferramentas:
+
+* **OWASP ZAP**
+* **Nuclei**
+
+> Antigamente era comum o uso do **Nikto** para análise de vulnerabilidades.
+
+---
+
+# 🕷️ Crawling (Spidering)
+
+## 📌 O que é
+
+Processo de **seguir links automaticamente** para coletar informações.
+
+---
+
+## ⚔️ Fuzzing vs Crawling
+
+| Técnica  | Descrição                      |
+| -------- | ------------------------------ |
+| Fuzzing  | Bruteforce para descobrir URLs |
+| Crawling | Segue links já existentes      |
+
+---
+
+## 🔍 Tipos de Crawling
+
+### 🌐 Breadth-First (Largura)
+
+* Explora vários caminhos ao mesmo tempo
+
+### ⬇️ Depth-First (Profundidade)
+
+* Explora um caminho até o final antes de mudar
+
+---
+
+## 💎 Informações Valiosas
+
+### 🔗 Links
+
+* Internos (dentro do site)
+* Externos (outros sites)
+
+### 🏷️ Metadata
+
+* Título
+* Descrição
+* Palavras-chave
+
+### 📁 Arquivos Sensíveis
+
+* Backups (`.bak`, `.old`)
+* Configuração (`web.config`, `settings.php`)
+* Logs (`error_log`, `access_log`)
+* APIs
+
+---
+
+## 🧠 Importância do Contexto
+
+As informações devem ser analisadas em conjunto:
+
+* Observar padrões de URLs
+* Buscar comentários no código
+* Correlacionar dados para gerar insights
+
+---
+
+## 🛠️ Ferramentas de Crawling
+
+* **Katana** → CLI, automatizado, ideal para pipelines
+* **Katana + Nuclei** → descoberta + vulnerabilidades
+
+### Interfaces Gráficas:
+
+* **Burp Suite Spider**
+* **OWASP ZAP**
+
+---
+
+# 🤖 robots.txt
+
+## 📌 O que é
+
+Arquivo localizado em:
+
+```
+/robots.txt
+```
+
+Define regras para crawlers:
+
+---
+
+## 🧾 Estrutura
+
+```txt
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Allow: /public/
+
+User-agent: Googlebot
+Crawl-delay: 10
+
+Sitemap: https://www.example.com/sitemap.xml
+```
+
+* `*` = coringa (todos os bots)
+* `Disallow` = áreas proibidas
+
+---
+
+## 🔍 Uso em Recon
+
+Permite:
+
+* Descobrir diretórios ocultos
+* Mapear estrutura do site
+* Detectar honeypots
+
+---
+
+# 📂 .well-known URIs
+
+## 📌 O que é
+
+Diretório padrão:
+
+```
+/.well-known/
+```
+
+Armazena **configurações e metadados padronizados**.
+
+---
+
+## 📎 Exemplos de endpoints
+
+* `security.txt` → política de segurança
+* `change-password` → URL de alteração de senha
+* `openid-configuration` → config do OpenID Connect
+
+Lista completa:
+[https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml](https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml)
+
+---
+
+## 🔍 Uso em Recon
+
+### 🔐 openid-configuration
+
+Endpoint muito valioso:
+
+```
+/.well-known/openid-configuration
+```
+
+Retorna um JSON com:
+
+* Endpoints de autenticação
+* Emissão de tokens
+* Validação
+
+---
+
+## 📄 Exemplo de resposta
+
+```json
+{
+  "issuer": "https://example.com",
+  "authorization_endpoint": "https://example.com/oauth2/authorize",
+  "token_endpoint": "https://example.com/oauth2/token",
+  "userinfo_endpoint": "https://example.com/oauth2/userinfo",
+  "jwks_uri": "https://example.com/oauth2/jwks",
+  "response_types_supported": ["code", "token", "id_token"],
+  "subject_types_supported": ["public"],
+  "id_token_signing_alg_values_supported": ["RS256"],
+  "scopes_supported": ["openid", "profile", "email"]
+}
+```
+
+---
+
+# 🧠 Resumo Geral
+
+* **Fingerprinting** → identifica tecnologias e versões
+* **Crawling** → mapeia o site automaticamente
+* **robots.txt** → revela áreas ocultas
+* **.well-known** → expõe configurações importantes
+* **Contexto é essencial** → conectar informações gera valor real
+
+---
