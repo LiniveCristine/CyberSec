@@ -1,3 +1,26 @@
+# 📑 Índice
+
+| Seção | Descrição | Seção | Descrição |
+|------|----------|------|----------|
+| [🔍 Reconhecimento](#-reconhecimento) | Introdução ao conceito de recon | [⚔️ Reconhecimento Ativo](#️-reconhecimento-ativo) | Técnicas ativas de exploração |
+| [🎯 Objetivo](#-objetivo) | Finalidade do reconhecimento | [🕵️ Reconhecimento Passivo](#-reconhecimento-passivo) | Coleta sem interação direta |
+| [🧭 Identificar Ativos](#-identificar-ativos) | Mapeamento de superfície do alvo | [🔎 Port Scanning](#-port-scanning) | Descoberta de portas abertas |
+| [🕵️ Descobrir Informações Ocultas](#-descobrir-informações-ocultas) | Arquivos e dados sensíveis | [🧨 Vulnerability Scanning](#-vulnerability-scanning) | Busca de falhas conhecidas |
+| [🧠 Gathering Intelligence](#-gathering-intelligence) | OSINT e coleta de dados | [🗺️ Network Mapping](#-network-mapping) | Mapeamento de rede |
+| [⚖️ Tipos de Reconhecimento](#-tipos-de-reconhecimento) | Ativo vs passivo | [🏷️ Banner Grabbing](#-banner-grabbing) | Identificação de serviços |
+| [🧾 WHOIS](#-whois) | Dados de domínio | [💻 Identificar Sistema Operacional](#-identificar-sistema-operacional) | Detecção de SO |
+| [🌐 DNS](#-dns) | Resolução de nomes | [🔢 Enumeração de Serviços](#-enumeração-de-serviços) | Versões e serviços |
+| [📁 Arquivo Hosts](#-arquivo-hosts) | Mapeamento local | [🕸️ Web Spidering](#-web-spidering) | Descoberta de URLs |
+| [🧾 Tipos de Registros DNS](#-tipos-de-registros-dns) | Registros A, MX, TXT etc | [🔍 Pesquisas (OSINT)](#-pesquisas-osint) | Google, Shodan etc |
+| [🛠️ Ferramentas DNS](#-ferramentas-dns) | dig, dnsx etc | [📇 WHOIS Lookup](#-whois-lookup) | Consulta de domínio |
+| [🔄 Fluxo de Reconhecimento](#-fluxo-de-reconhecimento-moderno) | Pipeline moderno | [🌐 DNS Analysis](#-dns-analysis) | Subdomínios e e-mails |
+| [🌐 Subdomínios](#-subdomínios) | Superfície expandida | [🕰️ Histórico](#-histórico) | Wayback Machine |
+| [💣 Bruteforce](#-bruteforce) | Enumeração forçada | [📱 Redes Sociais](#-redes-sociais) | OSINT humano |
+| [🔁 Transferência de Zona](#-transferência-de-zona-zone-transfer) | AXFR DNS | [💻 Repositórios](#-repositórios) | GitHub recon |
+| [🖥️ Virtual Hosts](#-virtual-hosts-vhosts) | Host header attacks | [🔎 Fingerprinting](#-fingerprinting-reconhecimento-ativopassivo) | Tecnologias do alvo |
+| [🕷️ Crawling](#-crawling-spidering) | Mapeamento de links | [🤖 robots.txt](#-robotstxt) | Diretórios ocultos |
+| [📂 .well-known URIs](#-well-known-uris) | Configurações públicas | [🧠 Resumo Geral](#-resumo-geral) | Visão consolidada |
+
 # 🔍 RECONHECIMENTO
 
 ## 🎯 Objetivo
