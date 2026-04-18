@@ -248,3 +248,232 @@ Ao reenviar a requisição diretamente do proxy:
 
 Ou seja, o navegador não “vê” essa nova requisição.
 
+---
+
+# 🔐 CODIFICAÇÃO E DECODIFICAÇÃO URL
+
+## 🌐 Introdução
+
+Alguns caracteres especiais não são permitidos diretamente na URL.  
+Eles precisam ser codificados para serem transmitidos corretamente nas requisições HTTP.
+
+### 📌 Exemplo
+
+```
+
+/search?q=teste 123
+
+```
+
+Codificado:
+
+```
+
+/search?q=teste%20123
+
+```
+
+---
+
+## 🔄 Mais usados
+
+| Caractere | Codificado |
+|----------|-----------|
+| espaço   | `%20`     |
+| /        | `%2F`     |
+| =        | `%3D`     |
+| &        | `%26`     |
+
+---
+
+## ⚙️ Na prática
+
+Caso a requisição seja alterada manualmente:
+
+- Pode ser necessário codificar novamente
+- Caso não seja feito:
+  - ❌ O servidor pode interpretar incorretamente
+  - ❌ A requisição pode quebrar
+
+---
+
+## 🧰 Caido
+
+### 📍 Como usar
+
+1. HTTP History → `Ctrl + R` na requisição → Replay  
+2. Selecionar o trecho desejado  
+3. Botão direito → **Convert → URL**
+
+➡️ Também funciona fora do Replay  
+➡️ Também possui opção de Base64
+
+---
+
+## 🚨 Importância
+
+- 🔓 Bypass em filtros e validações  
+- 🧱 Testes em WAF  
+
+---
+
+## 🔍 Decodificação
+
+### ❌ O Caido NÃO suporta:
+
+- HTML  
+- Unicode  
+- ASCII hexadecimal  
+
+### 🟠 Observação:
+O Burp suporta esses formatos
+
+---
+
+# 🧑‍💻 UTILIZANDO PROXY EM LINHA DE COMANDO
+
+## 🌐 Uso em ferramentas de recon
+
+É possível adicionar proxy diretamente nas ferramentas via CLI.  
+Cada ferramenta possui sua própria forma de configuração.
+
+### 📌 Exemplos
+
+```
+
+katana -proxy [http://127.0.0.1:8081](http://127.0.0.1:8081)
+
+```
+```
+
+ffuf -replay-proxy [http://127.0.0.1:8081](http://127.0.0.1:8081)
+
+```
+
+---
+
+## 🕸️ PROXYCHAINS
+
+Ferramenta que força aplicações a utilizarem proxy,  
+mesmo que não tenham suporte nativo.
+
+### 🔗 Tipos
+
+- HTTP  
+- SOCKS5  
+- SOCKS4  
+
+### ⚠️ Observações
+
+- 🐢 Pode deixar as requisições lentas  
+- ❌ Não suporta bem scans avançados (ex: SYN scan)  
+
+---
+
+# 💥 FUZZING
+
+## ⚔️ Ferramentas
+
+- Burp → Intruder *(limitado no Community)*  
+- Caido → Automate  
+
+---
+
+## 🚀 FFUF x AUTOMATE (Caido)
+
+### 💣 FFUF — ideal para:
+
+- Fuzzing de diretórios/arquivos  
+- Descoberta de subdomínios (vhosts)  
+- Grande volume de dados  
+
+---
+
+### 🤖 AUTOMATE — ideal para:
+
+- Ataques de lógica de negócios  
+- Bypass de WAF e filtros  
+- Poucos payloads com muita análise  
+
+---
+
+## 🧪 Como utilizar (Caido)
+
+### 📍 Passos
+
+1. HTTP History → `Ctrl + M` (Send to Automate)  
+2. Identifique o dado para fuzzing  
+3. Adicione um placeholder:
+
+```
+
+id=1 → id={{1}}
+
+```
+
+---
+
+## 📦 Payloads
+
+Na lateral direita:
+
+- Adicionar wordlist manualmente  
+- Upload de arquivo  
+- Intervalo de números  
+
+📁 Para adicionar arquivos:
+- Menu esquerdo → **Files**
+
+---
+
+## 🔍 Resultado
+
+É possível filtrar com regex:
+
+```
+
+resp.code.eq:200
+
+```
+
+---
+
+## 🔁 Avançado
+
+- Suporte a múltiplos placeholders  
+- Uso de múltiplas wordlists  
+
+---
+
+# 🕷️ SCANNER
+
+## 🟠 Burp
+
+- Possui scanner e crawler  
+- Scanner ativo e passivo  
+- Geração de relatórios  
+
+---
+
+## 🔵 Caido
+
+- ❌ Não possui scanner/crawler completo  
+- ✅ Possui **Workflow**
+
+---
+
+## ⚙️ WORKFLOW NO CAIDO
+
+Serve para automatizar tarefas repetitivas.  
+Funciona como blocos de montagem (nós).
+
+### 🧩 Possibilidades
+
+- 🔄 Alterar parâmetros automaticamente  
+- 🎨 Colorir saída de requisições específicas  
+- 📜 Executar scripts em JavaScript  
+- 💻 Rodar comandos shell  
+
+
+
+
