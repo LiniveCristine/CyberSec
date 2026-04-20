@@ -235,3 +235,290 @@ ffuf -w wordlist.txt -u http://IP:PORTA/diretorio/FUZZ -e .php,.html,.txt,.bak,.
 
 ---
 
+# 📂 Fuzzing Recursivo
+
+## 🔍 Conceito
+
+Fuzzing recursivo permite explorar **diretórios aninhados automaticamente**, indo além da raiz do site.
+
+## ⚙️ Funcionamento
+
+* **Nível 0 (padrão):**
+
+  ```
+  site.com/FUZZ
+  ```
+* **Descoberta:**
+
+  * Encontrou `/admin`
+* **Recursão:**
+
+  ```
+  site.com/admin/FUZZ
+  ```
+* **Aprofundamento:**
+
+  ```
+  site.com/admin/config/FUZZ
+  ```
+
+### 🎯 Controle de Profundidade
+
+| Flag                 | Descrição                     |
+| -------------------- | ----------------------------- |
+| `-recursion`         | Ativa fuzzing recursivo       |
+| `-recursion-depth N` | Define níveis de profundidade |
+
+---
+
+### ⚡ Exemplo FFUF
+
+```bash
+ffuf -w directory-list-2.3-medium.txt \
+-u http://IP:PORT/FUZZ \
+-e .html \
+-recursion -recursion-depth 2 \
+-rate 500 -ic -v
+```
+
+### 🔑 Flags importantes
+
+* `-w` → wordlist
+* `-u` → URL com FUZZ
+* `-e` → extensões (.html, .txt)
+* `-rate` → requisições por segundo ⚠️ evita DoS
+* `-ic` → ignora comentários na wordlist
+* `-v` → verbose
+
+---
+
+### ⚠️ Cuidados
+
+* Pode gerar **explosão de requisições**
+* Risco de:
+
+  * DoS
+  * bloqueios (WAF / rate limit)
+
+---
+
+# 🔄 Integração com Caido
+
+## 📌 Comando FFUF
+
+```bash
+ffuf -w directory-medium.txt \
+-u http://IP/recursive_fuzz/FUZZ \
+-recursion -recursion-depth 3 \
+-e .html,.txt \
+-mc 200,301 \
+-fc 400,404 \
+-rate 50 -t 30 -ac -sf \
+-o resultados.json
+```
+
+### 🔍 Explicação
+
+* `-mc` → status aceitos
+* `-fc` → status ignorados
+* `-t` → threads
+* `-ac` → auto-calibração (remove falsos positivos)
+* `-sf` → para se houver muitos erros
+* `-o` → output
+
+---
+
+## 📡 Envio para Caido
+
+```bash
+cat valid.txt | xargs -n 1 -P 5 -I {} \
+curl -s -o /dev/null -L \
+-x http://127.0.0.1:8081 "{}" 2>/dev/null
+```
+
+### 🔍 Explicação
+
+* `cat valid.txt` → lista de URLs válidas
+* `xargs` → executa comandos em lote
+
+  * `-n 1` → 1 URL por execução
+  * `-P 5` → 5 execuções paralelas
+* `curl`
+
+  * `-s` → silencioso
+  * `-o /dev/null` → descarta resposta
+  * `-L` → segue redirects
+  * `-x` → proxy (Caido)
+* `2>/dev/null` → ignora erros
+
+---
+
+# 🔑 Fuzzing de Parâmetros
+
+## 🧠 Conceito
+
+Parâmetros são como **variáveis da aplicação web**.
+
+## 🎯 Objetivo
+
+* Descobrir parâmetros ocultos
+* Alterar comportamento da aplicação
+* Explorar vulnerabilidades
+
+---
+
+## 🌐 GET vs POST
+
+### 🔎 GET
+
+```
+site.com?query=fuzzing&category=security
+```
+
+* Visível na URL
+* Usado para consultas
+
+---
+
+### 📦 POST
+
+* Dados no **body da requisição**
+* Usado em formulários
+
+#### Tipos:
+
+* `application/x-www-form-urlencoded`
+* `multipart/form-data`
+
+---
+
+## ⚙️ Fuzzing com FFUF (POST)
+
+```bash
+ffuf -u http://IP/post.php \
+-X POST \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "y=FUZZ" \
+-w param-mining.txt \
+-mc 200,302,403 \
+-fs 0 \
+-o resultado.json
+```
+
+### 🔑 Flags
+
+* `-X POST` → método POST
+* `-H` → header
+* `-d` → body (onde entra FUZZ)
+* `-fs 0` → remove respostas vazias
+
+---
+
+## 🧪 Ferramentas
+
+| Ferramenta | Uso                        |
+| ---------- | -------------------------- |
+| **ffuf**   | fuzzing geral              |
+| **arjun**  | descoberta de parâmetros   |
+| **Caido**  | automação + análise visual |
+
+---
+
+# 🌍 Fuzzing de Subdomínios e VHOSTs
+
+## 🧠 Conceito
+
+### 🔹 Subdomínio
+
+* Ex: `api.site.com`
+* Possui IP próprio
+
+### 🔹 VHOST
+
+* Mesmo IP
+* Diferenciado pelo **header Host**
+
+---
+
+### 🔍 Fuzzing de Subdomínios (dnsx)
+
+```bash
+dnsx -d site.com -w wordlist.txt -o subs.txt
+```
+
+---
+
+### ⚙️ Fuzzing de VHOST (FFUF)
+
+```bash
+ffuf -u http://site.com \
+-w common.txt \
+-H "Host: FUZZ.site.com" \
+-mc 200,301,302 \
+-fc 404,400
+```
+
+---
+
+### ⚖️ Diferença
+
+| Tipo       | Técnica     |
+| ---------- | ----------- |
+| Subdomínio | DNS         |
+| VHOST      | Header HTTP |
+
+---
+
+# 🎯 Filtragem de Resultados
+
+## 🔑 Principais Flags
+
+| Flag  | Função               |
+| ----- | -------------------- |
+| `-mc` | incluir status       |
+| `-fc` | excluir status       |
+| `-fs` | filtrar por tamanho  |
+| `-fw` | filtrar por palavras |
+| `-fl` | filtrar por linhas   |
+
+---
+
+### 📌 Exemplo
+
+```bash
+ffuf -u http://example.com/FUZZ \
+-w wordlist.txt \
+-mc 200 \
+-fw 427 \
+-ms >500
+```
+
+---
+
+# ✅ Validação de Resultados
+
+## 🎯 Por que validar?
+
+* Evitar falsos positivos
+* Confirmar vulnerabilidade
+* Criar evidências (PoC)
+
+---
+
+## 🔍 Métodos
+
+### Manual
+
+* Abrir no navegador
+* Reproduzir com `curl`
+
+### Análise
+
+* Ver response
+* Buscar:
+
+  * erros
+  * dados sensíveis
+  * comportamento estranho
+
+---
