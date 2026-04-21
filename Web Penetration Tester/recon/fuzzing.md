@@ -522,3 +522,336 @@ ffuf -u http://example.com/FUZZ \
   * comportamento estranho
 
 ---
+
+Aqui está seu resumo **didático em Markdown**, organizado como material de estudo 👇
+
+---
+
+# 🌐 WEB APIs 
+
+## 📌 O que é uma API?
+
+**API (Application Programming Interface)** é um conjunto de regras que permite que diferentes aplicações se comuniquem.
+
+* Funciona como uma **“linguagem universal”**
+* Permite troca de:
+
+  * Dados
+  * Serviços
+* Independe da tecnologia utilizada
+
+### 🧩 Uso na prática
+
+* Integração com serviços externos:
+
+  * Pagamento 💳
+  * Mapas 🗺️
+* Comunicação em arquiteturas de **microserviços**
+
+---
+
+# 🔗 Tipos de APIs
+
+## 🔹 REST API (mais comum)
+
+* Usa métodos HTTP:
+
+  * `GET`, `POST`, `DELETE`, etc.
+* Formato comum: **JSON**
+
+### ⚠️ Característica importante
+
+Retorna o **objeto completo**, mesmo se você quiser só parte dele
+
+```json
+GET /users/123
+```
+
+➡️ Retorna:
+
+```json
+{
+  "id": 123,
+  "name": "João",
+  "email": "...",
+  "address": "...",
+  ...
+}
+```
+
+---
+
+## 🔹 SOAP API
+
+* Mais **antigo e formal**
+* Usa **XML**
+* Estrutura baseada em **envelopes SOAP**
+* Pode usar:
+
+  * HTTP
+  * SMTP
+
+### 📦 Estrutura
+
+```xml
+<Envelope>
+  <Header/>
+  <Body>
+    <SearchBooks>
+      <keywords>cybersecurity</keywords>
+    </SearchBooks>
+  </Body>
+</Envelope>
+```
+
+### 🧠 Componentes
+
+* **Envelope** → estrutura principal
+* **Header** → metadados
+* **Body** → ação + parâmetros
+
+---
+
+## 🔹 GraphQL
+
+* Mais moderno
+* Resolve o problema de **excesso de dados no REST**
+
+### ✅ Você escolhe o que quer
+
+```graphql
+query {
+  user(id: 123) {
+    name
+  }
+}
+```
+
+➡️ Retorna apenas:
+
+```json
+{
+  "name": "João"
+}
+```
+
+---
+
+### 🔄 Mutations (CRUD)
+
+```graphql
+mutation {
+  createPost(title: "Post", body: "Conteúdo") {
+    id
+    title
+  }
+}
+```
+
+---
+
+# ⚔️ API vs Servidor Web
+
+## 🌍 Servidor Web
+
+* **Objetivo:** Servir páginas
+* **Comunicação:** HTTP
+* **Dados:** HTML, CSS, JS
+* **Usuário interage diretamente**
+* **Exemplo:**
+
+  * acessar `site.com`
+
+---
+
+## 🔌 API
+
+* **Objetivo:** Comunicação entre sistemas
+* **Comunicação:** HTTP, HTTPS, SOAP…
+* **Dados:** JSON, XML…
+* **Usuário NÃO interage diretamente**
+
+### 📱 Exemplo
+
+App de clima:
+
+* App → chama API
+* API → retorna dados
+* App → mostra ao usuário
+
+---
+
+# 🧠 Fuzzing em APIs
+
+⚠️ Diferença crucial:
+
+* ❌ NÃO fuzzar diretórios/arquivos
+* ✅ Fuzzar:
+
+  * **Endpoints**
+  * **Parâmetros**
+  * **Formato de dados**
+
+---
+
+# 🔍 Identificando Endpoints
+
+## 🔹 REST
+
+Endpoints são URLs:
+
+```
+/users/123
+```
+
+### 📌 Tipos de parâmetros
+
+#### 1. Query Parameter
+
+```
+/users?limit=10&sort=name
+```
+
+➡️ Equivalente SQL:
+
+```sql
+SELECT * FROM users ORDER BY name ASC LIMIT 10;
+```
+
+---
+
+#### 2. Path Parameter
+
+```
+/products/50
+```
+
+* `products` → recurso
+* `50` → ID
+
+---
+
+#### 3. Body Parameter
+
+```json
+{
+  "name": "Product",
+  "price": 99.99
+}
+```
+
+* Usado em:
+
+  * POST
+  * PUT
+  * PATCH
+
+---
+
+# 🔎 Descobrindo Endpoints (REST)
+
+* 📄 Documentação
+* 📡 Análise de tráfego:
+
+  * Burp Suite
+  * Caido
+* 🔨 Fuzzing
+
+---
+
+# 🔹 SOAP
+
+* Possui **UM único endpoint**
+* A ação é definida no **Body**
+
+## 🔎 Descoberta
+
+* 📄 WSDL (muito importante)
+* 📡 Tráfego
+* 🔨 Fuzzing
+
+---
+
+# 🔹 GraphQL
+
+* Um único endpoint:
+
+```
+/graphql
+```
+
+## 🔎 Descoberta
+
+* 🔍 Introspection (muito poderoso)
+* 📄 Documentação
+* 📡 Tráfego
+
+---
+
+# 🧪 Fuzzing de API
+
+## 🎯 Tipos
+
+* 🔹 Parâmetros
+* 🔹 Tipo de dado (JSON, XML)
+* 🔹 Sequencial (fluxos encadeados)
+
+---
+
+# ⚙️ Exemplos de Fuzzing
+
+## 🔹 REST
+
+```bash
+ffuf -u http://example.com/library/FUZZ \
+-w wordlist.txt \
+-mc 200,201,403
+```
+
+---
+
+## 🔹 SOAP (fuzz no BODY)
+
+```bash
+ffuf -u http://example.com/library -X POST \
+-H "Content-Type: text/xml" \
+-d '<Envelope><Body><FUZZ></FUZZ></Body></Envelope>' \
+-w funcoes.txt -mr "Response"
+```
+
+---
+
+## 🔹 GraphQL
+
+```bash
+ffuf -u http://example.com/library -X POST \
+-H "Content-Type: application/json" \
+-d '{"query": "{ FUZZ { id nome } }"}' \
+-w wordlist.txt -mc 200
+```
+
+---
+
+# 🚀 Resumo Final
+
+* APIs permitem comunicação entre sistemas
+* REST → simples e popular, mas pode retornar dados demais
+* SOAP → rígido e baseado em XML
+* GraphQL → flexível e eficiente
+
+### 🧠 Para pentest:
+
+* Foque em:
+
+  * endpoints
+  * parâmetros
+  * estrutura dos dados
+* Use:
+
+  * documentação
+  * análise de tráfego
+  * fuzzing direcionado
+
+---
+
+
