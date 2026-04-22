@@ -6,7 +6,7 @@ O **XSS (Cross-Site Scripting)** é uma vulnerabilidade web que permite a injeç
 
 # 📌 Tipos de XSS
 
-## 1. ⚡ XSS Reflected (Refletido)
+## ⚡ XSS Reflected (Refletido)
 
 ### 📖 O que é
 
@@ -129,7 +129,7 @@ http://site.com?search=<script>...</script>
 
 ---
 
-## 2. 🧠 XSS Stored (Persistente)
+## 🧠 XSS Stored (Persistente)
 
 ### 📖 O que é
 
@@ -176,7 +176,7 @@ http://site.com?search=<script>...</script>
 
 ---
 
-## 3. 🧩 XSS DOM-Based
+## 🧩 XSS DOM-Based
 
 ### 📖 O que é
 
