@@ -1,5 +1,4 @@
-# 💉 SQL Injection Manual — Resumo Didático
-
+# 💉 SQL Injection Manual
 ---
 
 ## 🔎 Identificando um possível SQL Injection
