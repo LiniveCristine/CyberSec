@@ -1,3 +1,33 @@
+# 📑 Índice
+
+| Seção | Descrição | Seção | Descrição |
+|------|----------|------|----------|
+| [📖 Introdução](#-introdução) | Conceito inicial sobre bancos de dados | [💉 Introdução ao SQL Injection](#-introdução-ao-sql-injection) | Fundamentos da vulnerabilidade |
+| [🔄 Fluxo de funcionamento](#-fluxo-de-funcionamento) | Comunicação cliente → servidor → BD | [🌐 Como aplicações usam SQL](#-como-aplicações-usam-sql) | Integração entre backend e banco |
+| [⚠️ Onde nasce o problema](#️-onde-nasce-o-problema) | Origem da vulnerabilidade | [🐘 Exemplo em PHP](#-exemplo-em-php) | Exemplo prático de consulta |
+| [🗄️ Tipos de Banco de Dados](#️-tipos-de-banco-de-dados) | Relacional vs NoSQL | [📨 Recuperando dados do usuário](#-recuperando-dados-do-usuário) | Inputs inseguros na query |
+| [🧠 Linguagem SQL](#-linguagem-sql) | Objetivos da SQL | [🧬 Tipos de SQL Injection](#-tipos-de-sql-injection) | Categorias de SQLi |
+| [⚙️ Sistemas Gerenciadores de Banco (SGBD)](#️-sistemas-gerenciadores-de-banco-sgbd) | Softwares que utilizam SQL | [🧠 Subvertendo a lógica da consulta](#-subvertendo-a-lógica-da-consulta) | Manipulação da query |
+| [🐬 Instalando MySQL](#-instalando-mysql) | Instalação e acesso | [🔓 Ignorando autenticação](#-ignorando-autenticação) | Bypass de login |
+| [🏗️ Criando Database](#️-criando-database) | Criação e uso de databases | [💬 Comentários SQL](#-comentários-sql) | Ignorando partes da query |
+| [🧱 Tabelas](#-tabelas) | Estrutura de armazenamento | [🔗 Cláusula UNION](#-cláusula-union) | Combinação de SELECTs |
+| [🛠️ Criando tabela](#️-criando-tabela) | Criação de tabelas | [💉 UNION Injection](#-union-injection) | Exploração via UNION |
+| [📑 Mostrar tabelas](#-mostrar-tabelas) | Visualizar tabelas disponíveis | [🔍 Descobrindo quantidade de colunas](#-descobrindo-quantidade-de-colunas) | Enumeração da query |
+| [🔬 Ver estrutura da tabela](#-ver-estrutura-da-tabela) | Estrutura das colunas | [🖥️ Local da injeção](#️-local-da-injeção) | Colunas visíveis |
+| [🔐 Propriedades importantes](#-propriedades-importantes) | Constraints e propriedades | [🗂️ Enumeração do banco de dados](#️-enumeração-do-banco-de-dados) | Coleta de metadados |
+| [🧩 Alterando tabelas](#-alterando-tabelas) | ALTER TABLE | [🧠 Descobrindo o SGBD](#-descobrindo-o-sgbd) | Identificação do banco |
+| [📜 SQL Statements](#-sql-statements) | Principais comandos SQL | [🗃️ INFORMATION_SCHEMA](#️-information_schema) | Database de metadados |
+| [➕ INSERT](#-insert) | Inserção de registros | [🏛️ information_schema.schemata](#️-information_schemaschemata) | Listagem de databases |
+| [🔍 SELECT](#-select) | Consulta de dados | [📑 Listando tabelas](#-listando-tabelas) | Enumeração de tabelas |
+| [❌ DROP](#-drop) | Remoção de tabelas | [🧱 Listando colunas](#-listando-colunas) | Enumeração de colunas |
+| [🔄 UPDATE vs ALTER](#-update-vs-alter) | Diferença entre comandos | [🔓 Acessando dados](#-acessando-dados) | Extração de informações |
+| [📊 Ordenando resultados](#-ordenando-resultados) | ORDER BY | [📂 SQLi e leitura de arquivos](#-sqli-e-leitura-de-arquivos) | Leitura/escrita no servidor |
+| [🎚️ Limitando resultados](#️-limitando-resultados) | LIMIT e OFFSET | [👤 Usuários e privilégios](#-usuários-e-privilégios) | Permissões do banco |
+| [🎯 Cláusula WHERE](#-cláusula-where) | Filtragem de dados | [📖 Lendo arquivos](#-lendo-arquivos) | Uso do LOAD_FILE() |
+| [🔎 Cláusula LIKE](#-cláusula-like) | Busca por padrões | [✍️ Escrevendo arquivos](#️-escrevendo-arquivos) | Escrita no sistema |
+| [⚡ Operadores SQL](#-operadores-sql) | Operadores lógicos e matemáticos | [💾 SELECT INTO OUTFILE](#-select-into-outfile) | Salvando arquivos |
+| [🧮 Outros operadores](#-outros-operadores) | Operadores adicionais | [🐚 Escrevendo WebShell](#-escrevendo-webshell) | Execução remota |
+
 # 💉 SQL
 
 ---
