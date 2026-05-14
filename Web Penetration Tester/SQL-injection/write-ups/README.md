@@ -644,3 +644,426 @@ Muitos cenários reais exigem:
 * Scripts customizados
 * Análise manual
 * Entendimento profundo da aplicação
+
+
+---
+
+# ☕ SQL Injection em Upload de XML — Caso Starbucks
+
+## Relatório Original
+
+[HackerOne Report #531051](https://hackerone.com/reports/531051?utm_source=chatgpt.com)
+
+---
+
+# 🎯 Visão Geral
+
+Durante a enumeração de subdomínios da Starbucks, um pesquisador encontrou um formulário de upload de arquivos.
+
+O pensamento inicial foi clássico:
+
+```text
+"Tentar obter RCE com shell PHP"
+```
+
+Porém, o comportamento da aplicação indicava algo diferente.
+
+---
+
+# 📂 Comportamento do Upload
+
+O servidor:
+
+* NÃO salvava o arquivo enviado
+* Apenas processava e lia o conteúdo
+
+Isso mudou completamente a direção da análise.
+
+---
+
+# 🔍 Identificando XML
+
+As mensagens de erro mostravam que:
+
+* O arquivo estava sendo tratado como XML
+* O parser esperava uma estrutura específica
+* Algumas tags obrigatórias eram necessárias
+
+---
+
+# 🧪 Construindo um XML Válido
+
+Usando as mensagens de erro, o pesquisador conseguiu montar um XML aceito pela aplicação.
+
+## Tags identificadas
+
+```xml
+<MainAccount>
+<Credit>
+<Debit>
+<Invoice>
+```
+
+Isso indicava que o upload provavelmente fazia parte de algum sistema financeiro.
+
+---
+
+# 🏢 Referência ao Microsoft Dynamics AX
+
+As mensagens também faziam referência ao:
+
+Microsoft Dynamics AX
+
+Uma plataforma ERP/financeira da Microsoft.
+
+Isso ajudou o pesquisador a entender melhor o contexto da aplicação.
+
+---
+
+# 💥 Segunda Tentativa — XXE
+
+O próximo teste foi:
+
+## XXE (XML External Entity)
+
+Ataques XXE tentam fazer o parser XML:
+
+* Ler arquivos locais
+* Fazer SSRF
+* Executar consultas externas
+
+---
+
+# ❌ XXE Bloqueado
+
+As entidades externas estavam sendo filtradas/desativadas.
+
+Exemplo conceitual:
+
+```xml
+<!ENTITY xxe SYSTEM "file:///etc/passwd">
+```
+
+O parser não aceitava entidades externas.
+
+---
+
+# 🚶 Afastamento Temporário
+
+Sem impacto evidente, o pesquisador decidiu focar em outros alvos.
+
+Mais de um mês depois, ele voltou para revisar o caso.
+
+A vulnerabilidade ainda existia.
+
+---
+
+# 🧠 Nova Hipótese — SQL Injection
+
+O pesquisador começou a suspeitar que os dados XML eram armazenados em um banco de dados.
+
+Se o XML fosse convertido em consultas SQL:
+
+```text
+Talvez fosse possível explorar SQL Injection
+```
+
+---
+
+# 🔢 Campo Suspeito
+
+A tag:
+
+```xml
+<MainAccount>123456</MainAccount>
+```
+
+recebia valores numéricos.
+
+Isso sugeria algo como:
+
+```sql
+SELECT * FROM table WHERE account_id='123456'
+```
+
+---
+
+# 🧪 Primeiro Teste
+
+## Payload
+
+```xml
+<MainAccount>123456'</MainAccount>
+```
+
+---
+
+# 📌 Resultado
+
+O apóstrofo (`'`) parecia ser filtrado.
+
+Inicialmente parecia seguro.
+
+---
+
+# 🔥 Bypass com Entidade HTML
+
+O pesquisador tentou usar uma entidade HTML/XML:
+
+```xml
+&apos;
+```
+
+---
+
+# 🧪 Novo Payload
+
+```xml
+<MainAccount>12345&apos;</MainAccount>
+```
+
+---
+
+# 🚨 Resultado Importante
+
+O servidor retornou:
+
+```text
+Database Error
+```
+
+Isso indicava que:
+
+* O payload chegou ao banco
+* O parser converteu `&apos;` para `'`
+* Existia potencial de SQL Injection
+
+---
+
+# 🧩 Blind SQL Injection
+
+O sistema NÃO retornava resultados SQL na tela.
+
+Então não era:
+
+* Error-Based
+* Union-Based
+
+O cenário indicava:
+
+## Blind SQL Injection
+
+---
+
+# ⏳ Testando Time-Based SQLi
+
+O pesquisador começou testes manuais usando delays.
+
+A ideia era verificar:
+
+```text
+A resposta demora quando a condição é verdadeira?
+```
+
+---
+
+# ⚙️ Uso do SQLMap
+
+Somente depois de:
+
+* Entender o fluxo
+* Identificar o contexto XML
+* Descobrir o bypass
+* Confirmar comportamento time-based
+
+o pesquisador utilizou o:
+
+sqlmap
+
+---
+
+# 🛠️ Configurações Utilizadas
+
+## Técnica Time-Based
+
+```bash
+--technique=T
+```
+
+---
+
+## Bypass de Encoding HTML/XML
+
+```bash
+--tamper htmlencode
+```
+
+O tamper script ajudava a converter caracteres especiais em entidades HTML/XML.
+
+---
+
+# 🧠 Lógica da Exploração
+
+A lógica da query vulnerável poderia ser semelhante a:
+
+```sql
+SELECT * FROM table
+WHERE account_id='12345'
+IF(1=1) WAITFOR DELAY '0:0:10'--'
+```
+
+---
+
+# ⏳ Objetivo do Delay
+
+Se a resposta demorasse 10 segundos:
+
+✅ O payload estava sendo executado.
+
+Isso confirmaria SQL Injection explorável.
+
+---
+
+# 📊 Avaliando o Impacto
+
+Encontrar SQL Injection NÃO era suficiente.
+
+O pesquisador precisava saber:
+
+```text
+Isso realmente impacta a empresa?
+```
+
+---
+
+# 🔍 Três Pontos Avaliados
+
+## 1. Tipo de Dados
+
+Quais informações existiam?
+
+* Financeiras?
+* Clientes?
+* Funcionários?
+
+---
+
+## 2. Quantidade de Dados
+
+Era um banco vazio ou relevante?
+
+---
+
+## 3. Atualidade dos Dados
+
+Os dados ainda eram utilizados pela empresa?
+
+---
+
+# 🚨 Conclusão
+
+Após a análise:
+
+✅ O banco possuía dados relevantes
+✅ O sistema ainda era utilizado
+✅ Existia impacto real
+
+---
+
+# 📈 Severidade
+
+A vulnerabilidade recebeu severidade:
+
+```text
+Crítica — 9.3
+```
+
+---
+
+# 🧠 Lições Importantes
+
+## Não tenha visão restrita
+
+Nem todo upload de arquivo serve apenas para:
+
+* Webshell
+* RCE
+* Upload bypass
+
+---
+
+## XML não significa apenas XXE
+
+Muitos pesquisadores param em:
+
+```text
+"XXE não funcionou"
+```
+
+Mas o XML ainda pode atingir:
+
+* SQL Injection
+* SSRF
+* Command Injection
+* Deserialização
+
+---
+
+## Revise alvos antigos
+
+O pesquisador voltou depois de mais de um mês.
+
+A falha ainda existia.
+
+---
+
+## Faça anotações detalhadas
+
+As mensagens de erro foram essenciais para:
+
+* Descobrir tags válidas
+* Entender o parser
+* Identificar o ERP utilizado
+
+---
+
+## Sempre avalie impacto
+
+Nem toda SQL Injection gera risco real.
+
+É importante avaliar:
+
+* Sensibilidade dos dados
+* Contexto do sistema
+* Uso atual da aplicação
+
+---
+
+# 📋 Fluxo Completo da Exploração
+
+1. Encontrar upload de arquivos
+2. Identificar processamento XML
+3. Construir XML válido
+4. Identificar referência ao Dynamics AX
+5. Testar XXE
+6. Descobrir bloqueio de entidades externas
+7. Revisitar o alvo semanas depois
+8. Suspeitar de SQL Injection
+9. Testar `'`
+10. Bypass usando `&apos;`
+11. Obter erro de banco
+12. Identificar Blind SQLi
+13. Explorar Time-Based
+14. Automatizar com SQLMap
+15. Avaliar impacto dos dados
+
+---
+
+# ⚠️ Observações Importantes
+
+* Uploads XML podem esconder múltiplas vulnerabilidades
+* Blind SQLi exige análise comportamental
+* Entidades HTML/XML podem bypassar filtros
+* Ferramentas automáticas funcionam melhor após análise manual
+* SQLMap foi usado apenas depois do entendimento do contexto
+* Testes devem ocorrer somente em ambientes autorizados
