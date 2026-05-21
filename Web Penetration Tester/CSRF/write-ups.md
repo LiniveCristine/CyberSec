@@ -370,3 +370,379 @@ POST
 | Impacto                | Acesso à conta e repositórios privados |
 
 ---
+
+# 💥 From Self-XSS to Account Takeover
+
+📚 Artigo original:
+[From Self-XSS to Account Takeover](https://medium.com/@splintercat/from-self-xss-to-account-takeover-c6488adc5737?utm_source=chatgpt.com)
+
+---
+
+# 🧠 Visão Geral
+
+Esse caso mostra como vulnerabilidades consideradas “baixas” podem ser combinadas para gerar um impacto crítico.
+
+O pesquisador transformou:
+
+* um **Self-XSS**;
+* ausência de proteção **CSRF**;
+* e manipulação de cookies;
+
+em um **Account Takeover**.
+
+---
+
+# 🧩 Ingredientes da Exploração
+
+## 1️⃣ Self-XSS
+
+Um campo do perfil era vulnerável a XSS.
+
+Porém:
+
+```text id="5em22o"
+somente o próprio usuário conseguia visualizar o payload
+```
+
+---
+
+## 2️⃣ Login sem proteção CSRF
+
+O formulário de login:
+
+* NÃO exigia token CSRF;
+* aceitava apenas usuário e senha.
+
+---
+
+## 3️⃣ Alteração de e-mail protegida
+
+A funcionalidade de troca de e-mail:
+
+* exigia token CSRF válido.
+
+---
+
+# 🪞 Self-XSS
+
+## 🔍 O que aconteceu?
+
+O pesquisador encontrou um XSS em sua própria conta.
+
+Exemplo:
+
+```html id="wb8hgd"
+<script>alert(1)</script>
+```
+
+---
+
+## ⚠️ Problema
+
+O payload só executava:
+
+```text id="r5n2qk"
+na própria sessão do atacante
+```
+
+Por isso muitos programas classificam Self-XSS como baixo impacto.
+
+---
+
+# 🎯 Objetivo do Pesquisador
+
+Ele precisava fazer:
+
+```text id="n4k18u"
+outras pessoas executarem o payload
+```
+
+---
+
+# 🔐 Descoberta Importante
+
+O login NÃO possuía proteção CSRF.
+
+Isso significava que qualquer site externo poderia enviar uma requisição de login automaticamente.
+
+---
+
+# 🌐 Forçando a Vítima a Logar na Conta do Hacker
+
+# 💣 Ideia do ataque
+
+O pesquisador criou:
+
+```text id="0a0aqn"
+site malicioso
+```
+
+com um formulário oculto contendo:
+
+* usuário do atacante;
+* senha do atacante.
+
+---
+
+## 🧾 Formulário automático
+
+```html id="9mv6sm"
+<form action="/login" method="POST">
+  <input type="hidden" name="user" value="hacker">
+  <input type="hidden" name="password" value="senha_hacker">
+</form>
+```
+
+---
+
+## ⚙️ Resultado
+
+Quando a vítima acessava o site:
+
+1. o formulário era enviado automaticamente;
+2. a vítima era autenticada na conta do hacker;
+3. o Self-XSS passava a executar no navegador da vítima.
+
+---
+
+# 🍪 Manipulação de Cookies
+
+## ⚠️ Novo problema
+
+Agora o XSS executava no navegador da vítima…
+
+MAS:
+
+```text id="u7e1v4"
+a vítima ainda estava logada na conta do hacker
+```
+
+Isso impedia acesso aos dados reais da vítima.
+
+---
+
+# 🧠 Objetivo
+
+O atacante precisava:
+
+* restaurar a sessão legítima da vítima;
+* sem perder o XSS.
+
+---
+
+# 🪝 Criando um Cookie Especial
+
+O payload criou um novo cookie com:
+
+```text id="t4epn9"
+path=/perfil/vulneravel
+```
+
+---
+
+## 🔍 O que isso faz?
+
+Esse cookie só seria utilizado quando a vítima acessasse:
+
+```text id="tmg5gk"
+/perfil/vulneravel
+```
+
+---
+
+# 🌉 A “ponte” do ataque
+
+Esse cookie funcionava como:
+
+```text id="7g9g8f"
+uma ponte entre a vítima e o perfil vulnerável do hacker
+```
+
+---
+
+## Resultado
+
+Quando a vítima acessasse a área vulnerável:
+
+* o navegador usaria o cookie do hacker;
+* o XSS continuaria executando.
+
+---
+
+# 🗑️ Apagando o Cookie da Sessão do Hacker
+
+## Problema
+
+Após o login forçado:
+
+```text id="l29zrm"
+a vítima continuava autenticada como hacker
+```
+
+Precisávamos restaurar a sessão original.
+
+---
+
+# 🌊 Técnica: Cookie Jar Overflow
+
+## 🧠 Conceito
+
+Os navegadores possuem limite de cookies.
+
+Quando o limite é atingido:
+
+```text id="8yxhwb"
+cookies antigos começam a ser removidos
+```
+
+---
+
+# 💣 Exploração
+
+O atacante enviou vários cookies até:
+
+* o cookie principal da sessão do hacker ser apagado.
+
+---
+
+## ⚠️ Importante
+
+O cookie especial:
+
+```text id="b4d5ol"
+path=/perfil/vulneravel
+```
+
+foi mantido.
+
+---
+
+# 🍪 Resultado Final dos Cookies
+
+Agora existiam dois comportamentos:
+
+| Área acessada        | Cookie usado              |
+| -------------------- | ------------------------- |
+| Site normal          | Sessão legítima da vítima |
+| `/perfil/vulneravel` | Sessão do hacker          |
+
+---
+
+# 🔄 Consequência
+
+A vítima:
+
+* parecia estar em sua própria conta;
+* mas o XSS continuava acessível em segundo plano.
+
+---
+
+# ☠️ Account Takeover
+
+Agora o atacante tinha:
+
+✅ XSS executando
+✅ Sessão legítima da vítima
+✅ Ponte para o perfil vulnerável
+
+---
+
+# 📥 Capturando o Token CSRF
+
+O payload fez um:
+
+```javascript id="f6mwnw"
+fetch('/account/dashboard.php')
+```
+
+---
+
+## 🎯 Objetivo
+
+Ler o HTML da página e extrair:
+
+```text id="6s2jja"
+token CSRF da vítima
+```
+
+---
+
+# 🔓 Alterando o E-mail
+
+Com o token CSRF válido:
+
+* o atacante podia simular ações legítimas.
+
+---
+
+# 📨 Payload de alteração
+
+```javascript id="5s8y3m"
+const form = document.createElement('form');
+
+form.action = '/account/dashboard.php';
+form.method = 'POST';
+
+form.innerHTML = `
+  <input type="hidden" name="csrf_token"
+         value="${csrf_vítima}">
+
+  <input type="hidden" name="email"
+         value="email_do_hacker@atack.com">
+`;
+
+document.body.appendChild(form);
+form.submit();
+```
+
+---
+
+# ⚙️ Resultado Final
+
+A requisição continha:
+
+* cookie legítimo da vítima;
+* token CSRF legítimo.
+
+Logo:
+
+```text id="wvb13m"
+o e-mail da conta foi alterado
+```
+
+---
+
+# 🔥 Impacto
+
+Após trocar o e-mail, o atacante poderia:
+
+* resetar senha;
+* assumir totalmente a conta;
+* realizar Account Takeover completo.
+
+---
+
+# 🛡️ Falhas que Permitiram o Ataque
+
+| Falha                   | Impacto                 |
+| ----------------------- | ----------------------- |
+| Self-XSS                | Execução de JavaScript  |
+| Login sem CSRF          | Login forçado           |
+| Má gestão de cookies    | Persistência do XSS     |
+| Token acessível via XSS | Bypass da proteção CSRF |
+
+---
+
+# 📌 Resumo Rápido
+
+| Etapa               | Objetivo                   |
+| ------------------- | -------------------------- |
+| Self-XSS            | Executar JS                |
+| Login CSRF          | Forçar vítima a logar      |
+| Cookie especial     | Manter ponte com XSS       |
+| Cookie Overflow     | Restaurar sessão da vítima |
+| Roubo de CSRF Token | Executar ações legítimas   |
+| Troca de e-mail     | Tomar conta da conta       |
+
+---
+
